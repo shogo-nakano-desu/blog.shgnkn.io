@@ -5,6 +5,3 @@
 <main>
   <Header />
 </main>
-
-<style>
-</style>

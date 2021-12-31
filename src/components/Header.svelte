@@ -2,9 +2,7 @@
 </script>
 
 <header>
-  <div>
-    <h1>blog.shgnkn.io</h1>
-  </div>
+  <h1>blog.shgnkn.io</h1>
 </header>
 
 <style>
