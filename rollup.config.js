@@ -45,21 +45,19 @@ export default {
   },
   plugins: [
     svelte({
-      preprocess: sveltePreprocess({ sourceMap: !production }),
+      preprocess: [
+        sveltePreprocess({ sourceMap: !production }),
+        mdsvex({ extensions: [".svx", ".md"] }),
+      ],
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
       },
+      extensions: [".svelte", ".svx", ".md"],
     }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
     css({ output: "bundle.css" }),
-
-    svelte({
-      // tell svelte to handle mdsvex files
-      extensions: [".svelte", ".svx"],
-      preprocess: mdsvex(),
-    }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
