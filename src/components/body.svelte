@@ -1,6 +1,6 @@
 <script>
-  import Index from '../contents/202201-start-blog-with-svelte/index.md';
-  import { metadata } from '../contents/202201-start-blog-with-svelte/index.md';
+  import Index from '../contents/202201-start-blog-with-svelte/Index.md';
+  import { metadata } from '../contents/202201-start-blog-with-svelte/Index.md';
 </script>
 
 <div>

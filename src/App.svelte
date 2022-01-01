@@ -6,7 +6,8 @@
 <main>
   <div class="containar">
     <Header />
-    <Body />
+
+    <!-- <Body /> -->
   </div>
 </main>
 
