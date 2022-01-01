@@ -1,27 +1,10 @@
 <script>
+  import Index from '../contents/202201-start-blog-with-svelte/index.md';
 </script>
 
-<body>
-  <div>
-    <h2><a href="https://WIP/{title}">[TODO]{title}</a></h2>
-  </div>
-</body>
+<div>
+  <Index />
+</div>
 
 <style>
-  header {
-    background-color: rgb(103, 103, 120);
-    color: rgb(255, 254, 252);
-  }
-  div {
-    margin: auto;
-    max-width: 960px;
-    padding: 1.45rem 1.0875rem;
-  }
-  a {
-    color: rgb(255, 254, 252);
-    text-decoration: none;
-  }
-  a:visited {
-    color: inherit;
-  }
 </style>
