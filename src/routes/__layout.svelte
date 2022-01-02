@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Header from '$lib/Header.svelte';
+  import Body from "$lib/Body.svelte"
 	import '../app.css';
 </script>
 
 <Header />
 
 <main>
+  <Body />
 	<slot />
 </main>
 
