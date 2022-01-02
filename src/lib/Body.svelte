@@ -4,8 +4,10 @@
 </script>
 
 <div>
+
   <h2>{metadata.title}</h2>
   <Index />
+
 </div>
 
 <style>

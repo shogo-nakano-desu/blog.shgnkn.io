@@ -7,10 +7,10 @@
 <Header />
 
 <main>
-  <Body />
+  <a href="http://localhost:3000/202201-start-blog-with-svelte">start blog with svelte</a>
 	<slot />
 </main>
-
+<!-- <Body /> -->
 <footer>
 	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
 </footer>
