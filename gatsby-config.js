@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
-    title: "blog-shgnkn-gatsby",
+    siteUrl: "https://www.shgnkn.io",
+    title: "blog.shgnkn.io",
   },
-  plugins: [],
+  plugins: ["gatsby-plugin-image", "gatsby-plugin-sharp"],
 };
