@@ -1,14 +1,8 @@
 import * as React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
-import {
-  container,
-  heading,
-  navLinks,
-  navLinkItem,
-  navLinkText,
-  siteTitle,
-} from "./layout.module.css";
+import * as styles from "./layout.module.css";
 const Layout = ({ pageTitle, children }) => {
+  console.log(styles)
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -19,33 +13,33 @@ const Layout = ({ pageTitle, children }) => {
     }
   `);
   return (
-    <div className={container}>
+    <div className={styles.container}>
       <title>
         {pageTitle} | {data.site.siteMetadata.title}
       </title>
-      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+      <header className={styles.siteTitle}>{data.site.siteMetadata.title}</header>
       <title>{pageTitle}</title>
       <nav>
-        <ul className={navLinks}>
-          <li className={navLinkItem}>
-            <Link to="/" className={navLinkText}>
+        <ul className={styles.navLinks}>
+          <li className={styles.navLinkItem}>
+            <Link to="/" className={styles.navLinkText}>
               Home
             </Link>
           </li>
-          <li className={navLinkItem}>
-            <Link to="/about" className={navLinkText}>
+          <li className={styles.navLinkItem}>
+            <Link to="/about" className={styles.navLinkText}>
               About
             </Link>
           </li>
-          <li className={navLinkItem}>
-            <Link to="/blog" className={navLinkText}>
+          <li className={styles.navLinkItem}>
+            <Link to="/blog" className={styles.navLinkText}>
               Blog
             </Link>
           </li>
         </ul>
       </nav>
       <main>
-        <h1 className={heading}>{pageTitle}</h1>
+        <h1 className={styles.heading}>{pageTitle}</h1>
         {children}
       </main>
     </div>
