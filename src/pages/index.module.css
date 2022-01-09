@@ -1,0 +1,7 @@
+.siteTitle {
+  color: rgb(255, 254, 252);
+  text-decoration: none;
+}
+.siteTitle:visited {
+  color: inherit;
+}

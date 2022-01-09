@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../components/layout";
+import * as styles from "./index.module.css";
 
 
 const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
@@ -18,8 +19,8 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
         }
         return(
         <article key={node.id}>
-          <h2>
-            <Link to={`/${node.slug}`}>{title}</Link>
+            <h2 >
+            <Link className={ styles.siteTitle} to={`/${node.slug}`}>{title}</Link>
           </h2>
           <p>Posted: {date}</p>
         </article>)
