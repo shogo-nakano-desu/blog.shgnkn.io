@@ -1,14 +1,20 @@
-import * as React from "react";
+import { VFC} from "react";
 import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../../components/layout";
-const BlogPost = ({ data }) => {
+const BlogPost:VFC<Props> = ({ data }) => {
+  if (data === undefined) {
+    throw new Error(`data should be passed`)
+  }
   const image = getImage(data.mdx.frontmatter.hero_image);
+  if (image === undefined) {
+    throw new Error(`image should be got`)
+  }
   return (
     <Layout pageTitle={data.mdx.frontmatter.title}>
       <p>Posted:　{data.mdx.frontmatter.date}</p>
-      <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
+        <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
       <p>
         Photo Credit:{" "}
         <a href={data.mdx.frontmatter.hero_image_credit_link}>

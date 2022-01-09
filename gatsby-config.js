@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-image",
+    "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     "gatsby-transformer-typescript-css-modules",
