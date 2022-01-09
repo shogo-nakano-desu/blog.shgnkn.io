@@ -15,6 +15,7 @@ module.exports = {
       options: {
         name: `blog`,
         path: `${__dirname}/blog`,
+        ignore: [`${__dirname}/src/__generated__/*.ts`],
       },
     },
     {
