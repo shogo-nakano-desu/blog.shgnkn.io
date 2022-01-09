@@ -1,4 +1,5 @@
-import { VFC} from "react";
+import * as React from 'react';
+import { VFC } from "react";
 import { graphql, PageProps } from "gatsby";
 import { GatsbyImage} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";

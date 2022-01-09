@@ -1,4 +1,5 @@
-import { FC }from "react";
+import * as React from 'react';
+import { FC } from "react";
 import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../../components/layout";
 

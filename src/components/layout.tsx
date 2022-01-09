@@ -1,9 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
+import { FC } from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import * as styles from "./layout.module.css";
-const Layout = ({ pageTitle, children }) => {
+
+const Layout:FC<any> = ({ pageTitle, children } ) => {
   console.log(styles)
-  const data = useStaticQuery<GatsbyTypes.SitQuery>(graphql`
+  const data = useStaticQuery<GatsbyTypes.SiteQuery>(graphql`
     query Site{
       site {
         siteMetadata {
@@ -12,12 +14,13 @@ const Layout = ({ pageTitle, children }) => {
       }
     }
   `);
+  const title = data?.site?.siteMetadata?.title;
   return (
     <div className={styles.container}>
       <title>
-        {pageTitle} | {data.site.siteMetadata.title}
+        {pageTitle} | {title}
       </title>
-      <header className={styles.siteTitle}>{data.site.siteMetadata.title}</header>
+      <header className={styles.siteTitle}>{title}</header>
       <title>{pageTitle}</title>
       <nav>
         <ul className={styles.navLinks}>
