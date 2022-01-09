@@ -2,7 +2,7 @@ import * as React from 'react';
 import { graphql, PageProps } from "gatsby";
 import { GatsbyImage,getImage} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import Layout from "../../components/layout";
+import Layout from "../components/layout";
 
 
 const BlogPost:React.FC<PageProps<any>> = (props:any) => {
