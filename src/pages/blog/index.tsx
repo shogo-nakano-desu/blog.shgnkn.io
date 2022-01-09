@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { FC } from "react";
 import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../../components/layout";
 
 
-const BlogPage: FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
+const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   const nodes = props.data.allMdx.nodes;
   if (nodes === undefined) {
     throw new Error(`nodes should be`)

@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { FC } from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import * as styles from "./layout.module.css";
 
-const Layout:FC<any> = ({ pageTitle, children } ) => {
+const Layout:React.FC<any> = ({ pageTitle, children } ) => {
   console.log(styles)
-  const data = useStaticQuery<GatsbyTypes.SiteQuery>(graphql`
-    query Site{
+  const data = useStaticQuery(graphql`
+    query{
       site {
         siteMetadata {
           title

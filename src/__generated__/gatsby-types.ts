@@ -3547,10 +3547,18 @@ type MdxSortInput = {
   readonly order: Maybe<ReadonlyArray<Maybe<SortOrderEnum>>>;
 };
 
-type SiteQueryVariables = Exact<{ [key: string]: never; }>;
+type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type SiteQuery = { readonly site: Maybe<{ readonly siteMetadata: Maybe<Pick<SiteSiteMetadata, 'title'>> }> };
+type Unnamed_1_Query = { readonly site: Maybe<{ readonly siteMetadata: Maybe<Pick<SiteSiteMetadata, 'title'>> }> };
+
+type BlogPostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type BlogPostsQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
+      Pick<Mdx, 'slug' | 'id'>
+      & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'date' | 'title'>> }
+    )> } };
 
 type BlogPostQueryVariables = Exact<{
   id: Maybe<Scalars['String']>;
@@ -3564,14 +3572,6 @@ type BlogPostQuery = { readonly mdx: Maybe<(
       & { readonly hero_image: Maybe<{ readonly childImageSharp: Maybe<Pick<ImageSharp, 'gatsbyImageData'>> }> }
     )> }
   )> };
-
-type BlogPostsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type BlogPostsQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<(
-      Pick<Mdx, 'slug' | 'id'>
-      & { readonly frontmatter: Maybe<Pick<MdxFrontmatter, 'date' | 'title'>> }
-    )> } };
 
 type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
