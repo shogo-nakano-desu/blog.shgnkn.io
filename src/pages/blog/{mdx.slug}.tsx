@@ -1,29 +1,30 @@
 import { VFC} from "react";
-import { graphql } from "gatsby";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { graphql, PageProps } from "gatsby";
+import { GatsbyImage} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../../components/layout";
 
 
-const BlogPost = ({ data }) => {
-  if (data === undefined) {
-    throw new Error(`data should be passed`)
-  }
-  const image = getImage(data.mdx.frontmatter.hero_image);
-  if (image === undefined) {
-    throw new Error(`image should be got`)
-  }
+const BlogPost: VFC<PageProps<any>> = (props) => {
+  const { mdx } = props.data;
+  const { body, frontmatter } = mdx || {}
+  const { title, date,hero_image, hero_image_alt,hero_image_credit_link, hero_image_credit_text} = frontmatter
+
+  // const image = getImage(data.mdx.frontmatter.hero_image);
+  // if (image === undefined) {
+  //   throw new Error(`image should be got`)
+  // }
   return (
-    <Layout pageTitle={data.mdx.frontmatter.title}>
-      <p>Posted:　{data.mdx.frontmatter.date}</p>
-        <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
+    <Layout pageTitle={title}>
+      <p>Posted:　{date}</p>
+        <GatsbyImage image={hero_image} alt={hero_image_alt} />
       <p>
         Photo Credit:{" "}
-        <a href={data.mdx.frontmatter.hero_image_credit_link}>
-          {data.mdx.frontmatter.hero_image_credit_text}
+        <a href={hero_image_credit_link}>
+          {hero_image_credit_text}
         </a>
       </p>
-      <MDXRenderer>{data.mdx.body}</MDXRenderer>
+      <MDXRenderer>{body}</MDXRenderer>
     </Layout>
   );
 };

@@ -5,6 +5,9 @@ import Layout from "../../components/layout";
 
 const BlogPage: FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   const nodes = props.data.allMdx.nodes;
+  if (nodes === undefined) {
+    throw new Error(`nodes should be`)
+  }
 
   return (
     <Layout pageTitle="My Blog Posts">
