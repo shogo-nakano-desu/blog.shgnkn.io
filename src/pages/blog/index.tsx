@@ -1,23 +1,31 @@
-import * as React from "react";
-import { Link, graphql } from "gatsby";
+import { FC }from "react";
+import { Link, graphql, PageProps } from "gatsby";
 import Layout from "../../components/layout";
 
-const BlogPage = ({ data }) => {
+
+const BlogPage: FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
+  const nodes = props.data.allMdx.nodes;
+
   return (
     <Layout pageTitle="My Blog Posts">
-      {data.allMdx.nodes.map((node) => (
+      {nodes.map((node) => {
+        const { title, date } = node.frontmatter || {};
+        if (title === null || title === undefined || date === null || date === undefined) {
+          throw new Error(`title and date should be defined`)
+        }
+        return(
         <article key={node.id}>
           <h2>
-            <Link to={`/blog/${node.slug}`}>{node.frontmatter.title}</Link>
+            <Link to={`/blog/${node.slug}`}>{title}</Link>
           </h2>
-          <p>Posted: {node.frontmatter.date}</p>
-        </article>
-      ))}
+          <p>Posted: {date}</p>
+        </article>)
+      })}
     </Layout>
   );
 };
 export const query = graphql`
-  query {
+  query BlogPosts{
     allMdx(sort: { fields: frontmatter___date, order: DESC }) {
       nodes {
         frontmatter {

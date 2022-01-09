@@ -3,7 +3,9 @@ import { graphql } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../../components/layout";
-const BlogPost:VFC<Props> = ({ data }) => {
+
+
+const BlogPost = ({ data }) => {
   if (data === undefined) {
     throw new Error(`data should be passed`)
   }
@@ -27,7 +29,7 @@ const BlogPost:VFC<Props> = ({ data }) => {
 };
 
 export const query = graphql`
-  query ($id: String) {
+  query BlogPost($id: String) {
     mdx(id: { eq: $id }) {
       body
       frontmatter {

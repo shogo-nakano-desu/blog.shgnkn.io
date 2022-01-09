@@ -3,8 +3,8 @@ import { Link, useStaticQuery, graphql } from "gatsby";
 import * as styles from "./layout.module.css";
 const Layout = ({ pageTitle, children }) => {
   console.log(styles)
-  const data = useStaticQuery(graphql`
-    query {
+  const data = useStaticQuery<GatsbyTypes.SitQuery>(graphql`
+    query Site{
       site {
         siteMetadata {
           title
