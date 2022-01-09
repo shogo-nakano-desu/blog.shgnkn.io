@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-image",
+    "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {
@@ -19,6 +20,13 @@ module.exports = {
     {
       resolve: "gatsby-plugin-mdx",
       options: { extensions: [`.md`, `.mdx`] },
+    },
+    {
+      resolve: `gatsby-plugin-typescript`,
+      options: {
+        isTSX: true,
+        allExtensions: true,
+      },
     },
   ],
 };
