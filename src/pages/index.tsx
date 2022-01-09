@@ -19,7 +19,7 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
         return(
         <article key={node.id}>
           <h2>
-            <Link to={`/blog/${node.slug}`}>{title}</Link>
+            <Link to={`/${node.slug}`}>{title}</Link>
           </h2>
           <p>Posted: {date}</p>
         </article>)

@@ -21,25 +21,7 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       </title>
       <header className={styles.siteTitle}>{title}</header>
       <title>{pageTitle}</title>
-      <nav>
-        <ul className={styles.navLinks}>
-          <li className={styles.navLinkItem}>
-            <Link to="/" className={styles.navLinkText}>
-              Home
-            </Link>
-          </li>
-          <li className={styles.navLinkItem}>
-            <Link to="/about" className={styles.navLinkText}>
-              About
-            </Link>
-          </li>
-          <li className={styles.navLinkItem}>
-            <Link to="/blog" className={styles.navLinkText}>
-              Blog
-            </Link>
-          </li>
-        </ul>
-      </nav>
+
       <main>
         <h1 className={styles.heading}>{pageTitle}</h1>
         {children}
