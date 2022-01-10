@@ -21,8 +21,14 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
         {pageTitle} | {title}
       </title>
       <header className={styles.siteTitle}>
-        {title}
+        <div>
+          <h1>
+            {title}
+          </h1>
+          <a href="https://github.com/shogo-nakano-desu">
         <StaticImage alt="github octcat icon" src="../images/GitHub-Mark-Light-32px.png"/>
+        </a>
+        </div>
       </header>
       <title>{pageTitle}</title>
 
