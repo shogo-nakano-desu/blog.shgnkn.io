@@ -25,6 +25,11 @@
   /* margin: 3rem 0; */
 }
 
+.image {
+  width: 2rem;
+  height: 2rem;
+}
+
 /* reset CSS */
 html {
   box-sizing: border-box;
