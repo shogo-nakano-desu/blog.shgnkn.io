@@ -11,7 +11,7 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   }
 
   return (
-    <Layout pageTitle="My Blog Posts">
+    <Layout pageTitle="Blog posts">
       {nodes.map((node) => {
         const { title, date } = node.frontmatter || {};
         if (title === null || title === undefined || date === null || date === undefined) {

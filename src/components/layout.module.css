@@ -2,6 +2,27 @@
   font-family: sans-serif;
 }
 
+.header-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: center;
+}
+
+.header-contents {
+  margin: 1rem;
+  /* display: flex; */
+}
+
+.site-title {
+  justify-content: center;
+}
+
+.icons {
+  justify-content: flex-end;
+}
+
 .heading {
   color: rebeccapurple;
 }
@@ -17,10 +38,10 @@
   color: black;
 }
 
-.site-title {
+.header {
   background-color: rgb(103, 103, 120);
   color: rgb(255, 254, 252);
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 700;
   /* margin: 3rem 0; */
 }

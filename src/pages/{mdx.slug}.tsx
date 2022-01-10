@@ -3,6 +3,7 @@ import { graphql, PageProps } from "gatsby";
 import { GatsbyImage,getImage} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import Layout from "../components/layout";
+import * as styles from "./_mdxSlug.module.css"
 
 
 const BlogPost:React.FC<PageProps<any>> = (props:any) => {
@@ -19,6 +20,7 @@ const BlogPost:React.FC<PageProps<any>> = (props:any) => {
   }
   return (
     <Layout pageTitle={title}>
+      <div className={ styles.photoInfo}>
       <p>Posted:　{date}</p>
         <GatsbyImage image={image} alt={hero_image_alt} />
       <p>
@@ -26,8 +28,11 @@ const BlogPost:React.FC<PageProps<any>> = (props:any) => {
         <a href={hero_image_credit_link}>
           {hero_image_credit_text}
         </a>
-      </p>
-      <MDXRenderer>{body}</MDXRenderer>
+        </p>
+        </div>
+      <div className={ styles.contents}>
+        <MDXRenderer>{body}</MDXRenderer>
+      </div>
     </Layout>
   );
 };
