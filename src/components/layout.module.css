@@ -7,7 +7,7 @@
   width: 100%;
   flex-direction: row;
   padding: 1rem;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .header-contents {
@@ -20,7 +20,7 @@
 }
 
 .icons {
-  justify-content: flex-end;
+  margin: 1rem;
 }
 
 .heading {

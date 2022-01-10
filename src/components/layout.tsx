@@ -22,16 +22,19 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       </title>
       <header className={styles.header}>
         <div className={styles.headerContainer}>
-          {/* <div className={ styles.headerContents}> */}
+          <div>
             <h2 className={ styles.siteTitle}>
               {title}
             </h2>
-            <a href="https://github.com/shogo-nakano-desu">
+          </div>
+          <div>
+            <a className={ styles.icons} href="https://github.com/shogo-nakano-desu">
               <StaticImage className={ styles.image} alt="github octcat icon" src="../images/GitHub-Mark-Light-32px.png"/>
             </a>
-            <a href="https://twitter.com/__shogo__">
+            <a className={ styles.icons} href="https://twitter.com/__shogo__">
               <StaticImage className={ styles.image} alt="twitter bird icon" src="../images/Twitter-white.png"></StaticImage>
             </a>
+            </div>
 
           </div>
         {/* </div> */}
