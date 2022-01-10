@@ -23,7 +23,6 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       <title>{pageTitle}</title>
 
       <main>
-        <h1 className={styles.heading}>{pageTitle}</h1>
         {children}
       </main>
     </div>
