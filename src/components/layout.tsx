@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link, useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql } from "gatsby";
+import { StaticImage } from 'gatsby-plugin-image'
 import * as styles from "./layout.module.css";
 
 const Layout:React.FC<any> = ({ pageTitle, children } ) => {
@@ -19,29 +20,25 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       <title>
         {pageTitle} | {title}
       </title>
-      <header className={styles.siteTitle}>{title}</header>
+      <header className={styles.header}>
+        <div className={styles.headerContainer}>
+          {/* <div className={ styles.headerContents}> */}
+            <h2 className={ styles.siteTitle}>
+              {title}
+            </h2>
+            <a href="https://github.com/shogo-nakano-desu">
+              <StaticImage className={ styles.image} alt="github octcat icon" src="../images/GitHub-Mark-Light-32px.png"/>
+            </a>
+            <a href="https://twitter.com/__shogo__">
+              <StaticImage className={ styles.image} alt="twitter bird icon" src="../images/Twitter-white.png"></StaticImage>
+            </a>
+
+          </div>
+        {/* </div> */}
+      </header>
       <title>{pageTitle}</title>
-      <nav>
-        <ul className={styles.navLinks}>
-          <li className={styles.navLinkItem}>
-            <Link to="/" className={styles.navLinkText}>
-              Home
-            </Link>
-          </li>
-          <li className={styles.navLinkItem}>
-            <Link to="/about" className={styles.navLinkText}>
-              About
-            </Link>
-          </li>
-          <li className={styles.navLinkItem}>
-            <Link to="/blog" className={styles.navLinkText}>
-              Blog
-            </Link>
-          </li>
-        </ul>
-      </nav>
+
       <main>
-        <h1 className={styles.heading}>{pageTitle}</h1>
         {children}
       </main>
     </div>
