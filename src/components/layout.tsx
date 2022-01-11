@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useStaticQuery, graphql } from "gatsby";
+import { useStaticQuery, graphql, Link } from "gatsby";
 import { StaticImage } from 'gatsby-plugin-image'
 import * as styles from "./layout.module.css";
 
@@ -23,9 +23,10 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       <header className={styles.header}>
         <div className={styles.headerContainer}>
           <div>
-            <h2 className={ styles.siteTitle}>
+            <Link className={styles.siteTitle} to='/'>{title}</Link>
+            {/* <h2 className={ styles.siteTitle}>
               {title}
-            </h2>
+            </h2> */}
           </div>
           <div>
             <a className={ styles.icons} href="https://github.com/shogo-nakano-desu">
