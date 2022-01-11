@@ -9,27 +9,25 @@ import * as styles from "./_mdxSlug.module.css"
 const BlogPost:React.FC<PageProps<any>> = (props:any) => {
   const { mdx } = props.data;
   const { body, frontmatter } = mdx || {}
-  // const { title, date,hero_image, hero_image_alt,hero_image_credit_link, hero_image_credit_text} = frontmatter
   const { title, date, hero_image_alt,hero_image_credit_link, hero_image_credit_text } = frontmatter
   const image = getImage(frontmatter.hero_image)
 
-
-  // const image = getImage(data.mdx.frontmatter.hero_image);
   if (image === undefined) {
     throw new Error(`image should be got`)
   }
   return (
     <Layout pageTitle={title}>
+      <h1>{title}</h1>
+      <p className={ styles.date}>{ date}</p>
       <div className={ styles.photoInfo}>
-      <p>Posted:　{date}</p>
-        <GatsbyImage image={image} alt={hero_image_alt} />
-      <p>
-        Photo Credit:{" "}
-        <a href={hero_image_credit_link}>
-          {hero_image_credit_text}
-        </a>
+          <GatsbyImage image={image} alt={hero_image_alt} />
+        <p className={ styles.credit}>
+          Photo Credit:{" "}
+          <a href={hero_image_credit_link} className={ styles.creditLink}>
+            {hero_image_credit_text}
+          </a>
         </p>
-        </div>
+      </div>
       <div className={ styles.contents}>
         <MDXRenderer>{body}</MDXRenderer>
       </div>
@@ -43,7 +41,7 @@ export const query = graphql`
       body
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        date
         hero_image_alt
         hero_image_credit_link
         hero_image_credit_text

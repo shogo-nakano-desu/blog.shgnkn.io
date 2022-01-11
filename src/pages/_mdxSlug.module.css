@@ -1,7 +1,21 @@
 .contents {
   color: #4d5156;
+  margin-top: 2rem;
 }
 
 .photoInfo {
   color: #333333;
+}
+
+.date {
+  color: #9399a5;
+}
+
+.credit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.credit-link {
+  margin-left: 0.25rem;
 }
