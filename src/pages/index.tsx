@@ -18,11 +18,13 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
           throw new Error(`title and date should be defined`)
         }
         return(
-        <article key={node.id}>
-            <h2 >
-            <Link className={ styles.siteTitle} to={`/${node.slug}`}>{title}</Link>
-          </h2>
-          <p>Posted: {date}</p>
+          <article key={node.id} className={ styles.articleContainer}>
+            <h2 className={ styles.titleContainer}>
+              <Link className={ styles.siteTitle} to={`/${node.slug}`}>{title}</Link>
+            </h2>
+            <div className={ styles.dateContainer}>
+              <p>Posted: {date}</p>
+            </div>
         </article>)
       })}
     </Layout>

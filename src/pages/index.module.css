@@ -5,3 +5,18 @@
 .siteTitle:visited {
   color: inherit;
 }
+
+.article-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.75rem;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+.date-container {
+  display: flex;
+  justify-content: center;
+}

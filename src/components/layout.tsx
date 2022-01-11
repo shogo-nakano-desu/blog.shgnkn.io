@@ -42,7 +42,7 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
       </header>
       <title>{pageTitle}</title>
 
-      <main>
+      <main className={ styles.mainContainer}>
         {children}
       </main>
     </div>
