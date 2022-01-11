@@ -7,4 +7,6 @@ hero_image_credit_text: "Cameron Venti"
 hero_image_credit_link: "https://unsplash.com/photos/Q1PcwcvuFa0"
 ---
 
+## これは私の初の記事です
+
 Here's another post! It's even better than the first one!
