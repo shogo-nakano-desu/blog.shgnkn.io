@@ -3,7 +3,11 @@ import { useStaticQuery, graphql, Link } from "gatsby";
 import { StaticImage } from 'gatsby-plugin-image'
 import * as styles from "./layout.module.css";
 
-const Layout:React.FC<any> = ({ pageTitle, children } ) => {
+type Props = {
+  pageTitle: string,
+}
+
+const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
   console.log(styles)
   const data = useStaticQuery(graphql`
     query{
@@ -48,4 +52,5 @@ const Layout:React.FC<any> = ({ pageTitle, children } ) => {
     </div>
   );
 };
+
 export default Layout;
