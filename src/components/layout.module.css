@@ -1,7 +1,7 @@
 .main-container {
   margin-left: 20%;
   margin-right: 20%;
-  margin-top: 3%;
+  margin-top: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

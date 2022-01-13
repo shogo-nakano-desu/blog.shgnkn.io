@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: row;
   /* padding: 1rem; */
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
   justify-content: space-between;
   align-items: center;
   margin-left: 20%;
