@@ -4,7 +4,7 @@ import Layout from "../components/layout";
 import * as styles from "./index.module.css";
 
 
-const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
+const BlogPage: React.FC<PageProps<any>> = (props) => {
   const nodes = props.data.allMdx.nodes;
   if (nodes === undefined) {
     throw new Error(`nodes should be`)
@@ -12,7 +12,7 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
 
   return (
     <Layout pageTitle="Blog posts">
-      {nodes.map((node) => {
+      {nodes.map((node:any) => {
         const { title, date } = node.frontmatter || {};
         if (title === null || title === undefined || date === null || date === undefined) {
           throw new Error(`title and date should be defined`)

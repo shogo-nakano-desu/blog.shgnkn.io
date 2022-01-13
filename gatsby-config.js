@@ -4,6 +4,8 @@ module.exports = {
     title: "blog.shgnkn.io",
     description:
       "This blog is for recording and disseminating what I have learned and tried.",
+    twitterUsername: "@__shogo__",
+    image: "/favicon-16x16.png",
   },
   plugins: [
     "gatsby-plugin-image",
