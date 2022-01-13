@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { useStaticQuery, graphql, Link } from "gatsby";
-import { StaticImage } from 'gatsby-plugin-image'
+import { useStaticQuery, graphql, } from "gatsby";
 import * as styles from "./layout.module.css";
 import { Header } from "./header"
 
@@ -26,9 +25,6 @@ const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
         {pageTitle} | {title}
       </title>
       <Header></Header>
-
-      {/* <title>{pageTitle}</title> */}
-
       <main className={ styles.mainContainer}>
         {children}
       </main>
