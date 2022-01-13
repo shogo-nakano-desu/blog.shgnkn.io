@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { StaticImage } from 'gatsby-plugin-image'
 import * as styles from "./layout.module.css";
+import { Header } from "./header"
 
 type Props = {
   pageTitle: string,
@@ -24,27 +25,9 @@ const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
       <title>
         {pageTitle} | {title}
       </title>
-      <header className={styles.header}>
-        <div className={styles.headerContainer}>
-          <div>
-            <Link className={styles.siteTitle} to='/'>{title}</Link>
-            {/* <h2 className={ styles.siteTitle}>
-              {title}
-            </h2> */}
-          </div>
-          <div>
-            <a className={ styles.icons} href="https://github.com/shogo-nakano-desu">
-              <StaticImage className={ styles.image} alt="github octcat icon" src="../images/GitHub-Mark-Light-32px.png"/>
-            </a>
-            <a className={ styles.icons} href="https://twitter.com/__shogo__">
-              <StaticImage className={ styles.image} alt="twitter bird icon" src="../images/Twitter-white.png"></StaticImage>
-            </a>
-            </div>
+      <Header></Header>
 
-          </div>
-        {/* </div> */}
-      </header>
-      <title>{pageTitle}</title>
+      {/* <title>{pageTitle}</title> */}
 
       <main className={ styles.mainContainer}>
         {children}
