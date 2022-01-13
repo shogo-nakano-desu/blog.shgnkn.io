@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useStaticQuery, graphql, } from "gatsby";
 import * as styles from "./layout.module.css";
 import { Header } from "./header"
+import { Footer } from "./footer"
 
 type Props = {
   pageTitle: string,
@@ -28,6 +29,7 @@ const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
       <main className={ styles.mainContainer}>
         {children}
       </main>
+      <Footer></Footer>
     </div>
   );
 };
