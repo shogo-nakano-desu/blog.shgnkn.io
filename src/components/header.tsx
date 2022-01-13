@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { StaticImage } from 'gatsby-plugin-image'
-import * as styles from "./layout.module.css";
+import * as styles from "./header.module.css";
 
 
 export const Header: React.FC= () => {
@@ -29,8 +29,7 @@ export const Header: React.FC= () => {
           <a className={styles.icons} href="https://twitter.com/__shogo__">
             <StaticImage className={styles.image} alt="twitter bird icon" src="../images/Twitter-white.png"></StaticImage>
           </a>
-        </div>
-
+          </div>
       </div>
     </header>
   )

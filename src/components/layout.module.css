@@ -12,19 +12,6 @@
   color: #333333;
 }
 
-.header-container {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  padding: 1rem;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-contents {
-  margin: 1rem;
-}
-
 .site-title {
   justify-content: center;
   text-decoration: none;
