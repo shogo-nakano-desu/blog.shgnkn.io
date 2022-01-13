@@ -1,0 +1,62 @@
+.main-container {
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-contents {
+  margin: 1rem;
+}
+
+.site-title {
+  justify-content: center;
+  text-decoration: none;
+  font-size: 2.5rem;
+}
+.site-title:visited {
+  color: inherit;
+}
+
+.icons {
+  margin: 1rem;
+}
+
+.heading {
+  color: rebeccapurple;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+.nav-link-item {
+  padding-right: 2rem;
+}
+.nav-link-text {
+  color: black;
+}
+
+.header {
+  background-color: rgb(103, 103, 120);
+  color: rgb(255, 254, 252);
+  font-size: 2rem;
+  font-weight: 700;
+  /* margin: 3rem 0; */
+}
+
+.image {
+  width: 2rem;
+  height: 2rem;
+}
