@@ -2,8 +2,13 @@ import * as React from 'react';
 import { graphql, PageProps } from "gatsby";
 import { GatsbyImage,getImage} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { MDXProvider }  from "@mdx-js/react"
+
 import Layout from "../components/layout";
+
+
 import * as styles from "./_mdxSlug.module.css"
+
 
 
 const BlogPost:React.FC<PageProps<any>> = (props:any) => {
@@ -28,8 +33,10 @@ const BlogPost:React.FC<PageProps<any>> = (props:any) => {
           </a>
         </p>
       </div>
-      <div className={ styles.contents}>
-        <MDXRenderer>{body}</MDXRenderer>
+      <div className={styles.contents}>
+        <MDXProvider components={{ h2: props => <h2 {...props} style={{color:"red"}}/>}}>
+          <MDXRenderer>{body}</MDXRenderer>
+        </MDXProvider>
       </div>
     </Layout>
   );
