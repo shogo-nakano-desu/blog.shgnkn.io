@@ -20,3 +20,11 @@
   display: flex;
   justify-content: center;
 }
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex;
+  justify-content: space-between;
+  width: 100%;
+}

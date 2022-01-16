@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, graphql, PageProps } from "gatsby";
+import { graphql, PageProps } from "gatsby";
 import { Card} from "../components/card"
 import Layout from "../components/layout";
 import * as styles from "./index.module.css";
@@ -18,10 +18,12 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
 
   return (
     <Layout pageTitle="Blog posts">
-      <div>
-        {frontmatters.map((e:data) => {
-          return <Card data={e} key={e?.path}/>
-        })}
+      <div className={ styles.container }>
+        <div className={styles.card}>
+          {frontmatters.map((e:data) => {
+            return <Card data={e} key={e?.path}/>
+          })}
+        </div>
       </div>
     </Layout>
   )
