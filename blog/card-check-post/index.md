@@ -36,7 +36,13 @@ hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
 #### これは
 
 ```
-コードサンプル
+const nodes = props.data.allMdx.nodes;
+  if (nodes === undefined) {
+    throw new Error(`nodes should be`)
+  }
+  const frontmatters = nodes.map((node: any) => node.frontmatter)
+  if (frontmatters.some((e: any) => e === undefined)) { throw new Error(`should be`) }
+  frontmatters;
 ```
 
 こっちはインラインのサンプル `const test = "test desu"` コード

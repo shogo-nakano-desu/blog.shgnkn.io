@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useStaticQuery, graphql, } from "gatsby";
 import * as styles from "./layout.module.css";
 import { Header } from "./header"
 import { Footer } from "./footer"
@@ -15,7 +14,7 @@ const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
       <SEO title={pageTitle}></SEO>
       <div className={styles.container}>
         <Header></Header>
-        <main className={ styles.main}>
+        <main className={styles.main}>
           {children}
         </main>
         <Footer></Footer>
