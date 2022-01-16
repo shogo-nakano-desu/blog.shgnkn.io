@@ -2,7 +2,10 @@
   background-color: rgb(21, 40, 58);
   color: rgb(255, 254, 252);
   font-size: 2rem;
+  height: 6rem;
   font-weight: 700;
+  /* display: flex;
+  align-items: center; */
 }
 .header-container {
   display: flex;
@@ -13,6 +16,7 @@
   align-items: center;
   margin-left: 15%;
   margin-right: 15%;
+  height: 100%;
 }
 
 .site-title {
