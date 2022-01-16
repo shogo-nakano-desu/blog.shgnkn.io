@@ -35,5 +35,26 @@ module.exports = {
       resolve: "gatsby-plugin-google-analytics",
       options: { trackingId: "G-ZBJ3NKJR4G" },
     },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              classPrefix: "language-",
+              inlineCodeMarker: "`", //もしかしたらデフォルトで`かも
+              showLineNumbers: true,
+              noInlineHighlight: false,
+              prompt: {
+                user: "root",
+                host: "localhost",
+                global: false,
+              },
+            },
+          },
+        ],
+      },
+    },
   ],
 };
