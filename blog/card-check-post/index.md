@@ -1,16 +1,16 @@
 ---
-title: "This is my second post as sample"
-path: "second-post"
-date: "2022-01-16"
+title: "card check post"
+path: "card-check-post"
+date: "2022-01-22"
 hero_image: "./anders-drange-5glbTkJOWqI-unsplash.jpg"
 hero_image_alt: "universe"
 hero_image_credit_text: "Anders Drange"
 hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
 ---
 
-## This is my second post
+## This is card check post
 
-I created this md file to check how my blog post looks like. This
+カードの並び順が問題ないかを確認するためのポスト
 
 ## What I am going to write
 

@@ -1,34 +1,30 @@
 import * as React from 'react';
 import { Link, graphql, PageProps } from "gatsby";
+import { Card} from "../components/card"
 import Layout from "../components/layout";
 import * as styles from "./index.module.css";
 
 
-const BlogPage: React.FC<PageProps<any>> = (props) => {
+const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   const nodes = props.data.allMdx.nodes;
   if (nodes === undefined) {
     throw new Error(`nodes should be`)
   }
+  const frontmatters = nodes.map((node: any) => node.frontmatter)
+  if (frontmatters.some((e: any) => e === undefined)) { throw new Error(`should be`) }
+  frontmatters;
+
+  type data = GatsbyTypes.BlogPostsQuery['allMdx']['nodes'][0]['frontmatter']
 
   return (
     <Layout pageTitle="Blog posts">
-      {nodes.map((node:any) => {
-        const { title, date } = node.frontmatter || {};
-        if (title === null || title === undefined || date === null || date === undefined) {
-          throw new Error(`title and date should be defined`)
-        }
-        return(
-          <article key={node.id} className={ styles.articleContainer}>
-            <h2 className={ styles.titleContainer}>
-              <Link className={ styles.siteTitle} to={`/${node.slug}`}>{title}</Link>
-            </h2>
-            <div className={ styles.dateContainer}>
-              <p>Posted: {date}</p>
-            </div>
-        </article>)
-      })}
+      <div>
+        {frontmatters.map((e:data) => {
+          return <Card data={e} key={e?.path}/>
+        })}
+      </div>
     </Layout>
-  );
+  )
 };
 export const query = graphql`
   query BlogPosts{
@@ -37,11 +33,18 @@ export const query = graphql`
         frontmatter {
           date(formatString: "MMMM D, YYYY")
           title
+          path
+          hero_image_alt
+          hero_image {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
         }
-        slug
-        id
       }
     }
   }
-`;
+`
+
+
 export default BlogPage;

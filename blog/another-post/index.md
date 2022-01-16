@@ -1,5 +1,6 @@
 ---
 title: "Another Post"
+path: "another-post"
 date: "2021-07-24"
 hero_image: "./cameron-venti-Q1PcwcvuFa0-unsplash.jpg"
 hero_image_alt: "a man enjoys surfing"
