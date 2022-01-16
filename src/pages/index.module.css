@@ -1,5 +1,5 @@
 .siteTitle {
-  color: rgb(255, 254, 252);
+  color: rgb(51, 51, 51);
   text-decoration: none;
 }
 .siteTitle:visited {
@@ -19,4 +19,12 @@
 .date-container {
   display: flex;
   justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex;
+  justify-content: space-between;
+  width: 100%;
 }

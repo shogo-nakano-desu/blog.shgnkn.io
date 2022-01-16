@@ -15,11 +15,11 @@ const Layout: React.FC<Props> = ({ pageTitle, children }  ) => {
       <SEO title={pageTitle}></SEO>
       <div className={styles.container}>
         <Header></Header>
-        <main className={ styles.mainContainer}>
+        <main className={ styles.main}>
           {children}
         </main>
         <Footer></Footer>
-        </div>
+      </div>
     </>
   );
 };

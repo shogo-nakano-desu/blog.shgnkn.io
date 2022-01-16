@@ -1,0 +1,27 @@
+.link {
+  display: flex;
+  margin: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  color: inherit;
+  word-break: break-all;
+  width: 17rem;
+}
+
+.card {
+  word-break: break-all;
+}
+
+.image {
+  height: 10rem;
+  border-radius: 6px;
+}
+
+.title {
+  font-size: 2rem;
+  word-break: break-all;
+}
+
+.date {
+  font-size: 1rem;
+}

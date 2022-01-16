@@ -20,7 +20,7 @@ const BlogPost:React.FC<PageProps<any>> = (props:any) => {
       <h1>{title}</h1>
       <p className={ styles.date}>{ date}</p>
       <div className={ styles.photoInfo}>
-          <GatsbyImage image={image} alt={hero_image_alt} />
+          <GatsbyImage className={ styles.image}image={image} alt={hero_image_alt} />
         <p className={ styles.credit}>
           Photo Credit:{" "}
           <a href={hero_image_credit_link} className={ styles.creditLink}>

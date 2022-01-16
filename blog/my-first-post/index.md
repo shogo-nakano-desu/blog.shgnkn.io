@@ -1,5 +1,6 @@
 ---
 title: "My First Post"
+path: "my-first-post"
 date: "2021-07-23"
 hero_image: "./anders-drange-5glbTkJOWqI-unsplash.jpg"
 hero_image_alt: "universe"

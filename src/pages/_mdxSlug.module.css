@@ -1,10 +1,11 @@
 .contents {
   color: #4d5156;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .photoInfo {
   color: #333333;
+  margin-top: 1rem;
 }
 
 .date {
@@ -18,4 +19,8 @@
 }
 .credit-link {
   margin-left: 0.25rem;
+}
+
+.image {
+  border-radius: 6px;
 }
