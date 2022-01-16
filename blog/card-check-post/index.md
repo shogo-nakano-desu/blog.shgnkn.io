@@ -35,7 +35,7 @@ hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
 
 #### これは
 
-```
+```javascript
 const nodes = props.data.allMdx.nodes;
   if (nodes === undefined) {
     throw new Error(`nodes should be`)
