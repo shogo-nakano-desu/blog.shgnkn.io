@@ -6,10 +6,7 @@ import { MDXProvider }  from "@mdx-js/react"
 
 import Layout from "../components/layout";
 
-
 import * as styles from "./_mdxSlug.module.css"
-
-
 
 const BlogPost:React.FC<PageProps<any>> = (props:any) => {
   const { mdx } = props.data;
@@ -34,7 +31,12 @@ const BlogPost:React.FC<PageProps<any>> = (props:any) => {
         </p>
       </div>
       <div className={styles.contents}>
-        <MDXProvider components={{ h2: props => <h2 {...props} style={{color:"red"}}/>}}>
+        <MDXProvider components={{
+          p: props => <p {...props} style={{ lineHeight: "3.5rem" }} />,
+          ul: props => <ul {...props} style={{ listStyleType: "disc", listStylePosition: "inside"}} />,
+          li: props => <li {...props} style={{ lineHeight: "2rem", paddingLeft: "1rem"}} />,
+          ol: props => <ol {...props} style={{ lineHeight: "2rem", paddingLeft: "1rem"}} />,
+        }}>
           <MDXRenderer>{body}</MDXRenderer>
         </MDXProvider>
       </div>

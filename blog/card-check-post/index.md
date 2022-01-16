@@ -25,6 +25,7 @@ hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
   - ブログで書きたい記事一覧
   - どうだろう
     - これで
+    - 新規
 
 #### これは
 
@@ -32,4 +33,4 @@ hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
 コードサンプル
 ```
 
-こっちは `const test = "test desu"` コード
+こっちはインラインのサンプル `const test = "test desu"` コード
