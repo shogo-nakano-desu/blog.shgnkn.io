@@ -36,13 +36,17 @@ hero_image_credit_link: "https://unsplash.com/photos/5glbTkJOWqI"
 #### これは
 
 ```javascript
-const nodes = props.data.allMdx.nodes;
-  if (nodes === undefined) {
-    throw new Error(`nodes should be`)
-  }
-  const frontmatters = nodes.map((node: any) => node.frontmatter)
-  if (frontmatters.some((e: any) => e === undefined)) { throw new Error(`should be`) }
-  frontmatters;
+const myname = "shogo"
+
+async function connectBQ(name:string){
+  const yourname = await axios.get("https://api/params?name=name")
+  return yourname
+}
 ```
 
 こっちはインラインのサンプル `const test = "test desu"` コード
+
+次に、クオートを試す
+> これはクオート
+> これも続く
+> まだまだいくんがいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい

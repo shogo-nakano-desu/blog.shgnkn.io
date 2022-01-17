@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { graphql, PageProps } from "gatsby";
-import { GatsbyImage,getImage} from "gatsby-plugin-image";
+import { GatsbyImage,getImage, ImageDataLike} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider }  from "@mdx-js/react"
 
@@ -8,11 +8,19 @@ import Layout from "../components/layout";
 
 import * as styles from "./_mdxSlug.module.css"
 
-const BlogPost:React.FC<PageProps<any>> = (props:any) => {
+const BlogPost:React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   const { mdx } = props.data;
   const { body, frontmatter } = mdx || {}
-  const { title, date, hero_image_alt,hero_image_credit_link, hero_image_credit_text } = frontmatter
-  const image = getImage(frontmatter.hero_image)
+  if (frontmatter === undefined||body === undefined) {
+    throw new Error(`frontmatter should be`)
+  }
+  const { title, date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
+  if (title === undefined || date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+    throw new Error(`should be`)
+  }
+
+  // 型はasを使わないでどうにかできないものか。。。
+  const image = getImage({...hero_image.childImageSharp} as ImageDataLike)
 
   if (image === undefined) {
     throw new Error(`image should be got`)
