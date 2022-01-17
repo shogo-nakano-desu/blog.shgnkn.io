@@ -1,5 +1,5 @@
-code[class*="language-"],
-pre {
+pre,
+code[class*="language-"] {
   overflow: scroll;
   color: #f8f8f2;
   background-color: #2e3440;
@@ -29,6 +29,25 @@ pre {
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
+}
+
+/* クオート */
+blockquote {
+  margin: 0;
+}
+
+blockquote p {
+  padding: 15px;
+  background: #eee;
+  border-radius: 5px;
+}
+
+blockquote p::before {
+  content: "\201C";
+}
+
+blockquote p::after {
+  content: "\201D";
 }
 
 /* 以下のコードが何も効いていなさそう。。。 */
