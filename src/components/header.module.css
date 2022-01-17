@@ -4,8 +4,6 @@
   font-size: 2rem;
   height: 6rem;
   font-weight: 700;
-  /* display: flex;
-  align-items: center; */
 }
 .header-container {
   display: flex;
@@ -14,8 +12,8 @@
   padding-bottom: 1.25rem;
   justify-content: space-between;
   align-items: center;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 18%;
+  margin-right: 18%;
   height: 100%;
 }
 

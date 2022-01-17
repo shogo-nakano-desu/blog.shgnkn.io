@@ -1,26 +1,3 @@
-.siteTitle {
-  color: rgb(51, 51, 51);
-  text-decoration: none;
-}
-.siteTitle:visited {
-  color: inherit;
-}
-
-.article-container {
-  display: flex;
-  flex-direction: column;
-  margin: 0.75rem;
-}
-
-.title-container {
-  display: flex;
-  justify-content: center;
-}
-.date-container {
-  display: flex;
-  justify-content: center;
-}
-
 .card {
   display: flex;
   flex-wrap: wrap;
