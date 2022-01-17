@@ -10,8 +10,11 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   if (nodes === undefined) {
     throw new Error(`nodes should be`)
   }
-  const frontmatters = nodes.map((node: any) => node.frontmatter)
-  if (frontmatters.some((e: any) => e === undefined)) { throw new Error(`should be`) }
+  // interface node {
+  //   frontmatter:
+  // }
+  const frontmatters = nodes.map((node) => node.frontmatter)
+  if (frontmatters.some((e) => e === undefined)) { throw new Error(`should be`) }
   frontmatters;
 
   type data = GatsbyTypes.BlogPostsQuery['allMdx']['nodes'][0]['frontmatter']
