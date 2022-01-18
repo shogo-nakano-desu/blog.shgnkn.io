@@ -11,7 +11,17 @@ hero_image_credit_link: "https://unsplash.com/photos/rCbdp8VCYhQ"
 
 ## ブログを始めてみました
 2022年の目標の１つに、「ブログを始めて毎月投稿する」という目標があったので、早速ブログを始めました。
-はてぶ, qiita, zenn, note, mediumなど無料で便利なサービスがたくさんある中で、わざわざお金がかかる方法でブログを運営しようと思った理由は以下３つです。
+本当は、まだまだ改善したい部分が多い状態なのですが、このままでは１本も記事を書けないまま1月が終わってしまうので、最低限のところで妥協して公開することにしました。
+これから
+- prism導入でシンタックスハイライトを効かせる
+- 自前検索エンジン実装
+- i18n対応
+- さくらVPSでのホスト
+などなど、順次実装して記事にしていけたらと思っています。
+
+今回は初回なので、ブログを始めた理由＆Gatsbyを使ってみて面白かった箇所、覚えておきたい箇所など中心にご紹介できたらと思います。
+
+さて、はてぶ, qiita, zenn, note, mediumなど無料で便利なサービスがたくさんある中で、わざわざお金がかかる方法でブログを運営しようと思った理由は以下３つです。
 
 1. かっこいい
 2. アウトプットの機会を増やしたい
@@ -48,7 +58,7 @@ hero_image_credit_link: "https://unsplash.com/photos/rCbdp8VCYhQ"
 ### 始め方
 [チュートリアル](https://www.gatsbyjs.com/docs/tutorial/)をみて開発を始めました。
 Gatsby公式からも、[gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)が出ていますし、GitHub内で、「gatsby blog」と検索すると、19,792件も検索結果がヒットするので、こういったものを活用すればささっとそれっぽいブログを作成することができると思います。
-しかし、今回は真心込めて手作りのCSSとconfigファイルを書いて、１からブログを構築することにしました。
+しかし、今回は真心込めてMaterial-UIなどのUI Componentは使わずに手作りのCSSを書き、configファイルも１から書いてブログを構築することにしました。
 チュートリアルの日本語訳や、ブログを１から構築する方法などは他の方もブログなどで沢山紹介してくださっているので、今回は自分が気になった箇所を中心に紹介できればと考えています。
 
 ### Linkタグとaタグの使い分け
@@ -56,6 +66,60 @@ Gatsbyが提供するコンポーネントに`<Link>`があります。用途は
 
 >The Gatsby Link component provides a performance feature called preloading. This means that the resources for the linked page are requested when the link scrolls into view or when the mouse hovers on it. That way, when the user actually clicks on the link, the new page can load super quickly.
 Use the Link component for linking between pages within your site. For external links to pages not created by your Gatsby site, use the regular HTML `<a>` tag.
+
 https://www.gatsbyjs.com/docs/tutorial/part-2/#use-the-link-component
 
 
+### CSS Modules
+チュートリアルによると、特にスタイリングに活用する手法に縛りはないようですが、デフォルトでセットアップ不要で活用することができるCSS Modulesを採用しました。
+その他の選定理由としては、
+- `content-title`のようなクラス名を扱いたい場合に、cssファイル内では `content-title`とケバブケースで記述しつつ、js/tsファイル内では`contentTitle`とキャメルケースで書くこともできるので、記法を統一できて良い
+- ほぼ静的なコンテンツなので、状態によってスタイリングを変えたいということはほぼないため、CSS in JSである必要性があまりない
+>Gatsby isn’t strict about what styling approach you use. You can pick whatever system you’re most comfortable with.
+
+https://www.gatsbyjs.com/docs/tutorial/part-2/#style-components-with-css-modules
+
+### GraphQLとdata layer
+GraphQLは今回初めて触りました。チュートリアルで紹介されているレベルのことであればすぐ扱えるようになりますが、まだまだ理解は浅いのでこれから深めていきたいところです。
+(ここで紹介されている図)[https://www.gatsbyjs.com/docs/tutorial/part-4/#meet-gatsbys-graphql-data-layer]がイメージつきやすいですが、GraphQLでは基本的に data layerに入っているデータに対して、クエリを発行してデータを取得することができる仕組みになっています。GatsbyはデフォルトでGraphQLをサポートしているので、最初から data layerに入っているデータは何もせずそのまま取得してくることができますが、例えば外部APIからデータを取得したい場合や任意のフォルダ内においたmarkdownファイルを取得したい場合などには、それらのファイルをdata layerに追加してやる必要があります。一度data layerに追加さえしてしまえば、基本的には同じ構文でGraphQLのクエリを発行することができるので便利です。
+今回はmarkdownファイルをdata layerに追加したかったため、 `gatsby-source-filesystem`プラグインを活用しました。パッケージをインストールしたのちに、`gatsby-config.js`ファイルに以下設定を追加します。これでdata layerに対して、ルートディレクトリ直下においたblogディレクトリの中身が追加されました。
+```javascript
+module.exports = {
+  ...,
+  plugins: [
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: `blog`,
+        path: `${__dirname}/blog`,
+      }
+    },
+  ],
+};
+```
+<br/>
+コンポーネント内でGraphQLを活用する際には、pageフォルダ配下においたpage componentとそれ以外のblock component（pageフォルダ配下以外においたコンポーネント）とで書き方が異なっており、page component内においては、コンポーネントの外で以下のようにgraphqlタグをつけたクエリをエクスポートして、コンポーネントに`props`として渡して活用します。
+
+```js
+export const query = graphql`
+  query BlogPost($id: String) {
+    mdx(id: { eq: $id }) {
+      body
+      frontmatter {
+        title
+        date
+        hero_image_alt
+        hero_image_credit_link
+        hero_image_credit_text
+        hero_image {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+      }
+    }
+  }
+`;
+```
+
+一方、block componentにおいては、
