@@ -1,5 +1,5 @@
 ---
-title: "Gatsbyでブログを始めてみました"
+title: "Gatsbyでブログ初め"
 path: "start-blog-with-gatsby"
 date: "2022-01-17"
 update: ""
@@ -34,11 +34,28 @@ hero_image_credit_link: "https://unsplash.com/photos/rCbdp8VCYhQ"
 
 ## Gatsbyでブログを構築した方法
 ### Gatsbyにした理由
-「Gatsby ブログ」などで検索すると先輩方の記事が山のように出てきます。
-そのため、一切使ったことがないけど気になっていたsvelteでブログを作ろう。と最初は考えたのですが、途中まで作ってからmarkdownファイルを含めたフォルダ構成と処理が気に入らず、Gatsbyに結局切り替えました。
+今回はブログを作成するということで、SPAはほぼ不要、SSGができる、できるだけ軽くて早いという条件でフレームワークを選びました。
+そこで、一切使ったことがないけど気になっていたsvelteでブログを作ろう。と最初は考えたのですが、途中まで作ってからmarkdownファイルを含めたフォルダ構成と処理が気に入らず、Gatsbyに結局切り替えました。
 - fsでpathを取ってくる方法
   - せっかくフレームワークを入れるならばフレームワークが提供している機能で処理したかった。
 - `import.meta.glog`でファイルを取得する方法
   - `.svelte`ファイルと同一階層にmarkdownファイルを置く必要がある。
     - 自分のこだわりとして、markdownファイルは別フォルダにおいて管理したかった。
   - TypeScriptだとエラーが出てしまう（自分のTS力問題な気もしますが。。。）
+
+また、VSCodeでの開発体験もまだイマイチで、とくに importのパスを１度間違えて、解決した後も１度エディタを落とさないとエラーが解消しない問題が多発していたことも切り替えた理由の一つです。
+
+### 始め方
+[チュートリアル](https://www.gatsbyjs.com/docs/tutorial/)をみて開発を始めました。
+Gatsby公式からも、[gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)が出ていますし、GitHub内で、「gatsby blog」と検索すると、19,792件も検索結果がヒットするので、こういったものを活用すればささっとそれっぽいブログを作成することができると思います。
+しかし、今回は真心込めて手作りのCSSとconfigファイルを書いて、１からブログを構築することにしました。
+チュートリアルの日本語訳や、ブログを１から構築する方法などは他の方もブログなどで沢山紹介してくださっているので、今回は自分が気になった箇所を中心に紹介できればと考えています。
+
+### Linkタグとaタグの使い分け
+Gatsbyが提供するコンポーネントに`<Link>`があります。用途はHTMLの `<a>`タグと同じなのですが、Linkコンポーネントを活用すると、preloadingという機能が効いて、マウスをホバーしたorスクロールでリンクがビューに現れたタイミングでリクエストが送られるので、ユーザーが実際にリンクをクリックした際に高速でロードすることができる優れものです。ただし、ホストしているサイトと同一サイト内でしかLinkタグは使えないので、外部サイトのリンクをおきたい場合には通常通りaタグを使うことになります。
+
+>The Gatsby Link component provides a performance feature called preloading. This means that the resources for the linked page are requested when the link scrolls into view or when the mouse hovers on it. That way, when the user actually clicks on the link, the new page can load super quickly.
+Use the Link component for linking between pages within your site. For external links to pages not created by your Gatsby site, use the regular HTML `<a>` tag.
+https://www.gatsbyjs.com/docs/tutorial/part-2/#use-the-link-component
+
+
