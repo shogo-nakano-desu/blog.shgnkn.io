@@ -41,7 +41,7 @@ const BlogPost:React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
         </div>
         <div className={styles.contents}>
           <MDXProvider components={{
-            p: props => <p {...props} style={{ lineHeight: "3.5rem" }} />,
+            p: props => <p {...props} style={{ lineHeight: "2rem" }} />,
             ul: props => <ul {...props} style={{ listStyleType: "disc", listStylePosition: "inside", paddingTop:"10px", paddingBottom:"10px"}} />,
             ol: props => <ol {...props} style={{ listStylePosition: "inside", paddingTop:"10px", paddingBottom:"10px" }} />,
             li: props => <li {...props} style={{ lineHeight: "2rem", paddingLeft: "1rem"}} />,

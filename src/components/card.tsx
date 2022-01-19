@@ -11,12 +11,12 @@ export const Card: React.FC<Props> = ({ data }) => {
     throw new Error(`should be`)
   }
   const { hero_image, hero_image_alt, title, path, date } = data;
-  if (hero_image === undefined||hero_image_alt === undefined||title === undefined||date === undefined) {
+  if (hero_image === undefined||hero_image_alt === undefined||title === undefined||date === undefined||path === undefined) {
     throw new Error(`should be`)
   }
 
   const image = getImage(hero_image as ImageDataLike)
-  if (image === undefined) {throw new Error(`should be`)}
+  if (image === undefined) { throw new Error(`should be`) }
 
   return (
     <Link className={ styles.link} to={`${path}/`}>
