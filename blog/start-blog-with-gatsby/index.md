@@ -101,6 +101,7 @@ module.exports = {
 コンポーネント内でGraphQLを活用する際には、pageフォルダ配下においたpage componentとそれ以外のblock component（pageフォルダ配下以外においたコンポーネント）とで書き方が異なっており、page component内においては、コンポーネントの外で以下のようにgraphqlタグをつけたクエリをエクスポートして、コンポーネントに`props`として渡して活用します。
 
 ```js
+// page query sample
 export const query = graphql`
   query BlogPost($id: String) {
     mdx(id: { eq: $id }) {
@@ -122,4 +123,56 @@ export const query = graphql`
 `;
 ```
 
-一方、block componentにおいては、
+一方、block componentからdata layerにアクセスするためには、`useStaticQuery`を活用します。。`useStaticQuery`は、コンポーネント内部で定義してfetchしたデータをそのままコンポーネント内部で活用することができます。注意点として、`useStaticQuery`は１つのコンポーネントで1回しか呼び出すことができないので、複数種類のデータを取得したい場合には一気に全てのデータを取得する必要があります。
+<br/>
+
+また、`GraphQL` においては、クエリに名前をつけることが可能で、上の例だとBlogPostがクエリ名に当たります。クエリ名はつけてもつけなくてもOKなのですが、デバックの際にはクエリ名があった方がどのクエリで問題が発生しているのかわかって便利ということです。ただ、１点注意する必要がある点としては、クエリ名には重複があってはいけないので、注意が必要です。
+<br/>
+
+GraphQLの面白い仕組みだなと思ったことの一つに、`query variable`という仕組みがあります。上にあげたサンプルだと、`$id: String`の部分がそうで、page component内でしか活用することができない仕組みですが、動的にデータを取得したい場合には強力な仕組みです。
+特に、[File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/)を活用する際に便利で、今回ブログを作成するにあたってもこの機能を活用しました。File System Route APIは名前そのままですが、ブログ投稿のように動的に決定するページを作成したいときに活用するAPIです。`src/pages`配下に `{nodeType.field}.tsx`のファイル名で動的にpathを変えてコンテンツを作成していくことが可能です。
+今回私のケースでは、`{mdx.slug}.tsx`ファイルで各ブログポストのページを作成する際に活用しています。
+File System Route APIを活用する際のポイントとして、ファイル名を生成する際に指定した項目（今回だとmdx.slug）のidが自動的にpropsとしてコンポーネントに渡され、それをそのままGraphQLのクエリ内で活用することができる点が挙げられます。この機能のおかげで、サンプルのクエリにおいて、idを特に何も渡さなくても自動でmdx.slugのidがクエリに渡され、データを抽出してくることが可能になっています。
+確認で、ローカルサーバーを立ち上げた状態で`http://localhost:8000/___graphql`を開いてみます。`http://localhost:8000/___graphql`はGraphQLのクエリサンドボックスとして活用することができる環境で、ローカルサーバーを立ち上げると自動で活用可能になります。
+画面上で、以下のクエリを書いて実行ボタンを押すと
+```sql
+query MyQuery {
+  allMdx {
+    nodes {
+      slug
+    }
+  }
+}
+```
+以下のような結果が表示されるかと思います。
+これは、allMdx nodeの slug fieldを抽出したクエリなので、`gatsby-config.js`ファイル内で設定した`` path: `${__dirname}/blog`, ``直下のファイルorフォルダ名が抽出されています。
+```sql
+{
+  "data": {
+    "allMdx": {
+      "nodes": [
+        {
+          "slug": "my-first-post/"
+        },
+        {
+          "slug": "another-post/"
+        },
+        {
+          "slug": "card-check-post/"
+        },
+        {
+          "slug": "second-post/"
+        },
+        {
+          "slug": "start-blog-with-gatsby/"
+        }
+      ]
+    }
+  },
+  "extensions": {}
+}
+```
+
+つまり、`{mdx.slug}.tsx`で使用している`mdx.slug`の部分はこれら１つ１つのフォルダ名に対応しており、それらに対してidが自動で振られる。そしてそのidを動的にクエリを生成する際に活用する。というのがポイントでした。
+
+###
