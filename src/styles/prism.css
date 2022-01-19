@@ -19,16 +19,27 @@ code[class*="language-"] {
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+  padding: 5px;
+  border-radius: 3px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 /* Code blocks */
 
 /* Inline code */
 :not(pre) > code {
-  color: #f8f8f2;
+  /* color: #f8f8f2;
   background-color: #2e3440;
   padding: 0.1em;
   border-radius: 0.3em;
-  white-space: normal;
+  white-space: normal; */
+  display: inline;
+  padding: 3px 5px;
+  font-family: "Fira Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+    monospace;
+  background-color: rgb(246, 250, 254);
+  border: 1px solid rgb(201, 215, 232);
+  border-radius: 3px;
 }
 
 /* クオート */
