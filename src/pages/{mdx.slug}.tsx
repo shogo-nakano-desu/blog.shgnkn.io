@@ -8,7 +8,8 @@ import Layout from "../components/layout";
 
 import * as styles from "./_mdxSlug.module.css"
 
-const BlogPost:React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
+const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
+  console.log(props)
   const { mdx } = props.data;
   const { body, frontmatter } = mdx || {}
   if (frontmatter === undefined||body === undefined) {
