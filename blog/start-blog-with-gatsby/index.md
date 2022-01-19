@@ -175,4 +175,18 @@ query MyQuery {
 
 つまり、`{mdx.slug}.tsx`で使用している`mdx.slug`の部分はこれら１つ１つのフォルダ名に対応しており、それらに対してidが自動で振られる。そしてそのidを動的にクエリを生成する際に活用する。というのがポイントでした。
 
-###
+検証として、`{mdx.slug}.tsx`内で、`console.log(props)`と入れてみると、ブラウザのデベロッパーツールで、以下のようなオブジェクトを確認できるかと思います。
+```javascript
+Object {
+  ...
+  pageContext:
+  id: "696420da-1d54-5203-afc5-521c6df57e5d"
+  slug: "start-blog-with-gatsby/"
+  __params: {slug: 'start-blog-with-gatsby'}
+  [[Prototype]]: Object
+}
+```
+
+この、pageContextに入っている情報が、File System Route APIを活用した際に自動で付与される情報で、query variableとして活用可能なデータです。今回の場合だとid以外にslugもquery variableとして活用可能ということですね。
+
+### .mdで記事を書きたい
