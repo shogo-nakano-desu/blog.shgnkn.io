@@ -10,9 +10,6 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
   if (nodes === undefined) {
     throw new Error(`nodes should be`)
   }
-  // interface node {
-  //   frontmatter:
-  // }
   const frontmatters = nodes.map((node) => node.frontmatter)
   if (frontmatters.some((e) => e === undefined)) { throw new Error(`should be`) }
   frontmatters;
@@ -21,7 +18,7 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
 
   return (
     <Layout pageTitle="Blog posts">
-      <div className={ styles.container }>
+      <div>
         <div className={styles.card}>
           {frontmatters.map((e:data) => {
             return <Card data={e} key={e?.path}/>
