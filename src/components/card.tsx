@@ -3,6 +3,7 @@ import { GatsbyImage,getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { Link} from "gatsby";
 import * as styles from "./card.module.css";
 
+
 interface Props{
   data: GatsbyTypes.BlogPostsQuery['allMdx']['nodes'][0]['frontmatter']
 }
