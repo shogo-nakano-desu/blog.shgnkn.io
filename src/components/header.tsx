@@ -5,7 +5,6 @@ import * as styles from "./header.module.css";
 
 
 export const Header: React.FC= () => {
-  console.log(styles)
   const data = useStaticQuery(graphql`
     query{
       site {
