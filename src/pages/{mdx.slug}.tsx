@@ -9,7 +9,6 @@ import Layout from "../components/layout";
 import * as styles from "./_mdxSlug.module.css"
 
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
-  console.log(props)
   const { mdx } = props.data;
   const { body, frontmatter } = mdx || {}
   if (frontmatter === undefined||body === undefined) {
@@ -28,7 +27,7 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   }
   return (
     <Layout pageTitle={title}>
-      <div className={ styles.container}>
+      <div>
         <h1>{title}</h1>
         <p className={ styles.date}>{ date}</p>
         <div className={ styles.photoInfo}>
