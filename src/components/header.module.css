@@ -6,15 +6,16 @@
   font-weight: 700;
 }
 .header-container {
+  margin: auto;
   display: flex;
   flex-direction: row;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
   justify-content: space-between;
   align-items: center;
-  margin-left: 18%;
-  margin-right: 18%;
   height: 100%;
+  max-width: 1024px;
+  padding-left: 0.5rem;
 }
 
 .site-title {
