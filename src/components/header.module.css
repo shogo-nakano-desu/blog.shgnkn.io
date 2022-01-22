@@ -14,8 +14,8 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  max-width: 960px;
-  padding: 1.45rem 1.0875rem;
+  max-width: 1024px;
+  padding-left: 0.5rem;
 }
 
 .site-title {

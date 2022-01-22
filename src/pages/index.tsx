@@ -18,7 +18,7 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
 
   return (
     <Layout pageTitle="Blog posts">
-      <div>
+      <div className={ styles.cards}>
         <div className={styles.card}>
           {frontmatters.map((e:data) => {
             return <Card data={e} key={e?.path}/>
