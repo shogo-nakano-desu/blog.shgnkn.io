@@ -1,7 +1,7 @@
 ---
 title: "Gatsbyでブログ初め"
 path: "start-blog-with-gatsby"
-date: "2022-01-17"
+date: "2022-01-23"
 update: ""
 hero_image: "./andy-holmes-rCbdp8VCYhQ-unsplash.jpg"
 hero_image_alt: "universe"
