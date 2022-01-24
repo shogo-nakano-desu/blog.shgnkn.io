@@ -321,213 +321,193 @@ sudo certbot renew
 ```
 
 ### サブドメインを設定する
-今回/はshgnkn.ioではなく、blog.shgnkn.ioに設定したかったので、サブドメインを切っていく。
+ここまで設定しておいてなんですが、自分は`shgnkn.io`ではなくサブドメインを切って`blog.shgnkn.io`でホストしたかったのです。ということで、サブドメインを切っていきます。
 
-まずは、さくらのドメインコントロールパネルでサブドメインを設定。詳細は割愛。
+まずは、さくらのドメインコントロールパネルでサブドメインを設定します。詳細は割愛しますが、[この方のブログ](https://mekori.hatenablog.com/entry/2013/04/20/231157)の前半が参考になります。管理画面が少し異なりますが、操作はほぼ一緒です。
+設定から反映まで数分〜48時間程度かかるということなので気長に待ちます。
 
- `/etc/nginx/conf.d` 配下に***.confファイルを作成する。その前に、以下コマンドで何が入っているか調べると、初期は空のはず。
-
-```jsx
-ls /etc/nginx/conf.d/
+今回私は、大量のサブドメインを切る予定があるわけでもないので、変数を使って対応したりはしないでシンプルに設定していきます。
+まずはconfファイルを設定します。このファイルを作成する前は、`/etc/nginx/conf.d/`配下は空のはずです。
+```sh
+#remote
+sudo vi /etc/nginx/conf.d/sub_domain.conf
 ```
-
-```jsx
-/etc/nginx/conf.d/blog.conf
-server {
-    server_name sample.com;
-
-    location / {
-        root     /var/www/index;
-    }
-}
-
-server {
-    server_name sub.sample.com;
-
-    location / {
-        root     /var/www/sub;
-    }
-}
-```
-
-この状態でnginxをリスタートさせて設定を反映しようとするとエラーになって、サーバーが止まるはず。
-
-```jsx
-sudo systemctl restart nginx
-```
-
-```jsx
-$ systemctl status nginx
-× nginx.service - The nginx HTTP and reverse proxy server
-     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; vendor preset: disabled)
-     Active: failed (Result: exit-code) since Sun 2022-01-23 10:20:25 JST; 35s ago
-    Process: 27025 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
-    Process: 27026 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=1/FAILURE)
-        CPU: 7ms
-
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp systemd[1]: Starting The nginx HTTP and reverse proxy server...
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp nginx[27026]: nginx: [emerg] unknown directive "location/" in /etc/nginx/conf.d/blog.conf:4
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp nginx[27026]: nginx: configuration file /etc/nginx/nginx.conf test failed
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp systemd[1]: nginx.service: Control process exited, code=exited, status=1/FAILURE
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp systemd[1]: nginx.service: Failed with result 'exit-code'.
-Jan 23 10:20:25 ik1-437-50721.vs.sakura.ne.jp systemd[1]: Failed to start The nginx HTTP and reverse proxy server.
-```
-
-locationがunknownとなっているが、どうやらサブドメインの設定から反映まで数時間〜48時間かかるらしい。ということで様子見。本番ではないから、落ちていても問題なし。
-
-ただここで、httpsへのリダイレクトどうするのだとか、コンテンツをアップするフォルダはどこにするのだとか気になりポイントが出てきます。
-
-以下のあたりの記事を読んでいく
-
-[Nginx の conf ファイルでサブドメインを変数に入れる - Qiita](https://qiita.com/KEINOS/items/45c1d1a130170e88b307)
-
-ただ、色々考えていくと、どうせそんなにサブドメイン切りまくる予定もないのだが、後から変えることは厳しいから、今回ちゃんとキルことにする。設定が有効になっていないと調査もできないから、夜or明日サーバーを立ち上げるところからやる。
-
-⇨サブドメインを立ち上げることができた。
-
-```jsx
-sudo vi /etc/nginx/conf.d/blog.conf
-```
-
-ここにconfファイルを記述していく。
-
-中身はこんな感じ
-
-```jsx
+```sh
+#/etc/nginx/conf.d/sub_domain.conf
 server{
-  server_name blog.shgnkn.io;
+  server_name sub_domain.your_domain;
 
   location / {
-    root /usr/share/nginx/html/blog;
+    root /usr/share/nginx/html/sub_domain;
     index index.html;
   }
 }
 ```
 
-書いたら、nginxをリロードして設定を反映させる。
+忘れずにNginxをリロードして設定を反映させます。
 
-```jsx
+```sh
+#remote
 sudo nginx -s reload
 ```
 
-これで、 `/usr/share/nginx/html/blog` 配下の `index.html` がhttp://blog.shgnkn.ioにアクセスした際に表示されるはずなので、
+これで、 `/usr/share/nginx/html/sub_domain` 配下の `index.html` が`http://sub_domain.your_domain`にアクセスした際に表示されるはずなので、適当なHTMLファイルを作成して確認します。
 
-```jsx
-vi /usr/share/nginx/html/blog/index.html
+```sh
+vi /usr/share/nginx/html/sub_domain/index.html
+```
+```
+#/usr/share/nginx/html/sub_domain/index.html
+Contents will be here
 ```
 
-で適当なHTMLファイルを作成してみる。
+保存して、`http://sub_domain.your_domain`にアクセスしてみると、`Contents will be here`と表示できているはずです。
 
-保存したら、http://blog.shgnkn.ioにアクセスしてみると、作成したファイルが表示できているはず。
+さて、次はサブドメインに対してもhttps通信ができるようにしていきます。
+必要な作業はSSL証明書の再発行です。
+サブドメインに対してhttp通信がなされた場合のリダイレクト設定も必要かと思っていたのですが、設定ファイルをみるとすでに設定できていたので不要でした。
 
-さて、次はこのファイルに対してもhttps通信ができるようにしていく。
+「certbot サブドメイン」などで検索すると、いかなるサブドメインに対しても有効なワイルドカード証明書に関する記事が多数出てくるかと思います。しかし、ワイルドカード証明書だと更新作業を行う際に、DNSにTXTを登録する必要があったりして自動更新の設定が厳しそうです。（もしできる方法あったらぜひ教えてください！）
+今回はサブドメインを１つしか切らない＆今後も大量に切る予定はないということで、ワイルドカード証明書は使わずに、１つのサブドメインだけ追加していきます。
 
-必要な作業はSSL証明書の再発行と、設定ファイルでリダイレクトを設定するところ。
-
-これとかをみると、ワイルドカードを使ってcertbotで証明書を発行できるぽい。
-
-[Let's Encryptによるワイルドカード証明書　～簡単なコマンドオプション解説を添えて～ - Qiita](https://qiita.com/F_clef/items/136d81223c030904523c)
-
-参考に進めてみたが、もともとの設定はcertonlyオプションをつけないで、自動でnginxに設定してしまっていたので、今回も自動で設定した方がよかったかも。txtをDNSに登録してしまったけど、後でやり直す。
-
-この記事とかもみてみると、マニュアルインストールにしてしまうと自動更新が効かなくなるぽい。なので、certbot renewで自動更新できるようにしておいた方が良さそう。
-
-[Let's Encryptのワイルドカード証明書を導入する - Qiita](https://qiita.com/m_sdk/items/13668df6ef9e03c6bf64)
-
-前と同じ方法方で、 以下コマンドでいこうとするとダメ。
-
-```jsx
-sudo certbot --nginx -m tsvx7433@gmail.com -d *.shgnkn.io -d shgnkn.io
+```sh
+#remote
+sudo certbot --nginx -m your_email_address -d sub_domain.your_domain -d your_domain
 ```
 
-やはりマニュアルでやって、TXT登録をする必要があるかも？続きは後ほど調査。
+これでサブドメインもhttps対応させることができました。
+`https://sub_domain.your_domain`にアクセスできるようになっているはずです。
+リダイレクトはすでに設定できているはずなので、サブドメインの `http://sub_domain.your_domain` にアクセスしても自動でhttpsにリダイレクされることが確認できるかと思います。
 
-わかった。ワイルドカード証明書を取ろうとするとTXT登録が必要になるみたい。ならば、今回は何十個もサブドメインを切るわけではないので、自動で証明書を更新できることを優先して、 `[blog.shgnkn.io](http://blog.shgnkn.io)` だけ追加することにする。
+最後にコンテンツをアップロードしたらいよいよ完了です！
 
-```jsx
-sudo certbot --nginx -m tsvx7433@gmail.com -d blog.shgnkn.io -d shgnkn.io
+### Gatsbyで生成したファイルをデプロイする
+今後はGitHub Actionsなどを活用して自動でデプロイできるようにしていきたいと思いますが、今回は初回なので手動rsyncで真心を込めてデプロイしていきたいと思います。
+自動デプロイはまた後ほど、設定したら記事にしていきいたいと思います。
+
+<br/>
+まずはrsyncが入っていなかったので入れていきます。
+```sh
+#remote
+sudo dnf install rsync
+```
+ローカルにも入っていなかったら入れます。
+
+
+```sh
+#local
+rsync -auvz -e 'ssh -p your_port_number' public以下のフォルダ user_name@ip_address:/usr/share/nginx/html/sub_domain/
 ```
 
-これでサブドメインもhttps対応させることができた。
-
-リダイレクトはすでに設定してあるので、サブドメインの `[http://blog.shgnkn.io](http://blog.shgnkn.io)` にアクセスしても自動でhttpsにリダイレクトしてくれる。
-
-あとはコンテンツをアップロードしたらいよいよ完了！
-
-### Gatsbyファイルをアップロードする。
-
-ここまでで、https通信などは可能になったが、まだコンテンツは何もない。書いた記事をアップしたい。どうする？
-
-いまは一旦手でやるとして、rsyncでgithubactionsを活用して自動デプロイできるようにワークフローを組んでいるのやりたい。これは別記事にしよう。
-
-[Gatsby.js製ブログをセルフホストしているサーバーにデプロイする | Yucchiy's Note](https://blog.yucchiy.com/2020/02/deployment-to-self-hosted-server-for-gatsbyjs/)
-
-まずはrsyncが入っていなかったので入れる。
-
-```jsx
-$sudo dnf list rsync
-$sudo dnf install rsync
-```
-
-‘ssh -p 22’の22には自身で設定しているポート番号を入れます。
-
-```jsx
-rsync -auvz -e 'ssh -p 22' /Users/shogonakanodesu/dev/js/blog-shgnkn-gatsby/public/ shogo@133.125.38.225:/usr/share/nginx/html/blog/
-```
-
-するとPermission denied (13)の大量のエラー。
-
-ローカルでrsyncを実行すると、remoteのrsyncも動くのだが、そっちではsudoなどをしていないただのユーザーが動くため、書き込み権限がなくてエラーになっている。という仕組みのよう。
-
+するとPermission denied (13)の大量のエラーが吐かれました。
+rsyncの仕組みとして、ローカルでrsyncを呼ぶと、ファイルのシンク先リモートでもrsyncが起動して、お互いが通信してファイルが渡されるのですが、その際にリモートではsudoなどをしていないただのユーザーアカウントが動くので、書き込み権限がなくてエラーになっている模様です。
 rootでログインはできない状態で保ちたいので、作成したuserでどうにかやりたい。
 
 古いが、以下の記事などを読むと、 `--rsync-path`   オプションを指定して、sudo rsyncが呼び出されるようなスクリプトを作成しておいておけばいいとのこと。
-
+ググると、「rootでログインするといいよ」「パスワードは不要にするといいよ」などの記事が見つかりますが、今後自動デプロイすること、rootログインを可能にして作業した後に不可に戻すのを忘れそうなことを考えると、なんとかもっとセキュアな方法を取りたいところでした。
+そこで以下複数記事を参考にさせていただき、最終的に[rsync + cron + ssh （rsyncd を立てない編）](http://www2s.biglobe.ne.jp/~nuts/labo/inti/cron-rsync-ssh-nodaemon.html)を参考に「鍵を作り特定の操作に対してだけrootで操作可能な権限を渡して操作」という方法を取ることにしました。
+**参考**
 [セキュアな rsync - 理屈編 - JULY's diary](https://july-diary.hatenablog.com/entries/2011/11/27)
-
 [セキュアな rsync - 実践編 - JULY's diary](https://july-diary.hatenablog.com/entry/20130327/p1)
-
-もっといい方法があったようなので、おすすめされてる方を見る
-
+[パスワードありsudoでrsyncするシェルスクリプト](https://qiita.com/hnakamur/items/d0d37a1051d8a398f5d1)
+上記記事のコメント欄にある、以下の記事を参考に作業しました。
 [rsync + cron + ssh （rsyncd を立てない編）](http://www2s.biglobe.ne.jp/~nuts/labo/inti/cron-rsync-ssh-nodaemon.html)
 
-```jsx
-local
+鍵を作成。-Nオプションでパスフレーズは空にしておく
+```sh
+#local
 sudo ssh-keygen -N "" -f ~/.ssh/rsync
 ```
-
-```jsx
-remote
+すぐ消すが、念の為権限を絞ってtmpフォルダを作成
+```sh
+#remote
 mkdir -m 700 tmp
 ```
-
-```jsx
-local
-sudo scp -P 51995 ~/.ssh/rsync.pub shogo@133.125.38.225:~/tmp
+sshd_configを書き換え
+```sh
+#remote
+sudo vi /etc/ssh/sshd_config
+.
+.
+.
+#PermitRootLogin no
+PermitRootLogin forced-commands-only
+.
+.
+.
 ```
 
-```jsx
-remote
+ローカルの公開鍵をリモートに転送
+```sh
+#local
+sudo scp -P your_port_number ~/.ssh/rsync.pub user_name@your_iP_address:~/tmp
+```
+
+私の場合は、rootに.sshフォルダが存在していなかったので作成。もしすでに作成されている場合には、最初の２つのコマンドは飛ばしてOK。最後に忘れずにsshdの再起動とtmpフォルダの削除を行います。
+```sh
+#remote
 sudo sh -c 'mkdir /root/.ssh'
 sudo sh -c 'touch /root/.ssh/authorized_keys'
 sudo sh -c 'cat ~nuts/tmp/rsync.pub >> /root/.ssh/authorized_keys'
 systemctl restart sshd
+sudo rm -rf ~/tmp
 ```
 
-```jsx
-local
+ここまでで、実行コマンドを限定した接続ができるはずなのでテストします。
+まずは、鍵ファイルにlsコマンドを入れてみます。
+```sh
+#remote
+sudo vi /root/.ssh/authorized_keys
+・
+・
+・
+command="ls" ssh-rsa ******
+・
+・
+・
+```
+ローカルから接続してみます。
+```sh
+#local
 sudo ssh -i ~/.ssh/rsync -p your_port_number root@your_ip_address
 ```
+lsが実行されて、すぐに接続が切れたら成功です。
 
-```jsx
-local
-sudo rsync -vv -az -e "sudo ssh -i /Users/shogonakanodesu/.ssh/rsync -p 51995" ~/dev/js/blog-shgnkn-gatsby/public/ root@133.125.38.225:/usr/share/nginx/html/blog/
+先ほどlsコマンドを入れた箇所には実際に走らせるコマンドを入れる必要があるので、そのコマンドを取得します。
+```sh
+#local
+sudo rsync -vv -az -e "sudo ssh -i 絶対パス/.ssh/rsync -p your_port_number" 絶対パス/public/ root@your_port_number:/usr/share/nginx/html/sub_domain/
+```
+すると、実行結果として`rsync --server -vvulogDtprz . 絶対パス/public/`という記述が見えるかと思います。ここから-vvオプションを取り除いたコマンドを登録していきます。
+
+```sh
+#remote
+sudo vi /root/.ssh/authorized_keys
+・
+・
+・
+command="rsync --server -ulogDtprz 絶対パス/public/" ssh-rsa ******
+・
+・
+・
 ```
 
-できた！！！！！！！！！！
-
-これで鯖管デビュー。後ほど、自動デプロイなど設定していきたい
+これで設定は完了したはずなので、ローカルからrsyncを呼び出してみます。
+```sh
+#local
+sudo rsync -vv -az -e "sudo ssh -i 絶対パス/.ssh/rsync -p your_port_number" 絶対パス/public/ root@your_port_number:/usr/share/nginx/html/sub_domain/
+```
+実行結果を確認してみましょう。`https://sub_domain.domain`にアクセスすると、Gatsbyでビルドしたページが表示されているはずです。
+リモートの`/usr/share/nginx/html/sub_domain/`配下も確認してみると、ビルドしたファイルが格納されているはずです。
+```sh
+#remote
+sudo ls /usr/share/nginx/html/sub_domain/
+```
 
 ### 最後に、不要なファイルを消していく
+サブドメインではなく、メインドメインで色々始めてしまったので、いらないファイルが `/usr/share/nginx/html`に残ってしまっています。これらを気をつけながら `rm -rf`コマンドで削除していきます。全部削除できたら、`https://your_domain`をURLバーに打ち込んでも403 Forbiddenになるはずです。
 
-サブドメインではなく、メインドメインで色々始めてしまったので、いらないファイルが `/usr/share/nginx/html`　に残ってしまっている。これを消していく
+
+### 最後に
+これで自分も鯖管デビューです。独自ドメインがあるとテンションが上がりますね。
+これを機に、アウトプットの習慣をつけていけたらと思います。
