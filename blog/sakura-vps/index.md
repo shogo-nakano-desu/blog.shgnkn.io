@@ -36,7 +36,7 @@ ApacheかNginxかどっちを入れるのが良いのか一切わからなかっ
 - Nginxはディレクトリレベルでの設定ができないため、逆にいうと毎回rootまでたどって設定ファイルを探すコストがかからず、パフォーマンスがいい模様。Apacheはその逆。
 - ApacheとNginxはそもそも設計が異なっており、Nginxの方がパフォーマンスが良さそう。Apacheは全ての要求（なんの？）に対してプロセスを立ち上げるから無駄が多いみたい。いつかちゃんと調査したい。
 
-**参照記事**<br/>
+**参考**<br/>
 [NginxとApacheの比較 〜 ウェブサーバー直接対決 〜](https://kinsta.com/jp/blog/nginx-vs-apache/)
 
 [ApacheとNginxについて比較 - Qiita](https://qiita.com/kamihork/items/49e2a363da7d840a4149)
