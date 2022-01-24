@@ -85,7 +85,7 @@ https://www.gatsbyjs.com/docs/tutorial/part-2/#style-components-with-css-modules
 GraphQLは今回初めて触りました。チュートリアルで紹介されているレベルのことであればすぐ扱えるようになりますが、まだまだ理解は浅いのでこれから深めていきたいところです。
 (ここで紹介されている図)[https://www.gatsbyjs.com/docs/tutorial/part-4/#meet-gatsbys-graphql-data-layer]がイメージつきやすいですが、GraphQLでは基本的に data layerに入っているデータに対して、クエリを発行してデータを取得することができる仕組みになっています。GatsbyはデフォルトでGraphQLをサポートしているので、最初から data layerに入っているデータは何もせずそのまま取得してくることができますが、例えば外部APIからデータを取得したい場合や任意のフォルダ内においたmarkdownファイルを取得したい場合などには、それらのファイルをdata layerに追加してやる必要があります。一度data layerに追加さえしてしまえば、基本的には同じ構文でGraphQLのクエリを発行することができるので便利です。
 今回はmarkdownファイルをdata layerに追加したかったため、 `gatsby-source-filesystem`プラグインを活用しました。パッケージをインストールしたのちに、`gatsby-config.js`ファイルに以下設定を追加します。これでdata layerに対して、ルートディレクトリ直下においたblogディレクトリの中身が追加されました。
-```javascript
+```javascript:title=aaa
 module.exports = {
   ...,
   plugins: [
@@ -102,7 +102,7 @@ module.exports = {
 <br/>
 コンポーネント内でGraphQLを活用する際には、pageフォルダ配下においたpage componentとそれ以外のblock component（pageフォルダ配下以外においたコンポーネント）とで書き方が異なっており、page component内においては、コンポーネントの外で以下のようにgraphqlタグをつけたクエリをエクスポートして、コンポーネントに`props`として渡して活用します。
 
-```js
+```js:title=aaa
 // page query sample
 export const query = graphql`
   query BlogPost($id: String) {
