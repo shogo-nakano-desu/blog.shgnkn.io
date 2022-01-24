@@ -10,89 +10,115 @@ hero_image_credit_link: "https://unsplash.com/photos/klWUhr-wPJ8"
 tags: [sakura,vps,linux,infra]
 ---
 
-さくらVPSへの申し込みをした際のめも
+先日作成したブログをさくらVPSにホストしました。
+OS入れてWebサーバ入れて、鍵を作って設定ファイル書いてと真心込めて作業したので、Netifyやfirebase、Vercelなどの進化しているホスティングサービスの凄さを肌身をもって実感することができました。
 
-### 選択したOS
-
-2022/01/11からCentOS Stream 9がインストール可能になっていたので、最新のOSがいいだろうということでこれを選択。
+## 構成
+### OS
+2022/01/11からCentOS Stream 9がさくらVPSで選択可能になっていたので、最新のOSがいいだろうということでこれを選択しました。
 
 CentOS Stream9の[公式ページ](https://centos.org/stream9/)によると、2027年ごろまでのサポートを想定しているということで、あと５年間は安心してそのまま使えそうです。
+Open SSL ver3.00(最新)とTLS1.2より古いバージョンのサポートを終了して、TLS1.2 or 1.3のみサポートすることになっているということで、セキュリティ的にも安心そうです。
+サーバーを弄るのは今回が初めてでしたが、CentOS Stream 9の記事はまだ少なく、他のバージョンと異なっているはまったポイントがいくつかあったのでその辺りも後ほど記載できたらと思います。
 
-- [ ]  Open SSL ver3.00(最新)とTLS1.2より古いバージョンのサポートを終了して、1.2 or 1.3のみサポートすることになったから、セキュリティ的にいいはず。という話を調べて書きたい。
-
-また、Open SSL の最新版バージョン
-
-### 選択したリージョン
-
-石狩を選択。一番安かったからというのが正直な理由。別の理由としては、石狩が一番寒いから環境的に優しそうかと思った。
+### リージョン
+石狩を選択しました。一番安かったからというのが正直な理由です。石狩が一番寒いから環境的に優しそうな気もしています。（適当）
 
 ### メモリ
+１Gを選択しました。
+年間プランを使っていても差額を払えばアップグレード可能ということだったので、まずは１Gで十分と判断。最初の頃は１Gでも多い気がしたので、ケチるか迷いましたが512MBでもあまり金額が変わらなかったので１Gに落ち着いています。SSDはデフォルトの50GBのままです。
 
-１Gを選択。年間プランを使っていても差額を払えばアップグレード可能ということだったので、まずは１Gで十分と判断。最初の頃は１Gでも多い気がしたので、ケチるか迷ったが512MBでもあまり金額が変わらなかったので１Gで契約。SSDはデフォルトの50GBのまま。
+### Webサーバ
+Nginxを採用。エンジンエックスと読むことを今回初めて知りました。
+ApacheかNginxかどっちを入れるのが良いのか一切わからなかったので、軽く調べてみました。今も自分の用途に対して最適な選択になっているか？と言われると自信はないのですが、今回の用途では最低限問題はなさそうなのでよしとします。いつかしっかりと調査してみたいなーという気はしています。
+色々と調べていく中で見えてきたポイントとしては、
+- Nginxが後続。シェアとしては伸びてきており、Apacheを追い抜こうとしている。
+- Nginxはディレクトリレベルでの設定ができないため、逆にいうと毎回rootまでたどって設定ファイルを探すコストがかからず、パフォーマンスがいい模様。Apacheはその逆。
+- ApacheとNginxはそもそも設計が異なっており、Nginxの方がパフォーマンスが良さそう。Apacheは全ての要求（なんの？）に対してプロセスを立ち上げるから無駄が多いみたい。いつかちゃんと調査したい。
 
-書いていて思ったが、これらは全部「構成」としてまとめて記事にした方が良さそう。
+**参照記事**<br/>
+[NginxとApacheの比較 〜 ウェブサーバー直接対決 〜](https://kinsta.com/jp/blog/nginx-vs-apache/)
 
-### いきなり、SSH接続ができない。
+[ApacheとNginxについて比較 - Qiita](https://qiita.com/kamihork/items/49e2a363da7d840a4149)
 
-- サーバーは起動した。だがしかし、rootユーザーでSSH接続ができない。
-- ちょっとググって、[この記事](https://kaworu.jpn.org/linux/ssh%E3%81%AEPermission_denied%E3%82%92%E8%A7%A3%E6%B1%BA%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)とか読んだ感じだと、「あー公開鍵が設定できてないのか。登録も設定もしてないわそもそも」と思い鍵を作り出す。
-- 待てよと。その前に、そもそもパスワードでログインできないことがおかしい。デフォルトはパスワードログインのはず。ということで、まだ何もしていないしOSさインストールをすることに。この際に、パケットフィルタリングでwebを選択して、TCP 80/443をあけた。
-- これに従って設定を進める
+## 作業メモ
+ローカルの操作とリモートの操作が混在していてややこしいので、基本的にコードブロックの上部に `#local` `#remote`などと記載するようにしています。
+参考にしていただく際にはそれらの表記は無視してください。
 
-[](https://manual.sakura.ad.jp/vps/support/security/firstsecurity.html?highlight=teraterm)
+### SSH接続ができない。
+**【結論】**
+CentOS Strema 9ではデフォルトでrootでのパスワードログインができなくなっている。以前のバージョンだとデフォルトは可能な設定になっているので、ネット上の記事は最初にrootでSSH接続して。。。と書いてあるものが多いです。気をつけましょう。
+<br/>
 
-- それでもログインできない。そこで原因解明。centOS stream 9ではデフォルトでrootでのパスワードログインが無効になっているとのこと。
+鍵の設定をしていないからか？パケットフィルタリングの設定か？など疑い、鍵を設定してさくらVPSの管理画面からOSインストールの際にパケットフィルタリングの設定でTCP 80/443をあけたりして、それでも解決できなかったのでそもそもなぜパスワードでログインできない？と考えググったところ、
+[CentOS Stream 9 LAMPサーバインストールメモ【Apache2.4＋MySQL8.0＋PHP8.0】](https://blog.apar.jp/linux/15791/#toc5)を見つけて気づきました。
 
-[CentOS Stream 9 LAMPサーバインストールメモ【Apache2.4＋MySQL8.0＋PHP8.0】](https://blog.apar.jp/linux/15791/#toc5)
 
-- さくらがstream 9の設定方法を出してくれていた。rootでのパスワード認証はデフォルトで不可になっているので、最初は標準ユーザとして設定されているcentosでログインする。
+**【手順】**
+さくらが[CentOS Stream 9の設定方法](https://manual.sakura.ad.jp/vps/os-packages/centos-stream-9.html?highlight=%E5%85%AC%E9%96%8B%E9%8D%B5)を出してくれていました。rootでのパスワード認証はデフォルトで不可になっているので、最初は標準ユーザとして設定されているcentosでログインします。
 
-```jsx
-% ssh centos@port_number
+
+```sh
+#local
+ssh centos@port_number
 ```
 
-[](https://manual.sakura.ad.jp/vps/os-packages/centos-stream-9.html?highlight=%E5%85%AC%E9%96%8B%E9%8D%B5)
-
-- vngコンソールをいじる必要があるのだが、キーマップが日本語になっていて@が打てないので、英字に変更した。
-- vngコンソールでは以下のコマンドでrootログインができる。この方法がわからなくて普通にググった。
-
-```jsx
+あとはちょっと古いのですが、[さくらのVPS講座](https://knowledge.sakura.ad.jp/7938/)を参考にしつつ、CentOS Stream 9固有の部分や不要な部分は飛ばしつつ作業をしていきます。
+VNGコンソールから以下の容量でログインして
+```sh
+#remote
 login: root
 Password: password
 ```
+centosユーザから任意のユーザー名にユーザーを作り替えて、最後にrootユーザーのパスワードを削除したら完了です。
+ちなみに、rootユーザーでのパスワードログインがデフォルトで不可になっている理由としては、rootユーザーのパスワードログインが可能になっているとブルートフォース攻撃を受けてroot権限が乗っ取られてしまう可能性があるためです。
+もちろん、自分で作成したユーザーでもパスワードログインを可能にしている場合その可能性は残るのですが、パスワードだけでなくユーザー名も当てる必要があるので攻撃の障壁は大きく上がるでしょう。
 
-あとは記事の方法に従って、centosユーザから任意のユーザー名にユーザーを作り替えて、最後にrootユーザーのパスワードを削除したら完了。
+### 公開鍵認証設定
+次に公開鍵認証の設定を行います。
+パスワードログインだとまだパスワードを破られるリスクが残るので、念には念を入れておきます。
 
-次に公開鍵認証の設定を行う。これをやっておくことで、毎回パスワードの入力をしないでログインできるようになる。
+まずは、 ローカルで鍵を作成します。
+```
+#local
+ssh-keygen -f "~/.ssh/your_key_name"
+```
+作成したら、リモートのホームディレクトリに 公開鍵である`your_key_name.pub`を移動させたいので、 `scp your_key_name.pub username@your_ip_address:~/` で移動させます。
+そして、以下コマンドでリモートに公開鍵リストを作成し、権限を設定します。
 
-まずは、 `.ssh` フォルダがホームディレクトリにあるか確認して、 `cd .ssh` で入る。そこで公開鍵を `ssh-keyge` で作成する。作成したら、リモートのホームディレクトリに 公開鍵である `id_rsa.pub`　を移動させたいので、 `scp id_rsa.pub username@ipadress:~/` で移動させる。あとは、さくらが教えてくれているように
-
-```jsx
-$ cd                                    # 確実にホームディレクトリに移動
-$ mkdir .ssh                            # ディレクトリ作成
-$ chmod 700 .ssh/                       # 自分以外のアクセスを禁止
-$ mv id_rsa.pub .ssh/authorized_keys    # 公開鍵リスト作成
-$ chmod 600 .ssh/authorized_keys        # 自分以外の読み書きを禁止
+```sh
+#remote
+pwd                                  # ディレクトリを確認して、ホームディレクトリ以外にいる場合にはホームディレクトリに移動
+mkdir .ssh                            # ディレクトリ作成
+chmod 700 .ssh/                       # 自分以外のアクセスを禁止
+mv id_rsa.pub .ssh/authorized_keys    # 公開鍵リスト作成
+chmod 600 .ssh/authorized_keys        # 自分以外の読み書きを禁止
 ```
 
 ### portの変更
-
-デフォルトは22番ポートが活用されてるが、well known portすぎてユーザーネーム片っ端からアタックされて危険。そこで、port番号を `sudo vi /etc/ssh/sshd_config` でいじって変更していく。
-
-```jsx
+デフォルトではSSH接続に22番ポートが活用されていますがwell known portということでユーザーネームを片っ端からアタックされて危険です。また、実際には鍵などでセキュリティを高めているのでリスクはそこまでない場合でも、アタックされているログがたくさん残るとログを見たときに邪魔です。
+そこで、port番号を任意の番号に変更していきます。
+この際に、すでに活用されている or これから活用しうるポートとぶつからないように設定します。
+```
+#remote
+sudo vi /etc/ssh/sshd_config
+```
+すると、
+```sh
 #Port 22
 ```
-
-という設定があるのでこの22を任意のポート番号に変えればOK。設定全般に当てはまるのだが、#はコメントアウトだから削除しないといけない。シンタックスハイライトが効かないから気づかなかった。
-
-今回は51195に変更している
+とコメントアウトされている部分があるのでこの22を任意のポート番号に変えればOKです。
+#はコメントアウトされている部分なので削除する必要があります。
+私は普段IDEでシンタックスハイライトが効いた状態で開発しているので、一瞬#がコメントアウトということに気づかず設定失敗してしまいました。。
 
 ### firewalldのアクティベート
+[CentOS Stream 9の設定方法](https://manual.sakura.ad.jp/vps/os-packages/centos-stream-9.html?highlight=%E5%85%AC%E9%96%8B%E9%8D%B5)の中で
+firewalldの設定をしたかと思います。
+しかし、設定しただけでは動いていないのでactivateしていきます。
 
-firewalldの設定をしたが、動いていなかったので、activateする
-
-```jsx
-systemctl status firewalld
+```sh
+#remote
+systemctl status firewalld #firewalldの状態確認
 ○ firewalld.service - firewalld - dynamic firewall daemon
      Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
      Active: inactive (dead)
@@ -111,60 +137,43 @@ systemctl status firewalld
      CGroup: /system.slice/firewalld.service
              └─1985 /usr/bin/python3 -s /usr/sbin/firewalld --nofork --nopid
 ```
-
-### Nginx VS Apache
-
-HTMLをホストするサーバーをどっちにしようか悩んで比較してみた。正直始める前の自分はどっちがいいのか一切わかっていなかったし、今も最適かと言われると自信がない。
-
-- Nginxの方がシェアとしては伸びてきており、Apacheを追い抜こうとしている。
-- ディレクトリレベルでの設定ができないため、逆にいうと毎回rootまでたどって設定ファイルを探すコストがかからず、パフォーマンスがいいみたい。
-- スタンドアロンサーバーとして活用して、キャッシュサーバーを置かなくてもNginxではキャッシュが効くみたい（仕組みがわからん＆Apacheもあるけど、バグが多い＆Nginxの方がパフォーマンスがいいらしい）
-- ApacheとNginxはそもそも設計が異なっており、Nginxの方が早そう。Apacheは全ての要求（なんの？）に対してプロセスを立ち上げるから無駄が多いぽい。
-- Apacheの方が立ち上げが簡単みたい。何がどう簡単かはわからない。Nginxの方が早いぽい。理屈は分かったが、元データに当たれているわけではないので、もし気になったら追加でちゃんと調査してみたい。
-
-**参照記事**
-
-[NginxとApacheの比較 〜 ウェブサーバー直接対決 〜](https://kinsta.com/jp/blog/nginx-vs-apache/)
-
-[ApacheとNginxについて比較 - Qiita](https://qiita.com/kamihork/items/49e2a363da7d840a4149)
+このような状態になったら起動成功です。
+firewallについては[さくらのVPS講座第7回](https://knowledge.sakura.ad.jp/10583/)にて説明してくれていたので、初めて聞いたという方は読んでみるといいと思います。
 
 ### Nginxのインストール
+CentOS Stream9はRPMパッケージを扱うコマンドは `yum` ではなく `dnf` です。
+また、今回Nginxをインストールする際に、EPELリポジトリというものを作成する機会があったのですが、何のことかわからず調べたところ、CentOS標準のリポジトリでは提供されていないパッケージをインストールする際に活用するサードパーティー製リポジトリということでした。他にもサードパーティー製リポジトリは存在していますが、EPELはエンタープライズ向けで信頼性がある模様です。
+ただ、デファクトぽくなっているが、RedHat社の公式サポートがあるわけではないので、その点は認識しておいた方が良さそうです。
 
-- RPMパッケージを扱うコマンドは `yum` ではなく `dnf` に変わっているので注意。
-- CentOS標準のリポジトリでは提供されていないパッケージをインストールする際には、EPELリポジトリを作成する必要がある。EPEL以外のサードパーティー製リポジトリを使ってもいいのだが、EPELはエンタープライズ向けで信頼性がある模様。ただ、RedHat社の公式サポートがあるわけではないので、要注意。デファクト見たくなっているのかな？
-
+**参考**
 [CentOSなどで使う、EPELってなんだ？ - Qiita](https://qiita.com/charon/items/f5732694515d174851b3)
 
-- まずはEPELを導入してNginxを入れる用意
+まずはEPELを導入してNginxを入れる用意をします。
 
-```jsx
+```sh
+#remote
 sudo dnf config-manager --set-enabled crb
 sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-9.noarch.rpm
 ```
 
-- `sudo dnf update` で全部最新にしてみた。
-- `dnf` で何かをインストールする際にもyumのレポになるのが面白い。
-- `vi `だとだめなので、sudoeditで書き込みした。
-- 結局、情報が多すぎて正解が分からないので公式を見てやった
+念の為、`sudo dnf update` で全部最新にしておきます。（意味ないかも）
+[nginx: Linux packages](https://nginx.org/en/linux_packages.html#RHEL-CentOS)を見てstableのインストールを進めていたのですが、なぜかインストールできません。サポートしているversionをよく見てみると、centos7 / 8ということで、stream9は入っていないです。
+過去の先輩方の記事を見ていくと、dnfデフォルトのNginxはバージョンが古すぎる。という記載がよく見つかったので、dnfからではなく、直接インストールしようとしていたのですがならばと、公式は全部無視してdnfデフォルトのNginxをインストールすることにしました。
+この際に、nginxの公式で展開されている `/etc/yum.repos.d/nginx.repo` の設定は消す必要があるので注意です。
 
-[nginx: Linux packages](https://nginx.org/en/linux_packages.html#RHEL-CentOS)
+dnfからそのままインストールする際には[How To Install Nginx on CentOS 9 Stream](https://idroot.us/install-nginx-centos-9-stream/)を参考にしました。
 
-- mainlineではなく、stableを使用することに。ただ、公式通りにやってもインストールできない。サポートしているversionをよく見てみると、centos7 / 8ということで、stream9は入っていない。ならばと、公式は全部無視してdnfデフォルト設定でインストールすることに。
-- デフォルトのnginxは古すぎるということだが、動かなければ始まらないということでとりあえずいけるものをインストールすることに。この際に、nginxの公式で展開されている `/etc/yum.repos.d/nginx.repo` の設定は消す必要がある。
-
-[How To Install Nginx on CentOS 9 Stream](https://idroot.us/install-nginx-centos-9-stream/)
-
-- 色々な人の記事を読むと、デフォルトのnginxが古すぎる。という指摘がよく入っていたが、centos stream 9ではデフォルトでインストールすると ver1.20.1が入る。
-
-```jsx
-$ nginx -v
+インストール後に念の為バージョンを確認してみると
+```sh
+#remote
+nginx -v
 nginx version: nginx/1.20.1
 ```
-
-ということで、stableだから別に古いわけではない。改善されたのかな。よしとして、次に進む。
-
-```jsx
+ということで、stableだから別に古いわけでもなかったです。めでたしめでたし。
+インストールできたら、Nginxサーバを立ち上げていきます。
+```sh
+#remote
 sudo systemctl start nginx #nginxサーバを立ち上げる
 sudo systemctl enable nginx #nginxサーバが自動で起動するようにする
 sudo systemctl status nginx #statusの確認
@@ -181,87 +190,60 @@ sudo systemctl status nginx #statusの確認
              └─26083 "nginx: worker process"
 ```
 
-これで立ち上がっている。この状態で、自分のIPアドレスをURLで叩いたら、nginxサーバーのデフォルト画面が見えるはず。  `[http://your_ip_address](http://your_ip_address)` だがしかし、ぐるぐるしていて進まない。firewallを設定していたことを思い出す。
-
-http と httpsのポートを開ける必要があるので開ける
-
-```jsx
+この状態になったらOKです。
+自分のIPアドレスをURLで叩いたら、nginxサーバーのデフォルト画面が見えるはずです。  `http://your_ip_address`
+しかし、faviconがぐるぐるしていて進まないです。
+ここでfirewallを設定していたことを思い出します。
+http と https（後ほど使えるようにする）のポートを開ける必要があるので開けます。
+```sh
+#remote
 sudo firewall-cmd --permanent --zone=public --add-service=http
 sudo firewall-cmd --permanent --zone=public --add-service=https
 sudo firewall-cmd --reload
 ```
 
-これで再度 `[http://your_ip_address](http://your_ip_address)` でトライするとnginxデフォルトの画面が見えた！ただ、 `[https://your_ip_address](https://your_ip_address)` だとまだだめ。
+これで再度 `http://your_ip_address` でトライするとnginxデフォルトの画面が開けました！`https://your_ip_address`と、httpsで接続しようとするとまだ開けません。
+後ほどSSL証明書を取得してhttps通信にも対応できるようにしていきます。
 
-configファイルは以下の階層にある
+### DNS設定
+サーバーのipアドレスを直接URLバーに打ったら接続できるようになりました。今度は、ドメイン名とipアドレスをDNSの設定を行い紐づけていきます。
+[ネームサーバ利用申請 - さくらのサポート情報](https://help.sakura.ad.jp/206207381/?_gl=1*1d7h9g4*_gcl_aw*R0NMLjE2NDA5NjMxNzMuQ2p3S0NBaUE4YnFPQmhBTkVpd0Etc0lsTjdfMkdTUlQzUjdybXZESXFUMDRqNmsxRmhJQ0hBMGlYYm42N2pvdVp3bkxRN19zdEczbFlob0NNQzBRQXZEX0J3RQ..&_ga=2.44704547.602954785.1642691223-1592514320.1642759501&_gac=1.185706331.1640963174.CjwKCAiA8bqOBhANEiwA-sIlN7_2GSRT3R7rmvDIqT04j6k1FhICHA0iXbn67jouZwnLQ7_stG3lYhoCMC0QAvD_BwE)を参考に進めていきました。
 
-```jsx
-Nginx configuration directory: /etc/nginx
-Nginx root directory: /usr/share/nginx/html
-Master/Global configuration file: /etc/nginx/nginx.conf
-```
-
-- あと少し、次はconfigファイルを作成していく。まずは公式を一通り読んでみることにする
-
-[Beginner's Guide](https://nginx.org/en/docs/beginners_guide.html#conf_structure)
-
-雰囲気は掴んだ。ただ、これだとJSファイルはホストすることができない。gatsbyはSSGだから全部HTMLに変換して出力しているのだろうか？デプロイ方法がわかっていない。一旦そのまま進む。
-
-### ファイルをアップロードしてみる
-
-### DNSの設定をする
-
-ネームサーバの設定をさくらで行う。これを参考にそのまま対応した
-
-[ネームサーバ利用申請 - さくらのサポート情報](https://help.sakura.ad.jp/206207381/?_gl=1*1d7h9g4*_gcl_aw*R0NMLjE2NDA5NjMxNzMuQ2p3S0NBaUE4YnFPQmhBTkVpd0Etc0lsTjdfMkdTUlQzUjdybXZESXFUMDRqNmsxRmhJQ0hBMGlYYm42N2pvdVp3bkxRN19zdEczbFlob0NNQzBRQXZEX0J3RQ..&_ga=2.44704547.602954785.1642691223-1592514320.1642759501&_gac=1.185706331.1640963174.CjwKCAiA8bqOBhANEiwA-sIlN7_2GSRT3R7rmvDIqT04j6k1FhICHA0iXbn67jouZwnLQ7_stG3lYhoCMC0QAvD_BwE)
-
-これで、これまでは  `[http://your_ip_address](http://your_ip_address)` としていたところから、  `[http://your_domain_name](http://your_domain_name)` でアクセスできるようになりました。自分の場合は `http://shgnkn.io`　です。次は、SSL証明書を入手して、httpsでの通信ができるように設定していきます。
+設定が完了すると、これまでは`http://your_ip_address` としていたところから、  `http://your_domain_name` でアクセスできるようになります。自分の場合は `http://shgnkn.io`です。
+次は、SSL証明書を入手して、httpsでの通信ができるように設定していきます。
 
 ### SSL証明書の導入
+Let’s Encryptを使いました。
+[ネコでもわかる！さくらのVPS講座 ～第六回「無料SSL証明書 Let's Encryptを導入しよう」 | さくらのナレッジ](https://knowledge.sakura.ad.jp/10534/)や
+[Let's EncryptのSSL証明書で、安全なウェブサイトを公開 | さくらのナレッジ](https://knowledge.sakura.ad.jp/5573/)などを読むと、古い記事なのでcertbot-autoを使うと記述がありますが、現在は非推奨となっているので使わないように注意です。
+[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)などには書いてありましたね。
+<br/>
+ここで問題発生です。
+certbot-autoの代わりに、Let's Encryptと通信を行うクライアントとしてcertbotを使うのですが、certbotはdnfにも、epel-releaseにも入っていないので、snapdを活用して入れましょう。と[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)などに書いてあります。
+しかし、CentOS Stream 9ではsnapdが使用できません。
 
-**Let’s Encryptを使う。**
+ググっていくと、`pip` でインストールする方法がある模様です。[Centos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)。早速記事にしてくださっていた方がいて助かりました。
+ブログ内のapacheはnginxに読み替えて実行していきます。
 
-SSL証明書の有効期限が3ヶ月なので、３ヶ月ごとに忘れずに更新する必要があるのが面倒くさい。バッチ処理で回したいところ。⇨自動更新できるみたい！
-
-[ネコでもわかる！さくらのVPS講座 ～第六回「無料SSL証明書 Let's Encryptを導入しよう」 | さくらのナレッジ](https://knowledge.sakura.ad.jp/10534/)
-
-SSLではなく現在はTLSが使われてるのでは？と思ったがどうやら習慣でそう呼ばれているみたい
-
-[ネコでもわかる！さくらのVPS講座 ～第六回「無料SSL証明書 Let's Encryptを導入しよう」 | さくらのナレッジ](https://knowledge.sakura.ad.jp/10534/)
-
-[Let's EncryptのSSL証明書で、安全なウェブサイトを公開 | さくらのナレッジ](https://knowledge.sakura.ad.jp/5573/)
-
-certbot-auto：Let’s Encryptが提供しているツールであり、Let’s Encryptと通信するためのクライアント。
-
-これでcertbot-autoをインストール。Apachだけ自動有効化オプション対応しているのか。。。
-
-```jsx
-sudo curl https://dl.eff.org/certbot-auto -o /usr/bin/certbot-auto
+```sh
+#remote
+sudo certbot --nginx
 ```
-
-⇨ふと気になって、certbot-auto自体について調べてみようとしたところ、まさかの現在は非推奨とのこと。。。
-
-[](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)
-
-かつ、centos stream 9ではsnapdが使用できない。さらに  `epel-release` の中にも certbotは入っていない。しかし、色々調べていくと、certbot自体は `pip` でインストールする方法がある模様。
-
-[Centos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)
-
-apacheはnginxに読み替えて実行していく。
-
-`sudo certbot --nginx` で諸々yesしたり、メアド、ドメインを登録したりしていく。と。
+諸々yesしたり、メアド、ドメインを登録したりしていきます。
 
 ```jsx
 Could not automatically find a matching server block for shgnkn.io. Set the `server_name` directive to use the Nginx installer.
 ```
 
-エラー。nginx.confファイルにドメイン名を設定する必要があるみたい。
+エラー。nginx.confファイルにドメイン名を設定する必要があるとのことで設定していきます。
 
-```jsx
+```sh
+#remote
 sudo vi /etc/nginx/nginx.conf
 ```
 
-```jsx
+```sh
+#/etc/nginx/nginx.conf
 server {
         listen       80;
         listen       [::]:80;
@@ -281,22 +263,22 @@ server {
     }
 ```
 
-リトライしていく。
-
-```jsx
-$ sudo vi /etc/nginx/nginx.conf
+設定ができたらリトライしていきます。
+```sh
+#remote
+sudo certbot --nginx
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
 
 Which names would you like to activate HTTPS for?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-1: shgnkn.io
+1: your_domain
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Select the appropriate numbers separated by commas and/or spaces, or leave input
 blank to select all options shown (Enter 'c' to cancel): 1
 Certificate not yet due for renewal
 
 You have an existing certificate that has exactly the same domains or certificate name you requested and isn't close to expiry.
-(ref: /etc/letsencrypt/renewal/shgnkn.io.conf)
+(ref: /etc/letsencrypt/renewal/your_domain.conf)
 
 What would you like to do?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -305,55 +287,40 @@ What would you like to do?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Select the appropriate number [1-2] then [enter] (press 'c' to cancel): 1
 Deploying certificate
-Successfully deployed certificate for shgnkn.io to /etc/nginx/nginx.conf
-Congratulations! You have successfully enabled HTTPS on https://shgnkn.io
+Successfully deployed certificate for your_domain to /etc/nginx/nginx.conf
+Congratulations! You have successfully enabled HTTPS on https://your_domain
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ```
 
-以下コマンドで、証明書や秘密鍵などのファイルが確認できていたら成功。
+以下コマンドで、証明書や秘密鍵などのファイルが確認できていたら成功です。
 
-```jsx
+```sh
+#remote
 sudo ls -l /etc/letsencrypt/live/your_domain
 ```
 
- `[https://your_domain](https://your_domain)` でhttps通信ができていることが確認できるはず！
+`https://your_domain`をブラウザのアドレスバーに入力するとhttps通信ができていることが確認できます。
+F12でdevtoolsを立ち上げて、securityをみると証明書を確認することができます。
 
-`/etc/nginx/conf.d/ssl.conf` に対して、以下のサイトに従って、NginxのSSL対応設定までやってしまったが、要らなかったかも。
+certbotは優秀で、httpで通信が来た際に、httpsに強制的にリダイレクトするようする設定を自動でしてくれます。あとは証明書の自動更新設定が必要になりそう。
 
-⇨やっぱり不要だった。 `/etc/nginx/nginx.conf`　にcertbotが追記してくれていた。なので削除
+証明書の期限が３ヶ月と短いので、証明書の自動更新も設定しておきたいところです。
+cronを活用する方法、certbotにあるタイマーユニットを活用する方法など、複数方法はありそうなので、お好きなもので設定したらOKです。
+自分はcronで設定してしまいましたが、うまく設定できているか確認ができていないので、期限が近づいたら見守りたいと思います。
 
-F12でdevtoolsを立ち上げて、securityをみると証明書を確認することができる。やったー。
-
-[Let's EncryptのSSL証明書で、安全なウェブサイトを公開 | さくらのナレッジ](https://knowledge.sakura.ad.jp/5573/)
-
-```jsx
-server {
-        listen  443 ssl;
-        server_name     secure.zem.jp;
-        ssl_certificate         /etc/letsencrypt/live/secure.zem.jp/cert.pem;
-        ssl_certificate_key     /etc/letsencrypt/live/secure.zem.jp/privkey.pem;
-        root                    /usr/share/nginx/html;
-        access_log  /var/log/nginx/ssl-access.log  main;
-}
-```
-
-実はまだ完了していない。httpで通信が来た際に、httpsに強制的にリダイレクトするように設定しておく。と思いきや、全部certbotが自動で設定してくれていた。あとは証明書の自動更新設定が必要になりそう。
-
-以下の記事を参考にすると、certbotにはタイマーユニットというものができたらしい。今まではcronを活用する方法が紹介されてきていたが、certbotがやってくれているものなのであれば、そのまま使いたいと思う。
-
+**参考**
 [CentOS7にnginxとcertbotを導入してHTTPS環境をさくっと作るの巻](https://blog.trippyboy.com/2020/centos/centos7%E3%81%ABnginx%E3%81%A8certbot%E3%82%92%E5%B0%8E%E5%85%A5%E3%81%97%E3%81%A6https%E7%92%B0%E5%A2%83%E3%82%92%E3%81%95%E3%81%8F%E3%81%A3%E3%81%A8%E4%BD%9C%E3%82%8B%E3%81%AE%E5%B7%BB/#toc5)
+[Ceontos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)
 
-タイマーを仕掛けていくが、その前にバックアップを取る。と思いきや、そんな設定ファイルは存在しなかった。今のcronコマンドが問題なく実行されるか、4/22に期限が切れるので、そのタイミングで見守る。
+期限の30日以内であれば以下コマンドで手動更新も可能です。
 
-念の為以下のコマンドで、期限の30日以内なら更新可能。
-
-```jsx
+```sh
+#remote
 sudo certbot renew
 ```
 
 ### サブドメインを設定する
-
 今回/はshgnkn.ioではなく、blog.shgnkn.ioに設定したかったので、サブドメインを切っていく。
 
 まずは、さくらのドメインコントロールパネルでサブドメインを設定。詳細は割愛。
