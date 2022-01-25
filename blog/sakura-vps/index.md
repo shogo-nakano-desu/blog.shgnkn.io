@@ -1,8 +1,8 @@
 ---
-title: "さくらVPSにホスト"
-path: "sakura-vps"
+title: "さくらVPS×CentOS Stream 9×Nginxでホスト"
+path: "sakura-vps-centos-nginx"
 date: "2022-01-24"
-update: ""
+update: "2022-01-25"
 hero_image: "./imgix-klWUhr-wPJ8-unsplash.jpg"
 hero_image_alt: "server"
 hero_image_credit_text: "imgix"
