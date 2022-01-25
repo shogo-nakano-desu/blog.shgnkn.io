@@ -21,7 +21,7 @@ export const Card: React.FC<Props> = ({ data }) => {
 
   return (
     <Link className={ styles.link} to={`${path}/`}>
-      <div className={ styles.card}>
+      <div>
         <GatsbyImage className={ styles.image} image={image} alt={hero_image_alt} />
         <p className={ styles.title}>{ title}</p>
         <p className={ styles.date}>Posted: {date}</p>
