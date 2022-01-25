@@ -216,13 +216,16 @@ sudo firewall-cmd --reload
 Let’s Encryptを使いました。
 [ネコでもわかる！さくらのVPS講座 ～第六回「無料SSL証明書 Let's Encryptを導入しよう」 | さくらのナレッジ](https://knowledge.sakura.ad.jp/10534/)や
 [Let's EncryptのSSL証明書で、安全なウェブサイトを公開 | さくらのナレッジ](https://knowledge.sakura.ad.jp/5573/)などを読むと、古い記事なのでcertbot-autoを使うと記述がありますが、現在は非推奨となっているので使わないように注意です。
-[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)などには書いてありましたね。
+[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html) などには書いてありましたね。
+
 <br/>
 ここで問題発生です。
-certbot-autoの代わりに、Let's Encryptと通信を行うクライアントとしてcertbotを使うのですが、certbotはdnfにも、epel-releaseにも入っていないので、snapdを活用して入れましょう。と[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)などに書いてあります。
+certbot-autoの代わりに、Let's Encryptと通信を行うクライアントとしてcertbotを使うのですが、certbotはdnfにも、epel-releaseにも入っていないので、snapdを活用して入れましょうと、
+
+[certbot-auto更新](https://manual.sakura.ad.jp/vps/startupscript/certbot-caution.html)などに書いてあります。
 しかし、CentOS Stream 9ではsnapdが使用できません。
 
-ググっていくと、`pip` でインストールする方法がある模様です。[Centos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)。早速記事にしてくださっていた方がいて助かりました。
+そのため、今回は`pip` でインストールする方法を取りました。（参照：[Centos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)）。早速記事にしてくださっていた方がいて助かりました。
 ブログ内のapacheはnginxに読み替えて実行していきます。
 
 ```sh
