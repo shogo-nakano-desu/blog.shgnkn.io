@@ -1,11 +1,6 @@
 .footer {
-  margin-top: 2rem;
-  /* position: absolute; */
+  margin: auto;
   bottom: 0;
-  margin-left: 15%;
-  margin-right: 15%;
-  margin-bottom: 2rem;
-  /* display: flex;
-  flex-direction: column; */
-  justify-content: center;
+  display: flex;
+  max-width: 752px;
 }

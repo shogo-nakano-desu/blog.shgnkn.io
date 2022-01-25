@@ -1,5 +1,5 @@
 ---
-title: "さくらVPS×CentOS Stream 9×Nginxでホスト"
+title: "さくらVPS × CentOS Stream 9 × Nginxでホスト"
 path: "sakura-vps-centos-nginx"
 date: "2022-01-24"
 update: "2022-01-25"
