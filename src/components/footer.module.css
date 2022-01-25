@@ -1,5 +1,8 @@
 .footer {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 1.25rem;
+  padding-top: 1.25rem;
   bottom: 0;
   display: flex;
   max-width: 752px;
