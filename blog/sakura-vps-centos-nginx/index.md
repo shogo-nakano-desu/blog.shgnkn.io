@@ -145,7 +145,7 @@ CentOS Stream9はRPMパッケージを扱うコマンドは `yum` ではなく `
 また、今回Nginxをインストールする際に、EPELリポジトリというものを作成する機会があったのですが、何のことかわからず調べたところ、CentOS標準のリポジトリでは提供されていないパッケージをインストールする際に活用するサードパーティー製リポジトリということでした。他にもサードパーティー製リポジトリは存在していますが、EPELはエンタープライズ向けで信頼性がある模様です。
 ただ、デファクトぽくなっているが、RedHat社の公式サポートがあるわけではないので、その点は認識しておいた方が良さそうです。
 
-**参考**
+**参考**<br/>
 [CentOSなどで使う、EPELってなんだ？ - Qiita](https://qiita.com/charon/items/f5732694515d174851b3)
 
 まずはEPELを導入してNginxを入れる用意をします。
@@ -309,7 +309,9 @@ certbotは優秀で、httpで通信が来た際に、httpsに強制的にリダ�
 cronを活用する方法、certbotにあるタイマーユニットを活用する方法など、複数方法はありそうなので、お好きなもので設定したらOKです。
 自分はcronで設定してしまいましたが、うまく設定できているか確認ができていないので、期限が近づいたら見守りたいと思います。
 
-**参考**
+<br/>
+
+**参考** <br/>
 [CentOS7にnginxとcertbotを導入してHTTPS環境をさくっと作るの巻](https://blog.trippyboy.com/2020/centos/centos7%E3%81%ABnginx%E3%81%A8certbot%E3%82%92%E5%B0%8E%E5%85%A5%E3%81%97%E3%81%A6https%E7%92%B0%E5%A2%83%E3%82%92%E3%81%95%E3%81%8F%E3%81%A3%E3%81%A8%E4%BD%9C%E3%82%8B%E3%81%AE%E5%B7%BB/#toc5)
 [Ceontos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)
 
@@ -406,13 +408,16 @@ rootでログインはできない状態で保ちたいので、作成したuser
 古いが、以下の記事などを読むと、 `--rsync-path`   オプションを指定して、sudo rsyncが呼び出されるようなスクリプトを作成しておいておけばいいとのこと。
 ググると、「rootでログインするといいよ」「パスワードは不要にするといいよ」などの記事が見つかりますが、今後自動デプロイすること、rootログインを可能にして作業した後に不可に戻すのを忘れそうなことを考えると、なんとかもっとセキュアな方法を取りたいところでした。
 そこで以下複数記事を参考にさせていただき、最終的に[rsync + cron + ssh （rsyncd を立てない編）](http://www2s.biglobe.ne.jp/~nuts/labo/inti/cron-rsync-ssh-nodaemon.html)を参考に「鍵を作り特定の操作に対してだけrootで操作可能な権限を渡して操作」という方法を取ることにしました。
-**参考**
-[セキュアな rsync - 理屈編 - JULY's diary](https://july-diary.hatenablog.com/entries/2011/11/27)
-[セキュアな rsync - 実践編 - JULY's diary](https://july-diary.hatenablog.com/entry/20130327/p1)
-[パスワードありsudoでrsyncするシェルスクリプト](https://qiita.com/hnakamur/items/d0d37a1051d8a398f5d1)
-上記記事のコメント欄にある、以下の記事を参考に作業しました。
-[rsync + cron + ssh （rsyncd を立てない編）](http://www2s.biglobe.ne.jp/~nuts/labo/inti/cron-rsync-ssh-nodaemon.html)
 
+<br/>
+
+**参考**<br/>
+[セキュアな rsync - 理屈編 - JULY's diary](https://july-diary.hatenablog.com/entries/2011/11/27) <br/>
+[セキュアな rsync - 実践編 - JULY's diary](https://july-diary.hatenablog.com/entry/20130327/p1) <br/>
+[パスワードありsudoでrsyncするシェルスクリプト](https://qiita.com/hnakamur/items/d0d37a1051d8a398f5d1) <br/>
+[rsync + cron + ssh （rsyncd を立てない編）](http://www2s.biglobe.ne.jp/~nuts/labo/inti/cron-rsync-ssh-nodaemon.html) <br/>
+
+最終的に、最後の記事を参考に以下の作業は進めました。
 鍵を作成。-Nオプションでパスフレーズは空にしておく
 ```sh
 #local
