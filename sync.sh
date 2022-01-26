@@ -1,6 +1,6 @@
 set -eu
 
-if [! -d "$HOME/.ssh"]; then
+if [ ! -d "$HOME/.ssh" ]; then
   mkdir -p "$HOME/.ssh"
 fi
 echo "$secret_key" > "$HOME/.ssh/key"
