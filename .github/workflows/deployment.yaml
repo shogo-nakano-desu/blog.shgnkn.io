@@ -31,5 +31,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn build --if-present
+      - run: yarn build
       - run: ./sync.sh
