@@ -32,4 +32,7 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install
       - run: yarn build
-      - run: ./sync.sh
+      - name: change permissions
+        run: chmod +x ./sync.sh
+      - name: deploy
+        run: ./sync.sh
