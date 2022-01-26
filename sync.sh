@@ -1,10 +1,11 @@
 #!/bin/sh
 set -eu
 
-if [ ! -d "$HOME/.ssh" ]; then
-  mkdir -p "$HOME/.ssh"
+KEYPATH="$HOME/.ssh"
+if [ ! -d "$KEYPATH" ]; then
+  mkdir -p "$KEYPATH"
 fi
-echo "$secret_key" > "$HOME/.ssh/key"
-chmod 600 "$HOME/.ssh/key"
-sh -c "rsync -azr --delete -e 'ssh -i $HOME/.ssh/key -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
+echo "$secret_key" > "$KEYPATH/key"
+chmod 600 "$KEYPATH/key"
+sh -c "rsync -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
 rm -rf $HOME/.ssh
