@@ -7,5 +7,5 @@ if [ ! -d "$KEYPATH" ]; then
 fi
 echo "$secret_key" > "$KEYPATH/key"
 chmod 600 "$KEYPATH/key"
-sh -c "rsync -vv -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
+sh -c "rsync -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
 rm -rf $HOME/.ssh
