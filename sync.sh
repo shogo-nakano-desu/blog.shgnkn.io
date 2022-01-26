@@ -1,0 +1,1 @@
+rsync -azr --delete -e "ssh -i $secret_key -p $server_port" ./public/ $user_name@$server_port:$server_destination

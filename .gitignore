@@ -1,5 +1,5 @@
 node_modules/
 .cache/
-public
-yarn.lock
 src/__generated__
+public/
+yarn-error.log
