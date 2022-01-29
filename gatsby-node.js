@@ -1,4 +1,7 @@
-const { createFilePath } = require("gatsby-source-filesystem");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// const { createFilePath } = require("gatsby-source-filesystem");
+import { createFilePath } from "gatsby-source-filesystem";
+import path from "path";
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -22,7 +25,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-const path = require("path");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+// const path = require("path");
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   // Destructure the createPage function from the actions object
