@@ -58,14 +58,14 @@ CentOS Strema 9ではデフォルトでrootでのパスワードログインが�
 さくらが[CentOS Stream 9の設定方法](https://manual.sakura.ad.jp/vps/os-packages/centos-stream-9.html?highlight=%E5%85%AC%E9%96%8B%E9%8D%B5)を出してくれていました。rootでのパスワード認証はデフォルトで不可になっているので、最初は標準ユーザとして設定されているcentosでログインします。
 
 
-```sh
+```shell
 #local
 ssh centos@port_number
 ```
 
 あとはちょっと古いのですが、[さくらのVPS講座](https://knowledge.sakura.ad.jp/7938/)を参考にしつつ、CentOS Stream 9固有の部分や不要な部分は飛ばしつつ作業をしていきます。
 VNGコンソールから以下の容量でログインして
-```sh
+```shell
 #remote
 login: root
 Password: password
@@ -86,7 +86,7 @@ ssh-keygen -f "~/.ssh/your_key_name"
 作成したら、リモートのホームディレクトリに 公開鍵である`your_key_name.pub`を移動させたいので、 `scp your_key_name.pub username@your_ip_address:~/` で移動させます。
 そして、以下コマンドでリモートに公開鍵リストを作成し、権限を設定します。
 
-```sh
+```shell
 #remote
 pwd                                  # ディレクトリを確認して、ホームディレクトリ以外にいる場合にはホームディレクトリに移動
 mkdir .ssh                            # ディレクトリ作成
@@ -104,7 +104,7 @@ chmod 600 .ssh/authorized_keys        # 自分以外の読み書きを禁止
 sudo vi /etc/ssh/sshd_config
 ```
 すると、
-```sh
+```shell
 #Port 22
 ```
 とコメントアウトされている部分があるのでこの22を任意のポート番号に変えればOKです。
@@ -116,7 +116,7 @@ sudo vi /etc/ssh/sshd_config
 firewalldの設定をしたかと思います。
 しかし、設定しただけでは動いていないのでactivateしていきます。
 
-```sh
+```shell
 #remote
 systemctl status firewalld #firewalldの状態確認
 ○ firewalld.service - firewalld - dynamic firewall daemon
@@ -150,7 +150,7 @@ CentOS Stream9はRPMパッケージを扱うコマンドは `yum` ではなく `
 
 まずはEPELを導入してNginxを入れる用意をします。
 
-```sh
+```shell
 #remote
 sudo dnf config-manager --set-enabled crb
 sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
@@ -165,14 +165,14 @@ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-
 dnfからそのままインストールする際には[How To Install Nginx on CentOS 9 Stream](https://idroot.us/install-nginx-centos-9-stream/)を参考にしました。
 
 インストール後に念の為バージョンを確認してみると
-```sh
+```shell
 #remote
 nginx -v
 nginx version: nginx/1.20.1
 ```
 ということで、stableだから別に古いわけでもなかったです。めでたしめでたし。
 インストールできたら、Nginxサーバを立ち上げていきます。
-```sh
+```shell
 #remote
 sudo systemctl start nginx #nginxサーバを立ち上げる
 sudo systemctl enable nginx #nginxサーバが自動で起動するようにする
@@ -195,7 +195,7 @@ sudo systemctl status nginx #statusの確認
 しかし、faviconがぐるぐるしていて進まないです。
 ここでfirewallを設定していたことを思い出します。
 http と https（後ほど使えるようにする）のポートを開ける必要があるので開けます。
-```sh
+```shell
 #remote
 sudo firewall-cmd --permanent --zone=public --add-service=http
 sudo firewall-cmd --permanent --zone=public --add-service=https
@@ -228,7 +228,7 @@ certbot-autoの代わりに、Let's Encryptと通信を行うクライアント�
 そのため、今回は`pip` でインストールする方法を取りました。（参照：[Centos Stream9: Let's Encrypt](https://hirop.mydns.jp/jitaku/2022/01/centos-stream9-lets-encrypt.html)）。早速記事にしてくださっていた方がいて助かりました。
 ブログ内のapacheはnginxに読み替えて実行していきます。
 
-```sh
+```shell
 #remote
 sudo certbot --nginx
 ```
@@ -240,12 +240,12 @@ Could not automatically find a matching server block for shgnkn.io. Set the `ser
 
 エラー。nginx.confファイルにドメイン名を設定する必要があるとのことで設定していきます。
 
-```sh
+```shell
 #remote
 sudo vi /etc/nginx/nginx.conf
 ```
 
-```sh
+```shell
 #/etc/nginx/nginx.conf
 server {
         listen       80;
@@ -267,7 +267,7 @@ server {
 ```
 
 設定ができたらリトライしていきます。
-```sh
+```shell
 #remote
 sudo certbot --nginx
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
@@ -298,7 +298,7 @@ Congratulations! You have successfully enabled HTTPS on https://your_domain
 
 以下コマンドで、証明書や秘密鍵などのファイルが確認できていたら成功です。
 
-```sh
+```shell
 #remote
 sudo ls -l /etc/letsencrypt/live/your_domain
 ```
@@ -320,7 +320,7 @@ cronを活用する方法、certbotにあるタイマーユニットを活用す
 
 期限の30日以内であれば以下コマンドで手動更新も可能です。
 
-```sh
+```shell
 #remote
 sudo certbot renew
 ```
@@ -333,11 +333,11 @@ sudo certbot renew
 
 今回私は、大量のサブドメインを切る予定があるわけでもないので、変数を使って対応したりはしないでシンプルに設定していきます。
 まずはconfファイルを設定します。このファイルを作成する前は、`/etc/nginx/conf.d/`配下は空のはずです。
-```sh
+```shell
 #remote
 sudo vi /etc/nginx/conf.d/sub_domain.conf
 ```
-```sh
+```shell
 #/etc/nginx/conf.d/sub_domain.conf
 server{
   server_name sub_domain.your_domain;
@@ -351,14 +351,14 @@ server{
 
 忘れずにNginxをリロードして設定を反映させます。
 
-```sh
+```shell
 #remote
 sudo nginx -s reload
 ```
 
 これで、 `/usr/share/nginx/html/sub_domain` 配下の `index.html` が`http://sub_domain.your_domain`にアクセスした際に表示されるはずなので、適当なHTMLファイルを作成して確認します。
 
-```sh
+```shell
 vi /usr/share/nginx/html/sub_domain/index.html
 ```
 ```
@@ -375,7 +375,7 @@ Contents will be here
 「certbot サブドメイン」などで検索すると、いかなるサブドメインに対しても有効なワイルドカード証明書に関する記事が多数出てくるかと思います。しかし、ワイルドカード証明書だと更新作業を行う際に、DNSにTXTを登録する必要があったりして自動更新の設定が厳しそうです。（もしできる方法あったらぜひ教えてください！）
 今回はサブドメインを１つしか切らない＆今後も大量に切る予定はないということで、ワイルドカード証明書は使わずに、１つのサブドメインだけ追加していきます。
 
-```sh
+```shell
 #remote
 sudo certbot --nginx -m your_email_address -d sub_domain.your_domain -d your_domain
 ```
@@ -392,14 +392,14 @@ sudo certbot --nginx -m your_email_address -d sub_domain.your_domain -d your_dom
 
 <br/>
 まずはrsyncが入っていなかったので入れていきます。
-```sh
+```shell
 #remote
 sudo dnf install rsync
 ```
 ローカルにも入っていなかったら入れます。
 
 
-```sh
+```shell
 #local
 rsync -auvz -e 'ssh -p your_port_number' public以下のフォルダ user_name@ip_address:/usr/share/nginx/html/sub_domain/
 ```
@@ -422,17 +422,17 @@ rootでログインはできない状態で保ちたいので、作成したuser
 
 最終的に、最後の記事を参考に以下の作業は進めました。
 鍵を作成。-Nオプションでパスフレーズは空にしておく
-```sh
+```shell
 #local
 sudo ssh-keygen -N "" -f ~/.ssh/rsync
 ```
 すぐ消すが、念の為権限を絞ってtmpフォルダを作成
-```sh
+```shell
 #remote
 mkdir -m 700 tmp
 ```
 sshd_configを書き換え
-```sh
+```shell
 #remote
 sudo vi /etc/ssh/sshd_config
 .
@@ -446,13 +446,13 @@ PermitRootLogin forced-commands-only
 ```
 
 ローカルの公開鍵をリモートに転送
-```sh
+```shell
 #local
 sudo scp -P your_port_number ~/.ssh/rsync.pub user_name@your_iP_address:~/tmp
 ```
 
 私の場合は、rootに.sshフォルダが存在していなかったので作成。もしすでに作成されている場合には、最初の２つのコマンドは飛ばしてOK。最後に忘れずにsshdの再起動とtmpフォルダの削除を行います。
-```sh
+```shell
 #remote
 sudo sh -c 'mkdir /root/.ssh'
 sudo sh -c 'touch /root/.ssh/authorized_keys'
@@ -463,7 +463,7 @@ sudo rm -rf ~/tmp
 
 ここまでで、実行コマンドを限定した接続ができるはずなのでテストします。
 まずは、鍵ファイルにlsコマンドを入れてみます。
-```sh
+```shell
 #remote
 sudo vi /root/.ssh/authorized_keys
 ・
@@ -475,20 +475,20 @@ command="ls" ssh-rsa ******
 ・
 ```
 ローカルから接続してみます。
-```sh
+```shell
 #local
 sudo ssh -i ~/.ssh/rsync -p your_port_number root@your_ip_address
 ```
 lsが実行されて、すぐに接続が切れたら成功です。
 
 先ほどlsコマンドを入れた箇所には実際に走らせるコマンドを入れる必要があるので、そのコマンドを取得します。
-```sh
+```shell
 #local
 sudo rsync -vv -az -e "sudo ssh -i 絶対パス/.ssh/rsync -p your_port_number" 絶対パス/public/ root@your_port_number:/usr/share/nginx/html/sub_domain/
 ```
 すると、実行結果として`rsync --server -vvulogDtprz . 絶対パス/public/`という記述が見えるかと思います。ここから-vvオプションを取り除いたコマンドを登録していきます。
 
-```sh
+```shell
 #remote
 sudo vi /root/.ssh/authorized_keys
 ・
@@ -501,13 +501,13 @@ command="rsync --server -ulogDtprz 絶対パス/public/" ssh-rsa ******
 ```
 
 これで設定は完了したはずなので、ローカルからrsyncを呼び出してみます。
-```sh
+```shell
 #local
 sudo rsync -vv -az -e "sudo ssh -i 絶対パス/.ssh/rsync -p your_port_number" 絶対パス/public/ root@your_port_number:/usr/share/nginx/html/sub_domain/
 ```
 実行結果を確認してみましょう。`https://sub_domain.domain`にアクセスすると、Gatsbyでビルドしたページが表示されているはずです。
 リモートの`/usr/share/nginx/html/sub_domain/`配下も確認してみると、ビルドしたファイルが格納されているはずです。
-```sh
+```shell
 #remote
 sudo ls /usr/share/nginx/html/sub_domain/
 ```

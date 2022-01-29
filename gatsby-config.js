@@ -12,6 +12,7 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -38,21 +39,11 @@ module.exports = {
         ignore: [`${__dirname}/src/__generated__/*.ts`],
       },
     },
+
     {
       resolve: "gatsby-plugin-mdx",
-      options: { extensions: [`.md`, `.mdx`] },
-    },
-    {
-      resolve: `gatsby-plugin-typescript`,
       options: {
-        isTSX: true,
-        allExtensions: true,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
+        gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -68,8 +59,17 @@ module.exports = {
             },
           },
         ],
+        extensions: [`.md`, `.mdx`],
       },
     },
+    {
+      resolve: `gatsby-plugin-typescript`,
+      options: {
+        isTSX: true,
+        allExtensions: true,
+      },
+    },
+
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
