@@ -28,11 +28,6 @@ code[class*="language-"] {
 
 /* Inline code */
 :not(pre) > code {
-  /* color: #f8f8f2;
-  background-color: #2e3440;
-  padding: 0.1em;
-  border-radius: 0.3em;
-  white-space: normal; */
   display: inline;
   padding: 3px 5px;
   font-family: "Fira Code", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
