@@ -61,7 +61,7 @@ tags: [linux,infra,shell,ci/cd,github-actions]
 
 これで、ビルドしてからプッシュすることができるようになるのですが絶対間違える自信があります。
 
-```sh
+```shell
 yarn push -- branch-name
 ```
 
@@ -122,7 +122,7 @@ jobs:
         run: ./sync.sh
 ```
 
-```sh
+```shell
 #./sync.sh
 
 #!/bin/sh
@@ -247,7 +247,7 @@ Node.jsはバージョン16系を活用しています。
 ```
 ここでは、`./sync.sh`に書いた以下のシェルスクリプトを実行しています。
 
-```sh
+```shell
 #!/bin/sh
 set -eu
 
@@ -269,7 +269,7 @@ rm -rf $HOME/.ssh
 
 次に、`set -eu`でシェルの設定を変えます。今回は`e`でコマンドが１つでもエラーになったら直ちにシェルを終了して。`u`で設定していない環境変数があったらエラーになるようにしています。
 
-```sh
+```shell
 #./sync.sh
 KEYPATH="$HOME/.ssh"
 if [ ! -d "$KEYPATH" ]; then
@@ -280,7 +280,7 @@ GitHubデフォルトの環境変数である`$HOME`を使って`KEYPATH`ディ�
 
 そして、作成したディレクトリに鍵を格納します。
 
-```sh
+```shell
 #./sync.sh
 echo "$secret_key" > "$KEYPATH/key"
 chmod 400 "$KEYPATH/key"
@@ -298,7 +298,7 @@ chmod 400 "$KEYPATH/key"
 まずは、`echo "$secret_key" > "$KEYPATH/key"`で設定した鍵を`"$KEYPATH/key"`として書き出して、
 作成した鍵ファイルに対して`chmod 400 "$KEYPATH/key"`で読み込み権限を付与しています。
 
-```sh
+```shell
 #./sync.sh
 sh -c "rsync -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
 ```
@@ -310,7 +310,7 @@ sh -c "rsync -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -
 もしroot権限で実行可能なコマンドを制御していない場合には、`StrictHostKeyChecking=no`にしない方が良さそうです。
 詳細は [sshのホスト鍵を無視する方法](https://kaworu.jpn.org/security/ssh%E3%81%AE%E3%83%9B%E3%82%B9%E3%83%88%E9%8D%B5%E3%82%92%E7%84%A1%E8%A6%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95)を読ませていただきました。
 
-```sh
+```shell
 #./sync.sh
 rm -rf $HOME/.ssh
 ```
@@ -318,24 +318,24 @@ rm -rf $HOME/.ssh
 
 さてこれで、設定は終わりな気がしますが、このままワークフローを実行するとエラーになってしまいます。
 
-```sh
+```shell
 protocol version mismatch~~
 ```
 というような内容を含むエラーメッセージが出るはずです。
 ここで気づきます。前回は自分のローカルからrsyncした結果とprotocolを合わせるために登録していたので、今回も合わせてやる必要があります。
 
-```sh
+```shell
 #./sync.sh
 sh -c "rsync -vv -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
 ```
 `-vv`オプションをrsyncに追加して処理中の経過ファイル名を表示するようにしておきます。その状態でワークフローを実行すると以下のようなエラーメッセージが追加されているはずです。
 
-```sh
+```shell
 rsync --server -vvlogDtprze.iLsfxC --delete . **
 ```
 
 これから、`vv`オプションを取り除いて、remoteの`/root/.ssh/authorized_keys`先頭のcommandに追加します。
-```sh
+```shell
 #remote
 sudo vi /root/.ssh/authorized_keys
 ・
@@ -348,7 +348,7 @@ command="rsync --server -logDtprze.iLsfxC --delete 絶対パス/public/" ssh-rsa
 ```
 これで問題なく実行できるはずです。
 余計なファイル名が表示されないよう、再度`-vv`オプションを削除して完了です。
-```sh
+```shell
 #./sync.sh
 sh -c "rsync -azr --delete -e 'ssh -i $KEYPATH/key -o StrictHostKeyChecking=no -p $server_port' ./public/ $user_name@$server_ip:$server_destination"
 ```
