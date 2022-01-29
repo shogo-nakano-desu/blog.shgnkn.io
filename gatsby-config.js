@@ -12,6 +12,8 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+    `gatsby-transformer-remark`,
+    // "gatsby-plugin-mdx-prismjs",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -38,21 +40,11 @@ module.exports = {
         ignore: [`${__dirname}/src/__generated__/*.ts`],
       },
     },
+
     {
       resolve: "gatsby-plugin-mdx",
-      options: { extensions: [`.md`, `.mdx`] },
-    },
-    {
-      resolve: `gatsby-plugin-typescript`,
       options: {
-        isTSX: true,
-        allExtensions: true,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
+        gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -68,8 +60,38 @@ module.exports = {
             },
           },
         ],
+        extensions: [`.md`, `.mdx`],
       },
     },
+    {
+      resolve: `gatsby-plugin-typescript`,
+      options: {
+        isTSX: true,
+        allExtensions: true,
+      },
+    },
+    // {
+    //   resolve: `gatsby-transformer-remark`,
+    //   options: {
+    //     plugins: [
+    //       `gatsby-remark-prismjs`,
+    //       // {
+    //       //   resolve: `gatsby-remark-prismjs`,
+    //       //   options: {
+    //       //     classPrefix: "language-",
+    //       //     // inlineCodeMarker: "`", //もしかしたらデフォルトで`かも
+    //       //     showLineNumbers: true,
+    //       //     // noInlineHighlight: false,
+    //       //     prompt: {
+    //       //       user: "root",
+    //       //       host: "localhost",
+    //       //       global: false,
+    //       //     },
+    //       //   },
+    //       // },
+    //     ],
+    //   },
+    // },
     {
       resolve: `gatsby-plugin-google-gtag`,
       options: {
