@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const { createFilePath } = require("gatsby-source-filesystem");
 import { createFilePath } from "gatsby-source-filesystem";
 import path from "path";
 
@@ -24,9 +22,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     });
   }
 };
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-// const path = require("path");
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   // Destructure the createPage function from the actions object
@@ -61,7 +56,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       // (or `node.frontmatter.slug`)
       path: node.fields.slug,
       // This component will wrap our MDX content
-      //[TODO]コメントアウトしたけど、何かラップするものが必要かも
       component: path.resolve(`./src/pages/{mdx.slug}.tsx`),
       // You can use the values in this context in
       // our page layout component
