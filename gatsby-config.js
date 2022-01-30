@@ -12,7 +12,6 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

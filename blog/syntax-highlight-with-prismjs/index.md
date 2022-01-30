@@ -85,3 +85,5 @@ PrismJSがその役割を担っており、
 <span class="token punctuation">{</span>
 ```
 のような形になっているかと思います。この処理をPrismJSが担ってくれているわけです。
+
+＊slugも時どうで生成するようにしたので、今frontmatterにfilepath書いて取ってきているところを自動生成されたslugを活用するように変えたい。。

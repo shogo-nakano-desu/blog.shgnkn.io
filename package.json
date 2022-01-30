@@ -29,7 +29,6 @@
     "gatsby-plugin-typegen": "^2.2.4",
     "gatsby-remark-prismjs": "^6.5.0",
     "gatsby-source-filesystem": "^4.4.0",
-    "gatsby-transformer-remark": "^5.5.1",
     "gatsby-transformer-sharp": "^4.4.0",
     "prettier": "^2.5.1",
     "prismjs": "^1.26.0",
