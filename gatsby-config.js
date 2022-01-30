@@ -47,8 +47,6 @@ module.exports = {
             resolve: `gatsby-remark-prismjs`,
             options: {
               classPrefix: "language-",
-              showLineNumbers: true,
-              // noInlineHighlight: false,
               prompt: {
                 user: "root",
                 host: "localhost",
