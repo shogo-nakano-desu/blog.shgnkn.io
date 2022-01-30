@@ -18,15 +18,27 @@ export const onCreateNode = ({ node, actions, getNode }) => {
 export const createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
+  // const result = await graphql(`
+  //   query {
+  //     allMdx {
+  //       edges {
+  //         node {
+  //           id
+  //           fields {
+  //             slug
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // `);
   const result = await graphql(`
     query {
       allMdx {
         edges {
           node {
             id
-            fields {
-              slug
-            }
+            slug
           }
         }
       }
