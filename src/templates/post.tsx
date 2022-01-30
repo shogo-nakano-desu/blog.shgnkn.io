@@ -6,9 +6,12 @@ import { MDXProvider }  from "@mdx-js/react"
 
 import Layout from "../components/layout";
 
-import * as styles from "./_mdxSlug.module.css"
+import * as styles from "./post.module.css"
 
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
+  console.log(props)
+  console.log(`------------------`)
+
   const { mdx } = props.data;
   const { body, frontmatter } = mdx || {}
   if (frontmatter === undefined||body === undefined) {
@@ -44,7 +47,7 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
             p: props => <p {...props} style={{ lineHeight: "2rem" }} />,
             ul: props => <ul {...props} style={{ listStyleType: "disc", listStylePosition: "inside", paddingTop:"10px", paddingBottom:"10px"}} />,
             ol: props => <ol {...props} style={{ listStylePosition: "inside", paddingTop:"10px", paddingBottom:"10px" }} />,
-            li: props => <li {...props} style={{ lineHeight: "2rem", paddingLeft: "1rem"}} />,
+            li: props => <li {...props} style={{ lineHeight: "2rem", paddingLeft: "1rem" }} />,
           }}>
             <MDXRenderer>{body}</MDXRenderer>
           </MDXProvider>
@@ -75,3 +78,4 @@ export const query = graphql`
 `;
 
 export default BlogPost;
+

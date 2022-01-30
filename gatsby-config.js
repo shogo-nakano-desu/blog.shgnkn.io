@@ -12,7 +12,6 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -48,9 +47,6 @@ module.exports = {
             resolve: `gatsby-remark-prismjs`,
             options: {
               classPrefix: "language-",
-              // inlineCodeMarker: "`", //もしかしたらデフォルトで`かも
-              showLineNumbers: true,
-              // noInlineHighlight: false,
               prompt: {
                 user: "root",
                 host: "localhost",
