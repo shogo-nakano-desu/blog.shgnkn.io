@@ -7,16 +7,22 @@ import { MDXProvider }  from "@mdx-js/react"
 import Layout from "../components/layout";
 
 import * as styles from "./post.module.css"
+import { Toc } from '../components/toc';
 
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
 
   const { mdx } = props.data;
-  const { body, frontmatter } = mdx || {}
-  if (frontmatter === undefined||body === undefined) {
+  const { body, frontmatter, tableOfContents } = mdx || {}
+  if (frontmatter === undefined||body === undefined || tableOfContents === undefined) {
     throw new Error(`frontmatter should be`)
   }
-  const { title, date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
-  if (title === undefined || date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+  const { title, path,date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
+  if (title === undefined ||path===undefined ||date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+    throw new Error(`should be`)
+  }
+  const items = tableOfContents.items
+  console.log(items)
+  if (items == undefined) {
     throw new Error(`should be`)
   }
 
@@ -40,6 +46,9 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
             </a>
           </p>
         </div>
+        <div>
+          <Toc contents={items} path={ path}/>
+        </div>
         <div className={styles.contents}>
           <MDXProvider components={{
             p: props => <p {...props} style={{ lineHeight: "2rem" }} />,
@@ -58,9 +67,11 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
 export const query = graphql`
   query BlogPost($id: String) {
     mdx(id: { eq: $id }) {
+      tableOfContents
       body
       frontmatter {
         title
+        path
         date
         hero_image_alt
         hero_image_credit_link
