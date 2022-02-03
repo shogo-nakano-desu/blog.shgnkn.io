@@ -3,9 +3,7 @@ import { graphql, PageProps } from "gatsby";
 import { GatsbyImage,getImage, ImageDataLike} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider }  from "@mdx-js/react"
-
 import Layout from "../components/layout";
-
 import * as styles from "./post.module.css"
 import { Toc } from '../components/toc';
 
@@ -20,8 +18,9 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   if (title === undefined ||path===undefined ||date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
     throw new Error(`should be`)
   }
+
+  // なぜtableOfContentsがundefinedになってしまうのかわからない。。。
   const items = tableOfContents.items
-  console.log(items)
   if (items == undefined) {
     throw new Error(`should be`)
   }

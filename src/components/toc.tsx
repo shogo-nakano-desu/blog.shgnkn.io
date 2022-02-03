@@ -4,13 +4,11 @@ import * as styles from "./toc.module.css"
 
 interface Props { contents:any,path:string}
 export const Toc: React.FC<Props> = ({ contents,path }) => {
-
   return (
   <>
     <div>
       目次
       </div>
-
         <ul>
         {contents.map((e: any) => {
           return(
