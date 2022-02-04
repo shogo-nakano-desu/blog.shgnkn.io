@@ -5,7 +5,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider }  from "@mdx-js/react"
 import Layout from "../components/layout";
 import * as styles from "./post.module.css"
-import { Toc } from '../components/toc';
+
 
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
 
@@ -47,7 +47,6 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
             </a>
           </p>
         </div>
-{/* <Toc contents={items} path={ path}/> */}
         <div className={styles.contents}>
           <MDXProvider components={{
             p: props => <p {...props} style={{ lineHeight: "2rem" }} />,

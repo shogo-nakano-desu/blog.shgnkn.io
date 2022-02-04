@@ -6,7 +6,9 @@ export const Footer: React.FC = () => {
   const year = getYear(new Date())
   return (
     <footer>
-      <div className={ styles.footer}>{year},{' '}Buit with{' '}<a href="https://www.gatsbyjs.com/">Gatsby</a></div>
+      <div className={styles.footer}>
+        {year},{" "}Buit with<a className={styles.footerLink} href="https://www.gatsbyjs.com/">Gatsby</a>
+      </div>
     </footer>
   )
 }

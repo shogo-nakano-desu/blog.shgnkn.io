@@ -12,22 +12,30 @@ type Props = {
   path?:string
 }
 
-const Layout: React.FC<Props> = ({ pageTitle,items,path, children }  ) => {
+const Layout: React.FC<Props> = ({ pageTitle, items, path, children }) => {
+  console.log(path)
   return (
     <>
       <SEO title={pageTitle}></SEO>
       <div className={styles.container}>
-        {/* <div> */}
           <Header></Header>
-          <div className={styles.wrapper}>
-            <main className={styles.main}>
-              {children}
-            </main>
-              {path ? <aside className={styles.tocContainer}><Toc contents={items} path={path} /></aside> : <></>}
+
+          {path
+            ?<div className={styles.wrapper}>
+                <main className={styles.mainPath}>
+                    {children}
+                </main>
+                <aside className={styles.tocContainer}><Toc contents={items} path={path} /></aside>
+              </div>
+            :
+              <main className={styles.main}>
+                {children}
+              </main>
+          }
           </div>
           <Footer></Footer>
-        </div>
-      {/* </div> */}
+
+
     </>
   );
 };

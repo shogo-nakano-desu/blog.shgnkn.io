@@ -1,4 +1,4 @@
-.container {
+.table-container {
   border-radius: 0.5rem;
   margin-top: 1rem;
   padding: 1rem;
@@ -7,16 +7,14 @@
   width: 250px;
   height: min-content;
 }
-p {
-  color: rgb(77, 81, 86);
-}
-a {
+
+.toc-link {
   text-decoration: none;
   color: rgb(138, 142, 146);
   transition: color 0.2s;
 }
 
-a:hover {
+.toc-link:hover {
   color: rgb(31, 32, 34);
 }
 
