@@ -18,7 +18,9 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
     throw new Error(`should be`)
   }
 
-  // なぜtableOfContentsがundefinedになってしまうのかわからない。。。
+  // なぜtableOfContentsがneverになってしまうのかわからない。。。
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const items = tableOfContents.items
   if (items == undefined) {
     throw new Error(`should be`)
