@@ -6,7 +6,6 @@ import { MDXProvider }  from "@mdx-js/react"
 import Layout from "../components/layout";
 import * as styles from "./post.module.css"
 
-
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
 
   const { mdx } = props.data;
