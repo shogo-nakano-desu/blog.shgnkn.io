@@ -10,6 +10,14 @@
   margin-top: 1.25rem;
 }
 
+@media only screen and (max-width: 800px) {
+  .main-path {
+    max-width: 100%;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+}
+
 .toc-container {
   position: sticky;
   top: 0;
@@ -25,35 +33,6 @@
   width: 100%;
   max-width: 1110px;
   padding-left: 0.5rem;
-}
-
-@media screen and (min-width: 62em) {
-  .wrapper {
-    grid-template-areas: "main aside";
-    grid-template-columns: calc(100% - 300px) 300px;
-  }
-}
-
-@media screen and (min-width: 48em) {
-  .wrapper {
-    grid-template-areas: "main aside";
-    grid-template-columns: calc(100% - 200px) 200px;
-  }
-}
-
-@media screen and (min-width: 30em) {
-  .wrapper {
-    grid-template-areas: "main";
-    grid-template-columns: 100%;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-  .main {
-    max-width: 100%;
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-  }
 }
 
 .container {

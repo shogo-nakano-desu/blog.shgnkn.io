@@ -5,6 +5,7 @@ html {
   word-break: normal;
   -moz-tab-size: 4;
   tab-size: 4;
+  scroll-behavior: smooth;
 }
 *,
 :after,
