@@ -2,10 +2,9 @@
   border-radius: 0.5rem;
   padding: 1rem;
   padding-left: 2rem;
-  position: sticky;
-  top: 0;
   box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
-  max-width: 300px;
+  max-width: 250px;
+  max-height: 624px;
 }
 
 .h3-tag {

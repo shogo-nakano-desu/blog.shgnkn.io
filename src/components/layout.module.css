@@ -3,9 +3,47 @@
   margin-right: auto;
   max-width: 752px;
   margin-top: 1.25rem;
+  display: block;
+  /* flex-direction: column;
+  flex: 1; */
+}
+
+.toc-container {
   display: flex;
-  flex-direction: column;
-  flex: 1;
+  justify-content: flex-end;
+  margin-right: 5rem;
+  top: 1rem;
+  position: sticky;
+}
+
+.wrapper {
+  display: grid;
+  gap: 1.25rem;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 4rem 1.5rem; */
+  max-width: 1280px;
+}
+
+@media screen and (min-width: 62em) {
+  .wrapper {
+    grid-template-areas: "main aside";
+    grid-template-columns: calc(100% - 300px) 300px;
+  }
+}
+
+@media screen and (min-width: 48em) {
+  .wrapper {
+    grid-template-areas: "main aside";
+    grid-template-columns: calc(100% - 200px) 200px;
+  }
+}
+
+@media screen and (min-width: 30em) {
+  .wrapper {
+    grid-template-areas: "main";
+    grid-template-columns: 100%;
+  }
 }
 
 @media only screen and (max-width: 767px) {

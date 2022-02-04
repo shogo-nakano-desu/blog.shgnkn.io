@@ -5,7 +5,7 @@ import * as styles from "./toc.module.css"
 interface Props { contents:any,path:string}
 export const Toc: React.FC<Props> = ({ contents,path }) => {
   return (
-    <div className={ styles.container}>
+    <table className={ styles.container}>
       <p>
       目次
       </p>
@@ -33,5 +33,5 @@ export const Toc: React.FC<Props> = ({ contents,path }) => {
           )
         })}
       </ul>
-  </div>
+  </table>
 );}

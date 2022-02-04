@@ -32,7 +32,9 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
     throw new Error(`image should be got`)
   }
   return (
-    <Layout pageTitle={title}>
+
+    <Layout pageTitle={title} items={ items} path={ path }>
+
       <div>
         <h1>{title}</h1>
         <p className={ styles.date}>{ date}</p>
@@ -45,9 +47,7 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
             </a>
           </p>
         </div>
-        <div>
-          <Toc contents={items} path={ path}/>
-        </div>
+{/* <Toc contents={items} path={ path}/> */}
         <div className={styles.contents}>
           <MDXProvider components={{
             p: props => <p {...props} style={{ lineHeight: "2rem" }} />,
@@ -59,8 +59,10 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
           </MDXProvider>
         </div>
       </div>
-    </Layout>
-  );
+      </Layout>
+
+      );
+
 };
 
 export const query = graphql`
