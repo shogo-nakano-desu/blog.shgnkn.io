@@ -17,15 +17,17 @@ const Layout: React.FC<Props> = ({ pageTitle,items,path, children }  ) => {
     <>
       <SEO title={pageTitle}></SEO>
       <div className={styles.container}>
-        <Header></Header>
-        <div className={styles.wrapper}>
-          <main className={styles.main}>
-            {children}
-          </main>
-            {path ? <aside className={styles.tocContainer}><Toc contents={items} path={path} /></aside> : <></>}
+        {/* <div> */}
+          <Header></Header>
+          <div className={styles.wrapper}>
+            <main className={styles.main}>
+              {children}
+            </main>
+              {path ? <aside className={styles.tocContainer}><Toc contents={items} path={path} /></aside> : <></>}
+          </div>
+          <Footer></Footer>
         </div>
-        <Footer></Footer>
-      </div>
+      {/* </div> */}
     </>
   );
 };

@@ -7,26 +7,26 @@ export const Toc: React.FC<Props> = ({ contents,path }) => {
   return (
     <table className={ styles.container}>
       <p>
-      目次
+        目次
       </p>
-      <ul>
+      <ul className={ styles.links}>
         {contents.map((e: any) => {
           return(
               e.items?.length > 0 ?
-              (<>
+              (<div >
                 <li key={e.title}>
                     <Link to={`/${path}/${e.url}`}>{e.title}</Link>
                 </li>
-                  <ul>
-                    {e.items.map((item: any) => {
-                      return (
-                        <li className={ styles.h3Tag } key={item.title}>
-                          <Link to={`/${path}/${item.url}`}>{item.title}</Link>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </>
+                <ul>
+                  {e.items.map((item: any) => {
+                    return (
+                      <li className={ styles.h3Tag } key={item.title}>
+                        <Link to={`/${path}/${item.url}`}>{item.title}</Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
             ): <li key={e.title}>
                     <Link to={`/${path}/${e.url}`}>{e.title}</Link>
                 </li>

@@ -1,12 +1,25 @@
 .container {
   border-radius: 0.5rem;
+  margin-top: 1rem;
   padding: 1rem;
   padding-left: 2rem;
   box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
-  max-width: 250px;
-  max-height: 624px;
+  width: 250px;
+  height: min-content;
+}
+p {
+  color: rgb(77, 81, 86);
+}
+a {
+  text-decoration: none;
+  color: rgb(138, 142, 146);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: rgb(31, 32, 34);
 }
 
 .h3-tag {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
