@@ -5,5 +5,12 @@
   padding-top: 1.25rem;
   bottom: 0;
   display: flex;
-  max-width: 752px;
+  /* max-width: 752px; */
+  max-width: 1110px;
+}
+
+.footer-link {
+  color: black;
+  text-decoration: none;
+  margin-left: 0.25rem;
 }

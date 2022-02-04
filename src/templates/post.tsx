@@ -3,22 +3,25 @@ import { graphql, PageProps } from "gatsby";
 import { GatsbyImage,getImage, ImageDataLike} from "gatsby-plugin-image";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider }  from "@mdx-js/react"
-
 import Layout from "../components/layout";
-
 import * as styles from "./post.module.css"
 
+
 const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
-  console.log(props)
-  console.log(`------------------`)
 
   const { mdx } = props.data;
-  const { body, frontmatter } = mdx || {}
-  if (frontmatter === undefined||body === undefined) {
+  const { body, frontmatter, tableOfContents } = mdx || {}
+  if (frontmatter === undefined||body === undefined || tableOfContents === undefined) {
     throw new Error(`frontmatter should be`)
   }
-  const { title, date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
-  if (title === undefined || date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+  const { title, path,date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
+  if (title === undefined ||path===undefined ||date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+    throw new Error(`should be`)
+  }
+
+  // なぜtableOfContentsがundefinedになってしまうのかわからない。。。
+  const items = tableOfContents.items
+  if (items == undefined) {
     throw new Error(`should be`)
   }
 
@@ -29,7 +32,9 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
     throw new Error(`image should be got`)
   }
   return (
-    <Layout pageTitle={title}>
+
+    <Layout pageTitle={title} items={ items} path={ path }>
+
       <div>
         <h1>{title}</h1>
         <p className={ styles.date}>{ date}</p>
@@ -53,16 +58,20 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
           </MDXProvider>
         </div>
       </div>
-    </Layout>
-  );
+      </Layout>
+
+      );
+
 };
 
 export const query = graphql`
   query BlogPost($id: String) {
     mdx(id: { eq: $id }) {
+      tableOfContents
       body
       frontmatter {
         title
+        path
         date
         hero_image_alt
         hero_image_credit_link
