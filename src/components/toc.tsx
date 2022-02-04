@@ -5,11 +5,11 @@ import * as styles from "./toc.module.css"
 interface Props { contents:any,path:string}
 export const Toc: React.FC<Props> = ({ contents,path }) => {
   return (
-  <>
-    <div>
+    <div className={ styles.container}>
+      <p>
       目次
-      </div>
-        <ul>
+      </p>
+      <ul>
         {contents.map((e: any) => {
           return(
               e.items?.length > 0 ?
@@ -17,23 +17,21 @@ export const Toc: React.FC<Props> = ({ contents,path }) => {
                 <li key={e.title}>
                     <Link to={`/${path}/${e.url}`}>{e.title}</Link>
                 </li>
-                <li>
                   <ul>
                     {e.items.map((item: any) => {
                       return (
-                        <li key={item.title}>
+                        <li className={ styles.h3Tag } key={item.title}>
                           <Link to={`/${path}/${item.url}`}>{item.title}</Link>
                         </li>
                       )
                     })}
                   </ul>
-                  </li>
                 </>
             ): <li key={e.title}>
                     <Link to={`/${path}/${e.url}`}>{e.title}</Link>
                 </li>
           )
         })}
-        </ul>
-  </>
+      </ul>
+  </div>
 );}
