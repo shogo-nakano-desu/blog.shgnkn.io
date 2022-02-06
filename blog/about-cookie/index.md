@@ -14,17 +14,7 @@ tags: [web,cookie]
 
 ## はじめに
 
-今回の投稿は主に以下の情報を参考にして、自分なりにまとめて書いています。
-
-[HTTP の概要 - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Overview#http_is_stateless_but_not_sessionless)
-
-[HTTP Cookie の使用 - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Cookies)
-
-[HTTP ヘッダー - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers)
-
-[Set-Cookie - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Set-Cookie)
-
-[HTTPSを使ってもCookieの改変は防げないことを実験で試してみた](https://blog.tokumaru.org/2013/09/cookie-manipulation-is-possible-even-on-ssl.html)
+今回の投稿は主に[参考](https://blog.shgnkn.io/about-cookie/#%E5%8F%82%E8%80%83)に含まれる記事などから、自分なりにまとめて書いています。
 
 ## なぜ存在しているのか
 
@@ -311,3 +301,20 @@ Set-Cookie: password=12345; Domain=example.com
 ただ、DevToolsからCookieを除いてみるだけでも、ちょっと心配になるようなものもあり面白かったです？
 
 Cookie完全に理解した。
+
+## 参考
+
+[HTTP の概要 - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Overview#http_is_stateless_but_not_sessionless)
+
+[HTTP Cookie の使用 - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Cookies)
+
+[HTTP ヘッダー - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers)
+
+[Set-Cookie - HTTP | MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Set-Cookie)
+
+[HTTPSを使ってもCookieの改変は防げないことを実験で試してみた](https://blog.tokumaru.org/2013/09/cookie-manipulation-is-possible-even-on-ssl.html)
+
+[CSRF - MDN Web Docs 用語集: ウェブ関連用語の定義 | MDN](https://developer.mozilla.org/ja/docs/Glossary/CSRF)
+
+[攻撃の種類 - ウェブセキュリティ | MDN](https://developer.mozilla.org/ja/docs/Web/Security/Types_of_attacks)
+
