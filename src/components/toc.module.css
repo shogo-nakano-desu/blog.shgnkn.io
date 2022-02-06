@@ -8,6 +8,18 @@
   height: min-content;
 }
 
+@media only screen and (max-width: 840px) {
+  .table-container {
+    width: 200px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .table-container {
+    width: 180px;
+  }
+}
+
 .toc-link {
   text-decoration: none;
   color: rgb(138, 142, 146);
