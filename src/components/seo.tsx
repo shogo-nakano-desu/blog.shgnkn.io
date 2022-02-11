@@ -57,6 +57,7 @@ const SEO:React.FC<Props> = ({ title, description,image, article }) => {
       {seo.description && (
         <meta name="twitter:description" content={seo.description} />
       )}
+      <meta name="google-site-verification" content="ahfhRF7B-0hIIQOjDPnrietH4aNfl8XuIg2bEPf2rG8" />
     </Helmet>
   )
 }
