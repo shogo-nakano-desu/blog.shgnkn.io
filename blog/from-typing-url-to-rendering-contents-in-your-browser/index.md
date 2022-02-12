@@ -1,7 +1,7 @@
 ---
 title: "URL入力⇨ブラウザに表示まで"
 path: "from-typing-url-to-rendering-contents-in-your-browser"
-date: "2022-02-11"
+date: "2022-02-12"
 update: ""
 hero_image: "./alina-grubnyak-ZiQkhI7417A-unsplash.jpg"
 hero_image_alt: "network"
