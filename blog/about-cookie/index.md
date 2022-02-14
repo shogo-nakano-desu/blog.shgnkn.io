@@ -62,7 +62,7 @@ Cookieを使ってセッションを管理するのであれば、どこかの�
 
 その際には以下のような形式で、名前、値の組みを作成して送信します。
 
-```shellscript
+```shell
 Set-Cookie: <name>=<value>
 ```
 

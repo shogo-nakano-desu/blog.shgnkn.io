@@ -12,7 +12,6 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    "gatsby-plugin-feed",
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -44,6 +43,7 @@ module.exports = {
       resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins: [
+          "gatsby-plugin-feed",
           `gatsby-remark-autolink-headers`,
           {
             resolve: `gatsby-remark-prismjs`,
