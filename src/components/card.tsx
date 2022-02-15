@@ -6,8 +6,8 @@ import * as styles from "./card.module.css";
 interface Props{
   data: GatsbyTypes.BlogPostsQuery['allMdx']['nodes'][0]['frontmatter']
 }
-export const Card: React.FC<Props> = ({ data }) => {
-  if (data === undefined) {
+export const Card: React.FC<Props> = ({ data}) => {
+  if (data === undefined ) {
     throw new Error(`should be`)
   }
   const { hero_image, hero_image_alt, title, path, date } = data;
@@ -18,13 +18,15 @@ export const Card: React.FC<Props> = ({ data }) => {
   const image = getImage(hero_image as ImageDataLike)
   if (image === undefined) { throw new Error(`should be`) }
 
+  //[TODO]Linkコンポーネントを使うと、trailing slashがなくなってしまう。
+  //回避策としてaタグにしているが、遅いので変えたい。
   return (
-    <Link key={path} className={styles.link} to={`${path}/`}>
+    <a className={styles.link} href={`${path}/`}>
       <div>
         <GatsbyImage className={ styles.image} image={image} alt={hero_image_alt} />
         <p className={ styles.title}>{title}</p>
         <p className={ styles.date}>Posted: {date}</p>
       </div>
-    </Link>
+    </a>
   )
 }
