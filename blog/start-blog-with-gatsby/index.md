@@ -1,5 +1,6 @@
 ---
 title: "Gatsbyでブログ初め"
+summary: "Gatsby + TypeScriptでブログを始めました。技術的な記事だけでなく、そのうちいま通っているオンライン大学のことなどもまとめていけたらと思います。"
 path: "start-blog-with-gatsby"
 date: "2022-01-23"
 update: ""

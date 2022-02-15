@@ -1,5 +1,6 @@
 ---
 title: "Cookieを理解する"
+summary: "Cookieについて、利用方法やセキュリティ上の注意点などをまとめています。"
 path: "about-cookie"
 date: "2022-02-06"
 update: ""
