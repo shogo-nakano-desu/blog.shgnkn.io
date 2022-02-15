@@ -13,8 +13,8 @@
 @media only screen and (max-width: 800px) {
   .main-path {
     max-width: 100%;
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
 }
 
@@ -38,7 +38,7 @@
   margin: auto;
   width: 100%;
   max-width: 1110px;
-  padding-left: 0.5rem;
+  /* padding-left: 0.5rem; */
 }
 
 .container {

@@ -8,7 +8,7 @@ import SEO from "./seo"
 
 type Props = {
   pageTitle: string,
-  pageImage:string,
+  pageImage?:string,
   items?: any,
   path?:string
 }
