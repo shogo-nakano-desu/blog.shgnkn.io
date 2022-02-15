@@ -82,7 +82,7 @@ tags: [infra,network,web]
 
 `blog.shgnkn.io` サーバー名です。
 
-`/from-typing-url-to-rendering-contents-in-your-browser/` データがあるパス名です。
+`/from-typing-~~/` データがあるパス名です。
 
 <br/>
 これらの情報をもとに、HTTPリクエストを作成したり、必要に応じて暗号処理モジュールを呼び出して暗号化処理をしたりしていきます。

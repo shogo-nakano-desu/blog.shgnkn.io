@@ -24,3 +24,10 @@
 .image {
   border-radius: 6px;
 }
+
+@media only screen and (max-width: 780px) {
+  .image {
+    border-radius: 6px;
+    width: 98%;
+  }
+}
