@@ -37,7 +37,6 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
     url: `${siteUrl}${pathname}`,
   }
 
-
   return (
     <Helmet
       title={seo.title}
@@ -56,7 +55,6 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
       { name: `twitter:card`, content: `summary_large_image` },
       { name: `twitter:creator`, content: twitterUsername },
       { name: `twitter:title`, content: seo.title },
-      { name: `twitter:image`, content: seo.image },
       { name: `twitter:description`, content: seo.description },
     ]}>
     </Helmet>
