@@ -20,8 +20,8 @@ const BlogPage: React.FC<PageProps<GatsbyTypes.BlogPostsQuery>> = (props) => {
     <Layout pageTitle="Blog posts">
       <div className={ styles.cards}>
         <div className={styles.card}>
-          {frontmatters.map((e:data) => {
-            return <Card data={e} key={e?.path}/>
+          {frontmatters.map((e: data) => {
+            return <Card data={e} key={`${e?.path}/`}/>
           })}
         </div>
       </div>
