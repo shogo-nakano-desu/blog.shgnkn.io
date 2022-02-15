@@ -19,7 +19,6 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
         defaultTitle: title
         defaultDescription: description
         siteUrl: siteUrl
-        defaultImage: image
         twitterUsername
       }
     }
@@ -29,21 +28,15 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
     defaultTitle,
     defaultDescription,
     siteUrl,
-    defaultImage,
     twitterUsername,
   } = site.siteMetadata
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
+    image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   }
-  // https://blog.shgnkn.ioが返ってくる
-  console.log(siteUrl)
-  //https://www.shgnkn.io/sakura-vps-centos-nginx見たくフル
-  console.log(seo.url)
-  console.log(image)
-  console.log(seo.image)
+
   return (
     <Helmet title={seo.title} titleTemplate={`%s | ${defaultTitle}`} htmlAttributes={{
         lang: "ja",
@@ -54,11 +47,12 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
       { name: 'og:type', content: 'website' },
       { name: 'og:title', content: seo.title },
       { name: 'og:description', content: seo.description },
-      { name: 'og:image', content: seo.image },
+      seo.image ? { name: 'og:image', content: seo.image } : {},
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:creator', content: twitterUsername },
-      { name: 'twitter:title', content: title }, { name: 'twitter:description', content: seo.description },
-      {name: "twitter:image", content:image}
+      { name: 'twitter:title', content: seo.title },
+      { name: 'twitter:description', content: seo.description },
+      {name: "twitter:image", content:seo.image}
     ]}>
 
       {twitterUsername && (
@@ -76,5 +70,4 @@ export default SEO
 SEO.defaultProps = {
   title: "blog.shgnkn.io",
   description: "リリース最優先",
-  image: "",
 }

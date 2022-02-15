@@ -27,14 +27,17 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   }
 
   // 型はasを使わないでどうにかできないものか。。。
-  const image = getImage({...hero_image.childImageSharp} as ImageDataLike)
-
+  const image = getImage({ ...hero_image.childImageSharp } as ImageDataLike)
   if (image === undefined) {
     throw new Error(`image should be got`)
   }
+
+  if (hero_image.publicURL === undefined) {
+    throw new Error(`image should be set`)
+  }
   return (
 
-    <Layout pageTitle={title} items={ items} path={ path }>
+    <Layout pageTitle={title} pageImage={hero_image.publicURL } items={ items} path={ path }>
 
       <div>
         <h1>{title}</h1>
@@ -78,6 +81,7 @@ export const query = graphql`
         hero_image_credit_link
         hero_image_credit_text
         hero_image {
+          publicURL
           childImageSharp {
             gatsbyImageData
           }
