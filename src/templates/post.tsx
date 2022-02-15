@@ -46,7 +46,7 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
             <GatsbyImage className={ styles.image}image={image} alt={hero_image_alt} />
           <p className={ styles.credit}>
             Photo Credit:{" "}
-            <a href={hero_image_credit_link} className={ styles.creditLink}>
+            <a href={hero_image_credit_link} className={styles.creditLink}>
               {hero_image_credit_text}
             </a>
           </p>
@@ -63,7 +63,6 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
         </div>
       </div>
       </Layout>
-
       );
 
 };
