@@ -19,10 +19,10 @@ export const Card: React.FC<Props> = ({ data }) => {
   if (image === undefined) { throw new Error(`should be`) }
 
   return (
-    <Link className={ styles.link} to={`${path}/`}>
+    <Link key={path} className={styles.link} to={`${path}/`}>
       <div>
         <GatsbyImage className={ styles.image} image={image} alt={hero_image_alt} />
-        <p className={ styles.title}>{ title}</p>
+        <p className={ styles.title}>{title}</p>
         <p className={ styles.date}>Posted: {date}</p>
       </div>
     </Link>
