@@ -12,14 +12,13 @@ type Props = {
   path?:string
 }
 
+
 const Layout: React.FC<Props> = ({ pageTitle, items, path, children }) => {
-  console.log(path)
   return (
     <>
       <SEO title={pageTitle}></SEO>
       <div className={styles.container}>
           <Header></Header>
-
           {path
             ?<div className={styles.wrapper}>
                 <main className={styles.mainPath}>
