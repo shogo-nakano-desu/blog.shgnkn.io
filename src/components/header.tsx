@@ -2,8 +2,6 @@ import * as React from 'react';
 import { useStaticQuery, graphql, Link } from "gatsby";
 import { StaticImage } from 'gatsby-plugin-image'
 import * as styles from "./header.module.css";
-import { startOfYesterday } from 'date-fns';
-
 
 export const Header: React.FC= () => {
   const data = useStaticQuery(graphql`

@@ -24,6 +24,11 @@
   font-size: 2rem;
 }
 
+/* .icons-container {
+  display: flex;
+  align-items: center;
+} */
+
 .site-title:visited {
   color: inherit;
 }
@@ -35,4 +40,18 @@
 .image {
   width: 2rem;
   height: 2rem;
+  margin-top: 0.5rem;
+}
+@media only screen and (max-width: 470px) {
+  .image {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 1rem;
+  }
+  .site-title {
+    font-size: 1.5rem;
+  }
+  .icons {
+    margin: 0.75rem;
+  }
 }
