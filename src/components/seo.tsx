@@ -36,6 +36,7 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   }
+  console.log(seo.image)
 
   return (
     <Helmet title={seo.title} titleTemplate={`%s | ${defaultTitle}`} htmlAttributes={{
@@ -47,12 +48,12 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
       { name: 'og:type', content: 'website' },
       { name: 'og:title', content: seo.title },
       { name: 'og:description', content: seo.description },
-      seo.image ? { name: 'og:image', content: seo.image } : {},
+      { name: 'og:image', content: seo.image },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:creator', content: twitterUsername },
       { name: 'twitter:title', content: seo.title },
+      { name: 'twitter:image', content: seo.image },
       { name: 'twitter:description', content: seo.description },
-      {name: "twitter:image", content:seo.image}
     ]}>
 
       {twitterUsername && (
