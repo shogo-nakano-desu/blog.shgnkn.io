@@ -5,11 +5,11 @@ import { useStaticQuery, graphql } from "gatsby"
 
 interface Props {
   title?: string,
-  description?: string,
+  summary?: string,
   image?:string,
 
 }
-const SEO:React.FC<Props> = ({ title, description,image }) => {
+const SEO:React.FC<Props> = ({ title,summary,image }) => {
   const { pathname } = useLocation()
 
   const { site } = useStaticQuery(graphql`
@@ -17,7 +17,6 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
     site {
       siteMetadata {
         defaultTitle: title
-        defaultDescription: description
         siteUrl: siteUrl
         twitterUsername
       }
@@ -26,13 +25,12 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
 `)
   const {
     defaultTitle,
-    defaultDescription,
     siteUrl,
     twitterUsername,
   } = site.siteMetadata
   const seo = {
     title: title || defaultTitle,
-    description: description || defaultDescription,
+    summary: summary ,
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   }
@@ -45,17 +43,17 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
         lang: "ja",
       }}
       meta={[
-      { name: `description`, content: seo.description },
+      { name: `description`, content: seo.summary },
       { name: `image`, content: seo.image },
       { name: `og:url`, content: seo.url },
       { name: `og:type`, content: `website` },
       { name: `og:title`, content: seo.title },
-      { name: `og:description`, content: seo.description },
+      { name: `og:description`, content: seo.summary },
       { name: `og:image`, content: seo.image },
       { name: `twitter:card`, content: `summary_large_image` },
       { name: `twitter:creator`, content: twitterUsername },
       { name: `twitter:title`, content: seo.title },
-      { name: `twitter:description`, content: seo.description },
+      { name: `twitter:description`, content: seo.summary },
     ]}>
     </Helmet>
   )
@@ -64,5 +62,5 @@ export default SEO
 
 SEO.defaultProps = {
   title: "blog.shgnkn.io",
-  description: "リリース最優先",
+  summary: "リリース最優先",
 }

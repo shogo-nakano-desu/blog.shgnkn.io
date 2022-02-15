@@ -13,8 +13,8 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   if (frontmatter === undefined||body === undefined || tableOfContents === undefined) {
     throw new Error(`frontmatter should be`)
   }
-  const { title, path,date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
-  if (title === undefined ||path===undefined ||date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
+  const { title, summary, path,date, hero_image_alt, hero_image_credit_link, hero_image_credit_text,hero_image } = frontmatter
+  if (title === undefined ||summary===undefined||path===undefined ||date === undefined || hero_image_alt === undefined || hero_image_credit_link === undefined || hero_image_credit_text === undefined || hero_image=== undefined) {
     throw new Error(`should be`)
   }
 
@@ -37,7 +37,7 @@ const BlogPost: React.FC<PageProps<GatsbyTypes.BlogPostQuery>> = (props) => {
   }
   return (
 
-    <Layout pageTitle={title} pageImage={hero_image.publicURL } items={ items} path={ path }>
+    <Layout pageTitle={title} pageImage={hero_image.publicURL} summary={ summary} items={ items} path={ path }>
 
       <div>
         <h1>{title}</h1>
@@ -75,6 +75,7 @@ export const query = graphql`
       body
       frontmatter {
         title
+        summary
         path
         date
         hero_image_alt

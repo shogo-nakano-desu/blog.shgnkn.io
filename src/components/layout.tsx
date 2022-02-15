@@ -8,16 +8,17 @@ import SEO from "./seo"
 
 type Props = {
   pageTitle: string,
-  pageImage?:string,
+  pageImage?: string,
+  summary?:string,
   items?: any,
   path?:string
 }
 
 
-const Layout: React.FC<Props> = ({ pageTitle,pageImage, items, path, children }) => {
+const Layout: React.FC<Props> = ({ pageTitle,pageImage,summary, items, path, children }) => {
   return (
     <>
-      <SEO title={pageTitle} image={ pageImage}></SEO>
+      <SEO title={pageTitle} image={pageImage} summary={ summary}></SEO>
       <div className={styles.container}>
           <Header></Header>
           {path
