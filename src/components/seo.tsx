@@ -39,30 +39,26 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
   console.log(seo.image)
 
   return (
-    <Helmet title={seo.title} titleTemplate={`%s | ${defaultTitle}`} htmlAttributes={{
+    <Helmet
+      title={seo.title}
+      titleTemplate={`%s | ${defaultTitle}`}
+      htmlAttributes={{
         lang: "ja",
-      }} meta={[
-      { name: 'description', content: seo.description },
-      { name: 'image', content: seo.image },
-      { name: 'og:url', content: seo.url },
-      { name: 'og:type', content: 'website' },
-      { name: 'og:title', content: seo.title },
-      { name: 'og:description', content: seo.description },
-      { name: 'og:image', content: seo.image },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:creator', content: twitterUsername },
-      { name: 'twitter:title', content: seo.title },
-      { name: 'twitter:image', content: seo.image },
-      { name: 'twitter:description', content: seo.description },
+      }}
+      meta={[
+      { name: `description`, content: seo.description },
+      { name: `image`, content: seo.image },
+      { name: `og:url`, content: seo.url },
+      { name: `og:type`, content: `website` },
+      { name: `og:title`, content: seo.title },
+      { name: `og:description`, content: seo.description },
+      { name: `og:image`, content: seo.image },
+      { name: `twitter:card`, content: `summary_large_image` },
+      { name: `twitter:creator`, content: twitterUsername },
+      { name: `twitter:title`, content: seo.title },
+      { name: `twitter:image`, content: seo.image },
+      { name: `twitter:description`, content: seo.description },
     ]}>
-
-      {twitterUsername && (
-        <meta name="twitter:creator" content={twitterUsername} />
-      )}
-      {seo.title && <meta name="twitter:title" content={seo.title} />}
-      {seo.description && (
-        <meta name="twitter:description" content={seo.description} />
-      )}
     </Helmet>
   )
 }
