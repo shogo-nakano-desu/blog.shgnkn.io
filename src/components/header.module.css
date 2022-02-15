@@ -22,10 +22,12 @@
   justify-content: center;
   text-decoration: none;
   font-size: 2rem;
+  color: rgb(255, 254, 252);
 }
 
 .site-title:visited {
   color: inherit;
+  color: rgb(255, 254, 252);
 }
 
 .icons {
