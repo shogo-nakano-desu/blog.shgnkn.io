@@ -36,7 +36,7 @@ const SEO:React.FC<Props> = ({ title, description,image }) => {
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   }
-  console.log(seo.image)
+
 
   return (
     <Helmet
