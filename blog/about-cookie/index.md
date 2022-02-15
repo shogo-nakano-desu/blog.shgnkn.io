@@ -1,5 +1,6 @@
 ---
 title: "Cookieを理解する"
+summary: "Cookieについて、利用方法やセキュリティ上の注意点などをまとめています。"
 path: "about-cookie"
 date: "2022-02-06"
 update: ""
@@ -62,7 +63,7 @@ Cookieを使ってセッションを管理するのであれば、どこかの�
 
 その際には以下のような形式で、名前、値の組みを作成して送信します。
 
-```shellscript
+```shell
 Set-Cookie: <name>=<value>
 ```
 

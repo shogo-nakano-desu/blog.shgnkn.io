@@ -1,5 +1,6 @@
 ---
 title: "さくらVPS × CentOS Stream 9 × Nginxでホスト"
+summary: "最新のCentOS Stream 9を導入しているのが見どころです。また、セキュリティ面も意識してサーバーを立てたので、その辺り参考になると嬉しいです。"
 path: "sakura-vps-centos-nginx"
 date: "2022-01-24"
 update: "2022-01-25"

@@ -1,5 +1,6 @@
 ---
 title: "URL入力⇨ブラウザに表示まで"
+summary: "ブラウザにURLを入力してから、画面にコンテンツが表示されるまでの流れをまとめています。自分のPC内で起こっていることに関しての説明が厚めになっています。"
 path: "from-typing-url-to-rendering-contents-in-your-browser"
 date: "2022-02-12"
 update: ""

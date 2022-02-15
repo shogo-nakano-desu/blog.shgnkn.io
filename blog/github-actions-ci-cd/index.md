@@ -1,5 +1,6 @@
 ---
 title: "GitHub ActionsでCI/CDパイプライン構築"
+summary: "GitHub Actionsで自動ビルド＆デプロイフローを構築しました。セキュリティを意識してブログサーバーを立てていたので、デプロイが少しややこしく、シェルスクリプトでゴニョゴニョしています。"
 path: "github-actions-ci-cd"
 date: "2022-01-27"
 update: ""

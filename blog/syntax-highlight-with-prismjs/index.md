@@ -1,5 +1,6 @@
 ---
 title: "PrismJSでSyntax Highlight"
+summary: "Syntax Highlightを入れました。公式ドキュメント記載の方法そのままではtokenizeがうまくいかず、少し苦戦したのでその辺りまとめています。"
 path: "syntax-highlight-with-prismjs"
 date: "2022-01-30"
 update: ""
