@@ -4,11 +4,6 @@ export const onPreRenderHTML = ({
 }) => {
   const headComponents = getHeadComponents();
   headComponents.sort((a, b) => {
-    // console.log(`===================a.type`);
-    // console.log(a.type);
-
-    // console.log(`===================b.type`);
-    // console.log(b.type);
     if (a.type === `meta` && b.type !== `meta`) {
       return -1;
     } else if (b.type === `meta` && a.type !== `meta`) {
@@ -18,8 +13,4 @@ export const onPreRenderHTML = ({
   });
 
   replaceHeadComponents(headComponents);
-  const lh = getHeadComponents();
-  for (let i = 0; i < 10; i++) {
-    console.log(lh[i].type);
-  }
 };
