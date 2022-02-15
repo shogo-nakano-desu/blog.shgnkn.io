@@ -24,11 +24,6 @@
   font-size: 2rem;
 }
 
-/* .icons-container {
-  display: flex;
-  align-items: center;
-} */
-
 .site-title:visited {
   color: inherit;
 }
@@ -50,6 +45,11 @@
   }
   .site-title {
     font-size: 1.5rem;
+    justify-content: center;
+    text-decoration: none;
+  }
+  .site-title:visited {
+    color: inherit;
   }
   .icons {
     margin: 0.75rem;
