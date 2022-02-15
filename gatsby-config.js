@@ -12,6 +12,7 @@ module.exports = {
     "gatsby-plugin-typegen",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+    "gatsby-plugin-sitemap",
     {
       resolve: `gatsby-plugin-feed-mdx`,
       options: {
