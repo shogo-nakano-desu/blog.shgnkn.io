@@ -43,13 +43,15 @@ const SEO:React.FC<Props> = ({ title,summary,image }) => {
         lang: "ja",
       }}
       meta={[
+        // <meta name="google-site-verification" content="ahfhRF7B-0hIIQOjDPnrietH4aNfl8XuIg2bEPf2rG8" />
+      { name: `google-site-verification`, content: `ahfhRF7B-0hIIQOjDPnrietH4aNfl8XuIg2bEPf2rG8`},
       { name: `description`, content: seo.summary },
-      { name: `image`, content: seo.image },
+      seo.image ? { name: `image`, content: seo.image } : {},
       { name: `og:url`, content: seo.url },
       { name: `og:type`, content: `website` },
       { name: `og:title`, content: seo.title },
       { name: `og:description`, content: seo.summary },
-      { name: `og:image`, content: seo.image },
+      seo.image ? { name: `og:image`, content: seo.image } : {},
       { name: `twitter:card`, content: `summary_large_image` },
       { name: `twitter:creator`, content: twitterUsername },
       { name: `twitter:title`, content: seo.title },
