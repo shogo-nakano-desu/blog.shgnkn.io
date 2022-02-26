@@ -4,7 +4,7 @@ summary: "AtCoderをはじめつつ、問題解決のための「アルゴリズ
 path: "started-competitive-programming"
 date: "2022-02-26"
 update: ""
-hero_image: "./jonathan-chng-HgoKvtKpyHA-unsplash"
+hero_image: "./jonathan-chng-HgoKvtKpyHA-unsplash.jpg"
 hero_image_alt: "track and field"
 hero_image_credit_text: "Jonathan Chng"
 hero_image_credit_link: "https://unsplash.com/photos/HgoKvtKpyHA"
