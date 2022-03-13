@@ -4,10 +4,10 @@ summary: "ドメイン駆動設計入門:成瀬允宣(著)を読んだ読書記�
 path: "introduction-to-ddd"
 date: "2022/03/13"
 update: ""
-hero_image: ""
-hero_image_alt: ""
-hero_image_credit_text: ""
-hero_image_credit_link: ""
+hero_image: "./sen-rgP93cPsVEc-unsplash.jpg"
+hero_image_alt: "lego"
+hero_image_credit_text: "Sen"
+hero_image_credit_link: "https://unsplash.com/photos/rgP93cPsVEc"
 tags: [reading,ddd]
 ---
 
