@@ -1,8 +1,8 @@
 ---
-title: "読書記録ドメイン駆動設計入門"
-summary: ""
-path: ""
-date: ""
+title: "読書記録：ドメイン駆動設計入門"
+summary: "ドメイン駆動設計入門:成瀬允宣(著)を読んだ読書記録です。これからDDDへの理解を深めていく前段階として、大事だと思ったポイントをまとめてみました。"
+path: "introduction-to-ddd"
+date: "2022/03/13"
 update: ""
 hero_image: ""
 hero_image_alt: ""
