@@ -101,6 +101,7 @@ module.exports = {
       resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins: [
+          { resolve: `gatsby-remark-images`, options: { maxWidth: 800 } },
           `gatsby-remark-autolink-headers`,
           {
             resolve: `gatsby-remark-prismjs`,
