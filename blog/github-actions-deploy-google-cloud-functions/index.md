@@ -99,7 +99,7 @@ APIを有効にしたら、あとは認証とデプロイの２部構成です�
 まずは環境変数にプロジェクトIDを登録しておきます。
 
 ```bash
-$ export PROJECT_ID="your_project_id"
+export PROJECT_ID="your_project_id"
 ```
 
 次にサービスアカウントの作成。
@@ -112,14 +112,14 @@ gcloud iam service-accounts create "my-service-account" \
 
 ```json
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-> --role="roles/cloudfunctions.developer" \
-> --member="serviceAccount:service-account-name@project-name.iam.gserviceaccount.com"
+  --role="roles/cloudfunctions.developer" \
+  --member="serviceAccount:service-account-name@project-name.iam.gserviceaccount.com"
 ```
 
 次に、Workload Identity Poolの作成
 
 ```bash
-$ gcloud iam workload-identity-pools create "pool-name" \
+gcloud iam workload-identity-pools create "pool-name" \
   --project="${PROJECT_ID}" \
   --location="global" \
   --display-name="This is test Pool"
@@ -128,7 +128,7 @@ $ gcloud iam workload-identity-pools create "pool-name" \
 次に、Workload Identity PoolのIDを取得します
 
 ```bash
-$ gcloud iam workload-identity-pools describe "pool-name" \
+gcloud iam workload-identity-pools describe "pool-name" \
   --project="${PROJECT_ID}" \
   --location="global" \
   --format="value(name)"
