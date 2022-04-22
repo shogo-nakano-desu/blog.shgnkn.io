@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
   return (
     <footer>
       <div className={styles.footer}>
-        {year},{" "}Buit with<a className={styles.footerLink} href="https://www.gatsbyjs.com/">Gatsby</a>
+        {year},{" "}Built with<a className={styles.footerLink} href="https://www.gatsbyjs.com/">Gatsby</a>
       </div>
     </footer>
   )
