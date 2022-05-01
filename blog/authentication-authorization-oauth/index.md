@@ -1,18 +1,25 @@
 ---
-title: ""
-summary: ""
+title: "認証・認可とOAuth2.0と"
+summary: "認証・認可を雰囲気で実装するのを卒業して、"
 path: "authentication-authorization-oauth"
-date: ""
+date: "2022-05-01"
 update: ""
-hero_image: "./.jpg"
-hero_image_alt: ""
-hero_image_credit_text: ""
-hero_image_credit_link: ""
-tags: []
+hero_image: "./maria-ziegler-jJnZg7vBfMs-unsplash.jpg"
+hero_image_alt: "key"
+hero_image_credit_text: "Maria Ziegler"
+hero_image_credit_link: "https://unsplash.com/photos/jJnZg7vBfMs"
+tags: [authentication, authorization, oauth2.0]
 ---
 GCPのリソースにアクセスしたり、Google APIにアクセスしたりといった実装をすることが直近多かったのですが、認証認可には[google-auth-library-nodejs](https://github.com/googleapis/google-auth-library-nodejs)を活用して、Google推奨の方式であるADC(Application Default Credentials)を用いて雰囲気で実装していました。
 
 いまいち仕組みがわかっていなくても動くし、最低限セキュアな実装にはできていたのですが脱雰囲気実装をしたく、認証・認可及びOAuth 2.0について改めて調べ直したのでそのメモです。
+
+仕組みを理解し、裏側で何が起こっているのかをイメージした上で実装できるようにすることが今回の目的だったため、個々の技術詳細には踏み込んでいません。
+
+## TL;DR
+
+- 認証・認可では誰がアクセスしてきていて、どのリソースに対してアクセスする権限があるのか確認している。
+- OAuth2.0では、最終的にアクセストークンを鍵として扱っているだけ。
 
 ## そもそも、認証・認可の違いは？
 
@@ -102,8 +109,23 @@ OAuth 2.0 で保護されたリソースにアクセスする際にBearerトー�
 - SCRAM-SHA-256
 - vapid
 
+## OpenID Connect
+
+認証方式には上で挙げたように様々な方式がありますが、認証の機能を自前で実装するのは大変です。なぜなら、ユーザーIDとパスワードの組みを自前のDBに保存する必要があり、そのDBをハックされたらお終いなので、セキュリティで気を使うべきポイントが一気に増えてしまいます。
+
+そこで、Googleアカウント、Twitterアカウント、Facebookアカウントなど外部サービスのアカウントを用いて認証を外部に委託するといったことがよく行われます。
+
+この、認証を外部に委託する仕組みがOAuth2.0を拡張したOpenID Connectと言われるもので、auth0などのベンダーによって機能が提供されています。
+
+今回OpenID Connectの仕様を深く調べることはできていないので、詳細は省きます。
+
 ## OAuth 2.0
 
 認証方式にどのようなものがあるのかは１つ前のパートで見てきました。
 
 Bearer認証でOAuth2.0の話が登場しましたが、OAuth 2.0は認証方式を定めたプロトコルではなく、「アクセストークンの要求とその応答」を標準化したプロトコルです。
+
+アクセストークンを発行する認可サーバーを自前で実装するのが大変なため、AuthleteやAuth0といったサービスを利用することが多いかと思います。
+
+今回はGoogle ColaboratoryでGoogle Driveをマウントしようとした際の挙動を用いて流れを追って行きます。
+
