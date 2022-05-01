@@ -1,6 +1,6 @@
 ---
 title: "認証・認可とOAuth2.0と"
-summary: "認証・認可を雰囲気で実装するのを卒業して、"
+summary: "認証・認可を雰囲気で実装するのを卒業して、裏側の仕組みを理解した上で実装ができるようになりたいと思い認証・認可、そしてOAuth2.0について調べ直した際のメモです。"
 path: "authentication-authorization-oauth"
 date: "2022-05-01"
 update: ""
