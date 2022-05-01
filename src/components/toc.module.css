@@ -1,9 +1,7 @@
 .table-container {
-  border-radius: 0.5rem;
   margin-top: 1rem;
   padding: 1rem;
   padding-left: 2rem;
-  box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem rgba(90, 90, 90, 0.1);
   width: 250px;
   height: min-content;
 }
