@@ -5,11 +5,11 @@ on:
     branches:
       - main
 env:
-  secret_key : ${{secrets.SECRET_KEY}}
-  server_port : ${{secrets.SERVER_PORT}}
-  server_ip : ${{secrets.SERVER_IP}}
-  user_name : ${{secrets.USER_NAME}}
-  server_destination : ${{secrets.SERVER_DESTINATION}}
+  secret_key: ${{secrets.SECRET_KEY}}
+  server_port: ${{secrets.SERVER_PORT}}
+  server_ip: ${{secrets.SERVER_IP}}
+  user_name: ${{secrets.USER_NAME}}
+  server_destination: ${{secrets.SERVER_DESTINATION}}
 
 jobs:
   deploy:
@@ -31,6 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
+      - run: yarn add gatsby-plugin-utils/polyfill-remote-file
       - run: yarn build
       - name: change permissions
         run: chmod +x ./sync.sh
