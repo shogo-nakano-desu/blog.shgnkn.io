@@ -8,9 +8,9 @@
     "gatsby"
   ],
   "scripts": {
-    "dev": "NODE_OPTIONS='-r esm' gatsby develop -o",
-    "build": "NODE_OPTIONS='-r esm' gatsby build",
-    "serve": "NODE_OPTIONS='-r esm' gatsby serve -o",
+    "dev": "gatsby develop -o",
+    "build": "gatsby build",
+    "serve": "gatsby serve -o",
     "clean": "gatsby clean"
   },
   "dependencies": {
@@ -19,7 +19,7 @@
     "date-fns": "^2.28.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "esm": "^3.2.25",
-    "gatsby": "^4.4.0",
+    "gatsby": "^4.17.1",
     "gatsby-plugin-feed-mdx": "^1.1.0",
     "gatsby-plugin-google-gtag": "^4.5.0",
     "gatsby-plugin-image": "^2.4.0",

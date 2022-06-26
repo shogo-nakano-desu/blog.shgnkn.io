@@ -31,7 +31,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn add gatsby-plugin-utils/polyfill-remote-file
       - run: yarn build
       - name: change permissions
         run: chmod +x ./sync.sh
