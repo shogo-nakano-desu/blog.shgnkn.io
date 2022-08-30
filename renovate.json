@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ]
+  "extends": ["config:base"],
+  "timezone": "Asia/Tokyo",
+  "schedule": "each month",
+  "labels": ["Type: Maintenance"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": false
+    }
+  ],
+  "semanticCommits": "enabled"
 }
