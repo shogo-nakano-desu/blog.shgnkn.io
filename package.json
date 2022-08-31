@@ -28,7 +28,7 @@
     "gatsby-plugin-react-helmet": "^5.7.0",
     "gatsby-plugin-sharp": "^4.4.0",
     "gatsby-plugin-sitemap": "^5.7.0",
-    "gatsby-plugin-typegen": "^2.2.4",
+    "gatsby-plugin-typegen": "3.0.0",
     "gatsby-remark-autolink-headers": "^5.6.0",
     "gatsby-remark-images": "^6.10.0",
     "gatsby-remark-prismjs": "^6.5.0",
