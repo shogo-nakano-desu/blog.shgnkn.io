@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { GatsbyImage,getImage, ImageDataLike } from 'gatsby-plugin-image';
-import { Link} from "gatsby";
 import * as styles from "./card.module.css";
 
 interface Props{
@@ -20,7 +19,8 @@ export const Card: React.FC<Props> = ({ data}) => {
 
   //[TODO]Linkコンポーネントを使うと、trailing slashがなくなってしまう。
   //回避策としてaタグにしているが、遅いので変えたい。
-  return (
+  //how-i-became-a-software-engineerの記事は検索結果だけでヒットすればOKなのでカードにはしない。他にも除外したい記事が出てきたら、除外フラグみたいなものを作ってもいいかも。
+  return path==="how-i-became-a-software-engineer"? <></> :(
     <a className={styles.link} href={`${path}/`}>
       <div>
         <GatsbyImage className={ styles.image} image={image} alt={hero_image_alt} />
