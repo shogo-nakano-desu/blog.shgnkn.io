@@ -3,7 +3,7 @@ title: "Prismaを数ヶ月使ってみた感想"
 summary: "仕事でPrismaを数ヶ月利用してきたので、その感想をまとめました。"
 path: "impression-of-prisma"
 date: "2022-08-30"
-update: ""
+update: "2022-12-05"
 hero_image: "./andrey-novik-_9-r_kfpz9A-unsplash.jpg"
 hero_image_alt: "prisma"
 hero_image_credit_text: "Andrey Novik"
@@ -25,10 +25,6 @@ ORM を何も用いずに RDBMS を用いる場合、DB 設計をする際に ER
 
 この Relation の設計が慣れないと少し難しく、Relation で親子関係を作成した際に required のフィールドを key として指定した場合には親がない状態で子を作成できないことが強制されるなど、RDBMS を素の状態で利用する場合には自分で制御可能な部分が勝手に指定されてしまったりします。もちろん、ランタイムエラーを最小限に抑えるための工夫ではあるのですが、良くも悪くも制約がついた状態で開発を進めることになります。ただ JOIN したいだけなのに、そのためだけに Relation を作成する必要がある ⇒DB のマイグレーションも必要で面倒臭い。。。という状況に何回も直面しました。また、アプリケーション開発の初期段階などで頻繁にスキーマが変更になる場合には、Prisma が提供する制約をかいくぐるために migration ファイルを手で書き換えるハックが必要になったりと、どうしても余計な手間＆リスクを取る必要が発生してしまったりしました。
 
-## Relation の子にあたる要素（配列）を条件に用いてフィルタリングできない
-
-## 複合キーで重複があった場合に処理をスキップするようにはできない
-
 ## UPSERT がない（あるけど UPSERT ではない）
 
 PostgreSQL や MySQL では UPSERT コマンドはないものの、 `ON CONFLICT` や`ON DUPLICATE KEY`などで UPSERT に相当する操作を行うことができます。また、ORM の場合 UPSERT コマンドを持っていることも多いでしょう。
@@ -41,7 +37,7 @@ Prisma も御多分に洩れず UPSERT が用意されており、[ドキュメ�
 
 例として以下の schema 定義と upsert のコードを考えてみます。
 
-```jsx
+```typescript
 // schema.prisma
 model user{
 	id      Int    @id @default(autoincrement())
@@ -50,7 +46,7 @@ model user{
 }
 ```
 
-```tsx
+```typescript
 const client = new PrismaClient();
 
 async function upsertUser(userId: string, name: string): Promise<void> {
@@ -82,7 +78,7 @@ await Promise.all([
 
 これを複数回実行すると、エラーになることがあるはずです。
 
-```tsx
+```json
 {"message":"ERROR: \"prisma error occurred, prisma error code: P2002\"","severity":"ERROR","stack":"Error: \nInvalid `prisma.user.upsert()` invocation:\n\n\n  Unique constraint failed on the field: `user_id`\n    at Object.request (/Users/my_dir/node_modules/@prisma/client/runtime/index.js:39809:15)\n    at DatasourceClient._request (/Users/my_dir/node_modules/@prisma/client/runtime/index.js:40637:18)\n    at UserDatasource.upsertUser (/Users/my_dir/webpack:/hogehoge)","timestamp":"2022-08-25T00:20:52.201Z"}
 {"message":"ERROR: \"prisma error occurred, prisma error code: P2002\"","severity":"ERROR","stack":"Error: \nInvalid `prisma.user.upsert()` invocation:\n\n\n  Unique constraint failed on the field: `user_id`\n    at Object.request (/Users/my_dir/node_modules/@prisma/client/runtime/index.js:39809:15)\n    at DatasourceClient._request (/Users/my_dir/node_modules/@prisma/client/runtime/index.js:40637:18)\n    at UserDatasource.upsertUser (/Users/my_dir/webpack:/hogehoge)","timestamp":"2022-08-25T00:20:52.219Z"}
 ```
@@ -91,7 +87,7 @@ await Promise.all([
 
 とにかくまだ Prisma 自体では解決していない問題なので、実装側で吸収する必要があります。今のところエラーハンドリングを行い、エラーをキャッチした場合には再実行する以外方法がなさそうです。
 
-```tsx
+```typescript
 async function upsertUser(
   userId: string,
   name: string,
@@ -126,7 +122,7 @@ async function upsertUser(
 
 以下のように、新しく追加した enum の値を default value として設定しようとすると、新しい enum の値は使う前にコミットされている必要がある。ということでエラーになります。
 
-```tsx
+```typescript
 // Before
 enum place {
   INDOOR
@@ -149,7 +145,7 @@ model activity {
 }
 ```
 
-```tsx
+```txt
 Error: P3018
 
 A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
@@ -167,7 +163,7 @@ DbError { severity: "ERROR", parsed_severity: Some(Error), code: SqlState("55P04
 
 解決するためには、まずは enum だけを追加した状態で migration を一度行い、次に前の工程で追加した enum を default value として設定した状態で migration を行えば OK です。
 
-```tsx
+```typescript
 // Before
 enum place {
   INDOOR
@@ -213,7 +209,7 @@ warn(prisma-client) Already 10 Prisma Clients are actively running.
 
 警告が出ているだけならまだ問題にはなっていませんが、このままだと複数の PrismaClient が各自で DB との connection pool を張っている状態になってしまうので、度が過ぎると DB がメモリ不足となって落ちてしまいます。この問題を回避するために、まずは Issue 内でも書かれているように一度 PrismaClient のインスタンス化をおこなったら、アプリケーションの各所でそれを引き回してやるようにする必要があります。
 
-```tsx
+```typescript
 export class Client extends PrismaClient {
   private static _instance: PrismaClient;
 
@@ -240,7 +236,7 @@ export class Client extends PrismaClient {
 
 `AAA-2000` だけをヒットさせたかったのですが、それは Prisma ではできません。
 
-```tsx
+```typescript
 // schema.prisma
 model product {
 	parts    String[]
@@ -251,3 +247,9 @@ parts: ['AAA-1000', 'AAA-2000', 'ABC-1000', 'DEF-1000']
 ```
 
 実現したい場合、戻り値に対して、filter 関数をかけてクエリ外でフィルターするしか今のところ方法はなさそうです。
+
+
+## Relation の子にあたる要素（配列）を条件に用いてフィルタリングできない
+WIP
+## 複合キーで重複があった場合に処理をスキップするようにはできない
+WIP
