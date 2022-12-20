@@ -17,10 +17,9 @@ export const Card: React.FC<Props> = ({ data}) => {
   const image = getImage(hero_image as ImageDataLike)
   if (image === undefined) { throw new Error(`should be`) }
 
-  //[TODO]Linkコンポーネントを使うと、trailing slashがなくなってしまう。
-  //回避策としてaタグにしているが、遅いので変えたい。
-  //how-i-became-a-software-engineerの記事は検索結果だけでヒットすればOKなのでカードにはしない。他にも除外したい記事が出てきたら、除外フラグみたいなものを作ってもいいかも。
-  return path==="how-i-became-a-software-engineer"? <></> :(
+  // [TODO] trailing slash disappears if I use Link component.
+  // So I use a tag but would like to use Link component because of performance
+  return (
     <a className={styles.link} href={`${path}/`}>
       <div>
         <GatsbyImage className={ styles.image} image={image} alt={hero_image_alt} />
