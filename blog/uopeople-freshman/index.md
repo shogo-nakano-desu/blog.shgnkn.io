@@ -1,6 +1,6 @@
 ---
 title: "University of the Peopleに通い出して1年"
-summary: "昨年４月にアメリカのオンライン大学University of the Peopleへの入学手続きをしてから、ちょうど1年が経っていたので簡単にまとめておきたいとお見ます。"
+summary: "昨年４月にアメリカのオンライン大学University of the Peopleへの入学手続きをしてから、ちょうど1年が経っていたので簡単にまとめておきたいと思います。"
 path: "uopeople-freshman"
 date: "2022-04-19"
 update: ""
