@@ -3,7 +3,7 @@ title: "University of the Peopleに通い出して2年"
 summary: "2021年４月にアメリカのオンライン大学University of the Peopleへの入学手続きをしてから、ちょうど2年が経つので簡単にまとめておきたいと思います。"
 path: "uopeople-sophomore"
 date: "2023-03-26"
-update: ""
+update: "2023-04-12"
 hero_image: "./ken-theimer-PoE6Q48B-5k-unsplash.jpg"
 hero_image_alt: "library in an university"
 hero_image_credit_text: "Ken Theimer"
@@ -64,7 +64,7 @@ UopeopleにおけるWritingのコースはとてつもなく面倒臭いです�
 
 ## Study.comで取得した単位
 ### Computer Science 305: Operating Systems
-UoPeopleのCS 3307 Operating Systems 2相当に当たるクラスです。現在単位移行中なので実際に単位移行が成功するかはわからないです。結果がわかったら記事をアップデートしようと思います。
+UoPeopleのCS 3307 Operating Systems 2相当に当たるクラスです。2023/04/12追記：無事単位移行を行うことができました。一度単位移行申請が却下されてしまったのですが、大学に問い合わせたところ、申請を出したタイミングでCS 3307 Operating Systems 2を履修していたため却下したとのことで、該当コースをdropすることで申請が通りました。万が一単位移行ができなかった場合でも授業から単位を取得できるように履修していましたが、まさかそれが原因で移行に失敗するとは思っていなかったので、drop締め切り前に問い合わせてできてよかったです。
 
 コースの内容は同時に受講していたCS2301: Operating System 1と非常に近しく、難易度的には同時受講が十分可能でした。CPUのスケジューリングアルゴリズムやその他OSが果たす役割について学びました。
 
@@ -72,7 +72,7 @@ UoPeopleのCS 3307 Operating Systems 2相当に当たるクラスです。現在
 
 コース最後のテストはコースの合間合間にあるような選択問題を大量に解くテストでした。練習問題を解いて都度理解していれば十分合格点は取れるレベルだったかと思います。
 
-一点注意点として、私はコース自体3週間ほどで終了したのですがfinal examやprogramming assignmentの採点に２週間ほどかかるようで、この間解約ができないとすると1コース完了するのに２ヶ月分の費用がかかってしまうことになります。ここもまだ明確ではないので、後ほどアップデートします。
+一点注意点として、私はコース自体3週間ほどで終了したのですがfinal examやprogramming assignmentの採点に２週間ほどかかります。ただ、2023/03時点では、月次サブスクの期限を過ぎてから採点が完了した場合でも、結果を見たり単位移管したりすることは可能でした。
 
 ## 取得できなかった単位
 ### Saylor.orgのNetwork
