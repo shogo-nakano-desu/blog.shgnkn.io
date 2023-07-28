@@ -3,7 +3,7 @@ title: "営業からエンジニアになるためにやったこと記録"
 summary: "営業からエンジニアにキャリアチェンジする際に行った学習記録です。"
 path: "how-i-became-a-software-engineer"
 date: "2022-10-16"
-update: ""
+update: "2023-07-28"
 hero_image: "./simon-english-AFlxfQa-o2E-unsplash.jpg"
 hero_image_alt: "trail hike"
 hero_image_credit_text: "Simon English"
@@ -58,7 +58,7 @@ Lilian さんの note[「【転職エントリ】Google に入社します」](h
 
 未経験から Web エンジニアになるには
 
-- Docer
+- Docker
 - AWS
 - Go / Ruby
 - React
@@ -303,5 +303,3 @@ HP から応募した２社はどちらも書類が通りませんでした。�
 
 長々と自分の話を書きましたが、少しでも参考になる方がいれば幸いです。もし疑問点、不明点、相談等ありましたら、Twitter などから DM 頂ければと思います。私で答えられる範囲で回答させて頂きます。自分自身、身近なエンジニアの方や Twitter で勝手にフォローしていたエンジニアの方などに相談させて頂き、たくさんフォローして頂いたので、少しでも還元できたらと思っています。
 <br/>
-
-＊この記事は [https://blog.shgnkn.io/](https://blog.shgnkn.io/) では表示されないようになっています。
