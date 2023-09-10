@@ -12,6 +12,7 @@ tags: [study, omscs]
 ---
 
 ジョージア工科大学コンピューターサイエンス修士課程に2024年春から進学することになりました。
+完全オンラインで修士課程を修了することができるOMSCS(Online Master of Science in Computer Science)のプログラムに参加する予定です。
 
 ## なぜ大学院に行くのか
 
