@@ -5,8 +5,8 @@ path: "georgia-tech-omscs"
 date: "2023-09-10"
 update: ""
 hero_image: "./admission.jpg"
-hero_image_alt: ""
-hero_image_credit_text: "Admission"
+hero_image_alt: "Admission"
+hero_image_credit_text: "Shogo Nakano"
 hero_image_credit_link: ""
 tags: [study, omscs]
 ---
