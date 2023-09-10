@@ -42,11 +42,11 @@ tags: [study, omscs]
 
 [ジョージア工科大学に合格するまでの572時間29分02秒](https://kakeami.github.io/road-to-gatech/)
 
-**[文系学部卒でも無条件で不合格にならないアメリカのオンラインコンピューターサイエンス修士コースを調べ、出願校を決めた](https://note.com/toshi0607/n/n587ffefacfa6)**
+[文系学部卒でも無条件で不合格にならないアメリカのオンラインコンピューターサイエンス修士コースを調べ、出願校を決めた](https://note.com/toshi0607/n/n587ffefacfa6)
 
 [文系学部卒からGeorgia Techコンピューターサイエンス修士課程への闘争](https://note.com/toshi0607/n/n2fc82def9c6b)
 
-**[リモートでアメリカの大学院に通い始めた](https://k0kubun.hatenablog.com/entry/omscs)**
+[リモートでアメリカの大学院に通い始めた](https://k0kubun.hatenablog.com/entry/omscs)
 
 何を準備すべきかがわかるだけでなく、自分のモチベーションを上げるためにもとてもよかったです。
 
