@@ -3,7 +3,7 @@ title: "UoPeopleを卒業してCS学位を取った"
 summary: "UoPeopleを卒業してCS学位を取りました。"
 path: "graduate-from-uopeople"
 date: "2023-07-22"
-update: ""
+update: "2023-11-14"
 hero_image: "./vasily-koloda-8CqDvPuo_kI-unsplash.jpg"
 hero_image_alt: "graduation ceremony"
 hero_image_credit_text: "Vasily Koloda"
@@ -87,6 +87,8 @@ tags: [uopeople]
 Georgia Tech Online Master of Science in Computer Science (OMSCS)にこの夏出願したいと思っています。現在書類の準備中です。
 
 専攻は今の所Computing Systemsにしようかと考えています。仕事や今までの経験とは全く異なりますが、Computational Perception and Roboticsも面白そうなので少し迷っているところです。
+
+(2023-11-14追記) [Georgia Tech Online Master of Science in Computer Scienceに進学します](https://blog.shgnkn.io/georgia-tech-omscs/) に進学が決まったことを書きました。
 
 ### 積読を消化する
 
