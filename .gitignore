@@ -4,3 +4,4 @@ src/__generated__
 public/
 yarn-error.log
 .yarn/
+.DS_Store
