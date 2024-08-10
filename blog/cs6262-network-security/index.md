@@ -8,7 +8,7 @@ hero_image: "./netsec.jpg"
 hero_image_alt: "Network Security"
 hero_image_credit_text: "DALL・E"
 hero_image_credit_link: ""
-tags: [gatech, omscs, os]
+tags: [gatech, omscs, network-security]
 ---
 
 2024-05~2024-07はGeorgia Tech OMSCSでNetwork Securityを受講しました。
